@@ -88,7 +88,6 @@ $(document).ready(function(){
             success:function(response){
                 console.log(response.message) 
                 console.log('success')
-                console.log((response.message === 'login'))
                 if (response.message === 'login'){
                     console.log('succ')
                     window.location.href='/accounts/login'

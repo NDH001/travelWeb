@@ -1,0 +1,70 @@
+{% extends 'journing/base.html'%}
+{% load static%}
+
+{% block headcontent%}
+<link rel='stylesheet' href="{% static 'userdata/styles/edit_profile.css'%}">
+<link rel='stylesheet' href="{% static 'userdata/styles/form_field.css'%}">
+{% endblock headcontent%}
+
+{% block content %}
+
+<main class='profile-section'>
+<form method='POST' enctype='multipart/form-data'>
+    {% csrf_token %}
+
+    <div class='image'>
+    <img src="{{user.profile.profile_pic.url}}">
+    </div>
+
+    <div class='edit-section'>
+
+        <div class='username'>
+        <h3>Username</h3>
+        {{u_form.username}}
+        </div>
+
+        <div class='email'>
+        <h3>Email</h3>
+        {{u_form.email}}
+        </div>
+
+        <div class='gender'>
+        <h3>Gender</h3>
+        {{p_form.gender}}
+        </div>
+
+        <div class='profile_pic'>
+        <h3>Profile picture</h3>
+        {{p_form.profile_pic}}
+        </div>
+
+        <div class='website'>
+        <h3>Website</h3>
+        {{p_form.website}}
+        </div>
+
+        <div class='desc'>
+        <h3>Personal statement (150 characters)</h3>
+        {{p_form.desc}}
+        </div>
+
+
+    <div class='errors'>     
+
+        {% for error in u_errors%}
+        <p>{{error}}</p>
+        {% endfor%}
+
+        {% for error in p_errors %}
+        <p>{{error}}</p>
+        {%endfor%}
+    </div>
+
+    <div class="save-div">
+    <input value='Save Change' class='save' name='save' type='submit'>
+    </div>
+
+</form>
+</main>
+
+{% endblock content%}

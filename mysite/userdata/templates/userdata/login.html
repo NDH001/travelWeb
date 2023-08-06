@@ -1,0 +1,20 @@
+{% extends 'userdata/form_base.html' %}
+{% load static %}
+
+{% block formhead%}
+<link rel='stylesheet' href="{% static 'userdata/styles/login.css' %}">
+<link rel='stylesheet' href="{% static 'userdata/styles/form_field.css'%}">
+<link rel='stylesheet' href="{% static 'userdata/styles/error_messages.css'%}">
+{% endblock formhead%}
+
+{% block formcontent%}
+
+{% include 'userdata/form_field.html'%}
+
+<a href="#">
+<p>Forgot password?</p>
+</a>
+
+{% include 'userdata/error_messages.html'%}
+
+{% endblock formcontent%}

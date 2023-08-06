@@ -1,0 +1,9 @@
+scroll to load more
+url contains user profile pk as url path ( not ideal ) add slug or uuid
+
+
+
+
+------------------------------
+add the shop and restau
+see if can generalize the add and delete collection views

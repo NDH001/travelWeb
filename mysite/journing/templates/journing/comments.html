@@ -1,0 +1,56 @@
+{% extends 'journing/base.html'%}
+{% load static %}
+
+{% block headcontent%}
+<link rel='stylesheet' href="{% static 'journing/styles/comments.css'%}">
+{% endblock headcontent%}
+
+
+{% block content%}
+
+<div class='create-comment'> 
+    <a href="{% url 'journing:sights_create' pk slug %}"> 
+        Write review 
+    </a> 
+</div>
+
+<main class='comment-section'>
+
+{% for c in comments%}
+<div class='comment'> 
+    
+
+    <div class='comment-user'>  
+       <img src="{{c.user.profile.profile_pic.url}}" >
+       {{c.user.username}}
+    </div>
+
+    <div class='comment-rating'>
+
+    <div><h1>{{c.rating}}</h1>/5</div>
+    <div>{{c.comment}}</div>
+
+    {% if user == c.user%}
+    <div class='comment-edit'>
+        <a href="{% url 'journing:sights_update' c.sight.id c.sight.slug c.id%}"><img src="{% static 'journing/icons/edit.png'%}" ></a>
+    </div>
+
+    {%endif%}
+    </div>
+
+    <div class='comment-timestamp'>
+        {% if user == c.user%}
+        <div id='pop-up-confirm-js'onclick="pop_up_confirmation('{{c.id}}','{{c.sight.id}}', '{{c.sight.slug}}')"> <img src="{% static 'journing/icons/delete.webp'%}"> </div>
+        {%endif%}
+        <h4>{{c.created_on}}</h4>
+    </div>
+
+</div>
+
+{% endfor %}
+
+</main>
+
+
+<script src="{% static 'journing/scripts/delete.js'%}"></script>
+{% endblock content%}

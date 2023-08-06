@@ -1,0 +1,64 @@
+{% extends 'journing/base.html' %} 
+{%load static%}
+
+{% block headcontent%}
+<link rel="stylesheet" href="{% static 'journing/styles/index.css'%}">
+{% endblock headcontent%}
+
+{% block content%}
+
+<!-- explore page html -->
+<nav>
+    <div class="background-video">
+        <video autoplay loop muted plays-inline class="promo-video">
+            <source src="{% static 'journing/videos/promo.mp4'  %}" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="explore-div">
+        <h1 >
+            Singapore
+        </h1>
+            
+        <a href="#index-main-js">Explore</a>
+    </div>
+
+</nav>
+
+
+<!-- main page html -->
+<main class='index-main' id='index-main-js'>
+        
+        {% for city in cities%}
+        <div class='thumbnail-grid'>
+            <div>
+                <a href="{% url 'journing:sights_list' city.slug %}">
+                <img class='thumbnail' src="{% static '/cityimgs/'%}{{city.img_local}}">
+                </a>
+            
+            </div> 
+            
+            <div class='thumbnail-title'>   {{city.city}}    </div>
+             
+        </div>
+        {% endfor %}
+</main>
+
+
+<!--js code--> 
+<script>
+
+let x = 10;
+window.addEventListener('scroll',()=>{
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight
+    const scrolled = window.scrollY;
+
+    if (Math.ceil(scrolled) === scrollable){
+        hey() 
+    }
+})
+</script>
+
+
+<script src="{% static 'journing/scripts/index.js'%}"></script>
+{% endblock content %}

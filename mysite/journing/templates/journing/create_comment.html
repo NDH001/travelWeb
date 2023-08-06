@@ -1,0 +1,32 @@
+{% extends 'journing/base.html'%}
+{% load static %}
+
+{% block headcontent%}
+<link rel='stylesheet' href="{% static 'journing/styles/create_comment.css'%}">
+{% endblock headcontent%}
+
+
+{% block content%}
+
+<div class='box'>
+
+    <form method='POST'>
+        {% csrf_token %}
+    <div>
+        <h1> Rate! </h1>
+        {{form.rating}}
+
+    </div>
+
+    <div>
+        <h1> Comment! </h1>
+        {{form.comment}}
+    </div>
+
+    <input class='submit-button' value='Submit' type='submit'>
+</form>
+
+</div>
+
+
+{% endblock content%}

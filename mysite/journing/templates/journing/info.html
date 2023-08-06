@@ -1,0 +1,72 @@
+{% extends 'journing/base.html' %} 
+{%load static%}
+
+
+{% block headcontent%}
+
+<link rel='stylesheet' href=" {% static 'journing/styles/info.css'%}">
+
+{% endblock headcontent%}
+
+{%block content%}
+<header>
+    <div class='left'>        
+        <div class='main-thumbnail'> <img src="{% static 'sightmoreimgs/'%}{{imgs.0}}"> </div>
+        <div class='side-thumbnails'>
+            <div> <img src="{% static 'sightmoreimgs/'%}{{imgs.1}}"> </div>
+            <div> <img src="{% static 'sightmoreimgs/'%}{{imgs.2}}">  </div>
+            <div> <img src="{% static 'sightmoreimgs/'%}{{imgs.3}}"> </div>
+        </div>
+
+    </div>
+
+    <div class='right'>
+        <p class="name"> {{sights_info.name}}</p>
+        <div class="score">
+            <h1>{{item.score}}</h1> 
+            <h4>/5.0</h4>  
+        </div>
+
+        <div class="address"> 
+            <div>Address</div> 
+            <div>{{sights_info.address}}</div> 
+        </div>
+
+        <div class="hours"> 
+            <div>Opening hours</div>  
+            <div>{{sights_info.time}}</div>
+        </div>
+
+        <div class="contacts"> 
+            <div>Contacts</div> 
+            <div>{{sights_info.tele}}</div>
+        </div> 
+        
+        <div class="pop">
+            <div class="pop-score">{{item.popularity}}</div> 
+            <div class="ppl"> <a href="{% url 'journing:sights_comments' sights_info.id slug %}"> People's Opinion </a></div>
+        </div>
+    </div>
+
+<div class='select-star-js'>
+    {% include 'journing/star.html'%}
+</div> 
+</header>
+
+<main>
+
+    {% autoescape off %}
+    {% for i in info%}
+
+        <div> <h1>{{i.0}} </h1></div>
+
+        <div>{{i.1}}</div>
+        <br>
+
+    {% endfor%}
+    {% endautoescape %}
+
+</main>
+
+<script src="{% static 'star.js'%}"></script>
+{%endblock content%}

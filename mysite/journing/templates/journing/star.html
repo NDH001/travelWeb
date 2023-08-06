@@ -1,0 +1,6 @@
+{% load static %}
+    {% if item.marked %}
+    <img class='star-js' src="{% static 'journing/icons/selected-star.png'%}">
+    {% else %}
+    <img class='star-js' src="{% static 'journing/icons/unselected-star.png'%}">
+    {% endif %}

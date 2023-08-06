@@ -1,0 +1,95 @@
+{% extends 'journing/base.html'%}
+{% load static %}
+
+{% block headcontent%}
+<link rel='stylesheet' href="{% static 'userdata/styles/profile.css'%}">
+{% endblock headcontent%}
+
+{% block content%}
+
+<main class='all-stack'>
+
+    <div class='top-stack'>
+        <div class='profile'>
+
+            <div class='profile-pic-container'>
+                <img src="{{user.profile.profile_pic.url}}">
+            </div>
+            
+            <div class='profile-shared'>
+                <h1>Journal Shared</h1>
+                <br>
+                <h2>{{user.profile.shared}}</h2>
+            </div>
+
+            <div class='profile-followers'>
+                <h1>Followers</h1>
+                <br>
+                <h2>{{user.profile.followers}}</h2>
+            </div>
+
+            <div class='profile-following'>
+                <h1>Following</h1>
+                <br>
+                <h2>{{user.profile.following}}</h2>
+            </div>
+
+            <button type='button' id='profile-edit'> Edit profile</button>
+            <button type='button' id='profile-logout' > logout</button>
+        
+        </div> 
+        <br>
+        <div class= 'user edit-field'><h2> {{user.username}} </h2> </div>
+        <div class='city edit-field'> 
+
+            <h3>
+            
+                {% if user.profile.city %}
+                {{user.profile.city}}
+                {%else%}
+                + Add your current city 
+                {%endif%}
+
+            </h3>
+            
+            </div>
+
+        <div class='date edit-field'> <h3>Joined on {{user.date_joined |date:"SHORT_DATE_FORMAT" }}</h3></div>
+        <div class='website edit-field'> 
+            <h3>
+                {% if user.profile.website%}
+                {{user.profile.website}}
+                {%else %}
+                + Add a website
+                {% endif %}
+
+            </h3>
+            </div>
+
+        <div class='details edit-field'> <h3>{{user.profile.desc}}</h3> </div>
+    </div>
+
+    <div class='mid-stack'>
+        <div class='activity'> <h2> Activity feed </h2></div>
+        <div class='tips'> <h2>Tips </h2> </div>
+        <div class='photos'> <h2>Photos </h2></div>
+        <div class='reviews'> <h2>Reviews </h2></div>
+        <div class='badges'> <h2>Badges </h2></div>
+        <div class='map'><h2>Travel map</h2></div>
+    </div>
+
+    <div class='bot-stack'>
+        <h1> Fill out your profile ! </h1>
+        <h2> Add photos and info to your profile so people can find you easily and get to know you better !</h2>
+    </div>
+
+</main>
+
+<script> 
+    let user = "{{user.username}}"
+
+</script>
+
+<script src="{% static 'userdata/scripts/profile.js'%}"></script>
+{% endblock content%}
+

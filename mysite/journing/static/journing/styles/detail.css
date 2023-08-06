@@ -1,0 +1,131 @@
+/* navbar code */
+.main-nav{
+    display: grid;
+    grid-template-columns: 2fr 5fr 2fr;
+    align-items: center;
+}
+
+/* navbar left */
+.nav-city h1{
+    color: inherit;
+    font-size: 50px;
+    text-align: center;
+    padding-left: 50px;
+}
+
+/* navbar middle */
+.nav-innersearch{
+    display: inherit;
+    grid-template-columns: 4fr 1fr;
+    align-items: inherit;
+}
+
+.nav-innersearch input{
+    height: 40px;
+    margin: 0px 150px;
+    border: 1px solid rgb(61, 60, 60);
+    border-radius: 15px;
+    padding-left: 20px;
+    font-size: 20px;
+    background-color: rgb(11,11,11);
+}
+
+.nav-innersearch input::placeholder{
+    color: rgb(170, 166, 166);
+    font-size: 20px;
+    
+}
+
+.nav-innersearch img{
+    margin-left: -200px;
+    width: 15%; 
+}
+
+/* navbar right */
+.nav-innernav{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 400px;
+    margin-left: -100px;
+}
+
+.nav-innernav button{
+    background-color: gray;
+    font-size: 20px;
+    font-weight: 700;
+    border: 1px solid white;
+    padding: 5px 5px;
+    margin-right: 2px;
+    color: white;
+}
+
+.nav-innernav button:hover{
+    background-color: rgb(18, 18, 18);
+}
+
+/* titles */
+
+.titles{
+    font-size: xx-large;
+    font-weight: 700;
+    display: grid;
+    grid-template-columns: 1fr 2fr 0.5fr 0.5fr;
+    text-align: center;
+    padding-left: 550px;
+    margin-top: 100px;
+}
+
+/*address*/
+.titles div:nth-child(2){
+    width: 450px;
+    margin-left: 50px;
+}
+/*popularity*/
+.titles div:nth-child(3){
+    width: 200px;
+    margin-left: -190px;    
+}
+/*address*/
+.titles div:nth-child(4){
+    width: 200px;
+    margin-left: -150px; 
+}
+
+/* main display */
+
+.individual-list{
+    display: grid;
+    align-items: center;
+    text-align: center;
+    font-size: 12px;
+    grid-template-columns: 1fr 1fr 2fr 2fr 1fr 1fr;
+    background-color: rgb(36, 36, 36);
+    margin: 20px 100px;
+}
+
+.individual-list img{
+    padding: 20px 20px;
+    width: 100%;
+}
+
+.individual-list div:nth-child(5){
+    font-size: 20px;
+}
+.individual-list div:nth-child(6){
+    font-size: 20px;
+}
+
+.select-star-js{
+    width: 50px;
+    height: 50px;
+    margin-left:120px;
+    margin-top:-40px;
+}
+
+.star-js{
+    width: 100%;
+}
+
+.star-js:hover{
+    cursor: pointer;
+}

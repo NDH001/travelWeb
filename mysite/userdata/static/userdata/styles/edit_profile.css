@@ -1,0 +1,64 @@
+.profile-section{
+    background-color: rgb(30,30,30);
+    margin: auto;
+    margin-top:20px; 
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    width: 400px;
+    padding: 20px 50px;
+
+}
+
+.image{
+    margin-top: 20px;
+    text-align: center;
+
+}
+
+.image img{
+    width: 150px;
+    height: 150px;
+    border-radius: 150px;
+}
+
+.edit-section{
+    margin-top: 10px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 2fr;
+    row-gap: 10px;
+}
+
+.gender{
+    font-size: 18px;
+}
+
+.desc{
+    height: 100px;
+    width: 100%;
+    padding: 5px 5px;
+}
+
+.errors{
+    padding-top: 10px;
+}
+
+.errors p{
+    
+    background-color: red;
+}
+
+.save-div{
+    margin: auto;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.save-div input{
+    background-color: rgb(40, 167, 69);
+    border: none;
+    color: white;
+    border-radius: 3px;
+    font-size: 25px;
+    padding: 5px 10px;
+}

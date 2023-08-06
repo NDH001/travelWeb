@@ -1,0 +1,103 @@
+header, main{
+    margin: 50px 100px;
+    padding: 50px 100px;
+    background-color: rgb(42, 42, 42);
+    border-radius: 10px;
+    position: relative;
+}
+
+header{
+    padding:40px 100px;
+    display: grid;
+    grid-template-columns: 5fr 2fr;
+
+}
+
+/* left side */
+.left{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    padding-right: 30px;
+}
+
+.main-thumbnail img{
+    width: 100%;
+    height: 100%;
+}
+
+.side-thumbnails{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.side-thumbnails div img{
+    padding: 0px 10px; 
+    height: 150px;
+    width: 280px; 
+}
+
+/* right side */
+.right{
+    display: grid;
+    grid-template-rows:1fr 50px 2fr 50px 1fr 1fr;    
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.name{
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.score h4{
+    margin-left:-10px;
+}
+
+.score, .address, .hours, .contacts,.pop {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    align-items: center; 
+} 
+
+.address{
+    margin-top: -30px;
+}
+
+.hours{
+    margin-top: -50px;
+}
+
+.contacts{
+    margin-top: -20px;
+}
+
+.right div div:nth-child(2){
+    padding-left: 60px;
+}
+
+.pop-score{
+    font-size: 30px;
+    color: black;
+    border: 2px solid gray;
+    border-radius: 15px;
+    padding: 10px 10px;
+    background-color: white;
+    text-align: center;
+}
+
+.select-star-js{
+    width: 80px;
+    position: absolute;
+    right: 30px;
+    top:35px
+}
+
+.select-star-js img{
+    width: 100%;
+}
+
+
+
+
+
+

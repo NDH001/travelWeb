@@ -1,0 +1,110 @@
+{% extends 'journing/base.html' %} 
+{%load static%}
+
+
+{% block headcontent%}
+<link rel="stylesheet" href="{% static 'journing/styles/detail.css' %}" />
+{% endblock headcontent%}
+
+{% block content%}
+
+<nav class='main-nav'>
+
+    <div class='nav-city'> <h1>{{city.pk}}</h1> </div>
+    <div class='nav-innersearch'> 
+        
+        <input placeholder='Search attractions' type='text'/>
+        <img src= "{% static 'journing/icons/mg.png' %}" />
+
+    </div>
+    <div class='nav-innernav'> 
+        <button class='attraction-js'><a href="{% url 'journing:sights_list' city.slug %}" > Attractions </a></button>
+        <button class='food-js'> <a href="{% url 'journing:foods_list' city.slug %}" >Food </a></button>
+        <button class='shop-js'> <a href="{% url 'journing:shops_list' city.slug %}" >Shopping</a> </button>
+        
+    </div>
+
+</nav>
+
+<div class='titles'>
+    <div>
+        Attractions
+    </div>
+    <div>
+        Address
+    </div>
+    <div>
+        Popularity
+    </div>
+    <div>
+        Score
+    </div>
+</div>
+
+<main> 
+
+
+    {% for item in items%}
+
+    <div class='individual-list'> 
+        <div class='item-img-container'> 
+            {% if current_page == 'sight'%}
+            <a href="{% url 'journing:sights_info' item.id item.slug %}">
+                <img src= " {% static '/sightimgs/'%}{{item.img_local}} ">
+            </a>
+            {% elif current_page == 'food'%}
+            <a href="{% url 'journing:foods_info' item.id item.slug %}">
+                <img src= " {% static '/foodimgs/'%}{{item.img_local}} ">
+            </a>
+            {% else %}
+            <a href="{% url 'journing:shops_info' item.id item.slug %}">
+                <img src= " {% static '/shopimgs/'%}{{item.img_local}} ">
+            </a>
+            {% endif %}
+    </div>
+
+    <div class='select-star-js' onclick="get_data('{{item.id}}','{{user.id}}')">
+    {% include 'journing/star.html'%}
+    </div>
+
+    <div>
+        <h1> {{item.name}} </h1>
+    </div>
+
+
+    <div>
+
+        <h1> {{item.address}} </h1>
+
+    </div>
+    <div>
+        
+        <h1> {{item.popularity}} </h1>
+
+    </div>
+    <div>
+
+        <h1> {{item.score}} </h1>
+    </div>
+
+</div>
+{% endfor%}
+
+
+</main>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+
+    let lit = "{% static 'journing/icons/selected-star.png' %}"
+    let unlit = "{% static 'journing/icons/unselected-star.png' %}"
+
+</script>
+
+<script type='module' src="{% static 'journing/scripts/helper.js'%}"></script>
+<script src="{% static 'journing/scripts/detail.js'%}"></script>
+<script src="{% static 'journing/scripts/star.js'%}"></script>
+
+
+{%endblock content%}

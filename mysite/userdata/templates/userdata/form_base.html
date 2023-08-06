@@ -1,0 +1,55 @@
+{% extends 'journing/base.html' %}
+{% load static %}
+
+<!--head reference-->
+{% block headcontent%}
+<link rel='stylesheet' href="{% static 'userdata/styles/form_base.css'%}">
+
+{% block formhead%}
+{% endblock formhead%}
+
+{% endblock headcontent%}
+
+
+<!--body content-->
+{% block content%}
+<main class='main-box'>
+
+    <!--logo section-->
+    <div class='main-logo'>
+        <img src="{% static 'journing/logos/logo.png' %}"/>
+        <h1 id='welcome-js'> Welcome back ! </h1>
+    </div>
+    
+    
+    <!--form section-->
+    <form action='' method='POST'> 
+        {% csrf_token%}
+        <div class='main-form'>
+
+            {% block formcontent%}
+            {% endblock formcontent%} 
+            <input id='sub-button-js' class='sub-button' type='submit' value='Sign in'> 
+        </div>
+        
+    </form>
+
+    <!--desc section-->
+    <div class='descs'>
+        <hr/>           
+        <h4 id='member-js'>Not a member? </h4> 
+        <a href="{% url 'userdata:register'%}" id='action-link-js'>
+        <h3 id='action-js'> Sign up now! </h3>
+        </a>
+        <p class='terms'>
+            By proceeding,you agree to our <u>Terms of User</u> and confirm you have read our <u>Privacy and Cookie Statement</u>.
+        </p>
+    </div>
+
+</main>
+
+<!--js reference-->
+{% block jscontent%}
+{% endblock jscontent%}
+
+{% endblock content%}

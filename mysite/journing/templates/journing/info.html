@@ -48,7 +48,7 @@
         </div>
     </div>
 
-<div class='select-star-js'>
+<div class='select-star-js' onclick="get_data('{{item.id}}','{{user.id}}')">
     {% include 'journing/star.html'%}
 </div> 
 </header>
@@ -68,5 +68,12 @@
 
 </main>
 
-<script src="{% static 'star.js'%}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    
+    let lit = "{% static 'journing/icons/selected-star.png' %}"
+    let unlit = "{% static 'journing/icons/unselected-star.png' %}"
+    
+</script>
+<script src="{% static 'journing/scripts/star.js'%}"></script>
 {%endblock content%}

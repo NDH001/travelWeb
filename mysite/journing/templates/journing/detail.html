@@ -4,6 +4,7 @@
 
 {% block headcontent%}
 <link rel="stylesheet" href="{% static 'journing/styles/detail.css' %}" />
+<link rel="stylesheet" href="{% static 'journing/styles/page_nav.css' %}" />
 {% endblock headcontent%}
 
 {% block content%}
@@ -90,7 +91,7 @@
 </div>
 {% endfor%}
 
-
+{% include 'journing/page_nav.html'%}
 </main>
 
 {%endblock content%}

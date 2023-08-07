@@ -39,6 +39,7 @@ class HomepageView(ListView):
 class GeneralListView(ListView):
     template_name = "journing/detail.html"
     context_object_name = "items"
+    paginate_by = 10
 
     # overide these variables
     collection_model = None

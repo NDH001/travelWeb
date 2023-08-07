@@ -1,6 +1,7 @@
-function search(){
-    let input = document.getElementById('search-bar-js').value
+function search(cat,redirect_url){
+    input = document.getElementById(cat).value
     if (input){
-        window.location.href = (`${index_url}?q=${input}`)
+        window.location.href = (`${redirect_url}?q=${input}`)
     }
 }
+

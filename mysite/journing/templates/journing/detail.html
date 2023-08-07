@@ -14,8 +14,8 @@
     <div class='nav-city'> <h1>{{city.pk}}</h1> </div>
     <div class='nav-innersearch'> 
         
-        <input placeholder='Search attractions' type='text'/>
-        <img src= "{% static 'journing/icons/mg.png' %}" />
+        <input id="cat-search-bar-js" placeholder='Search attractions' type='text'/>
+        <img src= "{% static 'journing/icons/mg.png' %}" onclick="search('cat-search-bar-js','temp')"/>
 
     </div>
     <div class='nav-innernav'> 
@@ -106,6 +106,8 @@
 
 </script>
 
+
+<script src="{% static 'journing/scripts/search.js'%}"></script>
 <script src="{% static 'journing/scripts/detail.js'%}"></script>
 <script src="{% static 'journing/scripts/star.js'%}"></script>
 

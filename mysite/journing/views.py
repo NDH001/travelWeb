@@ -66,16 +66,16 @@ class GeneralListView(ListView):
         pass
 
     def get_related_modelset(self):
-        pass
+        return self.request.GET.get("q")
 
     def get_slug_object(self):
         self.city = Cities.objects.get(slug=self.kwargs.get("slug"))
-        return self.city
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["city"] = self.city
         context["current_page"] = self.current_page
+        context["redirect_url"] = self.request.build_absolute_uri()
         return context
 
     def get_related_queryset(self):
@@ -84,6 +84,8 @@ class GeneralListView(ListView):
         )
 
     def get_queryset(self) -> QuerySet[Any]:
+        self.get_slug_object()
+
         queryset = self.get_related_modelset().prefetch_related(
             self.collection_model_set
         )
@@ -99,7 +101,10 @@ class SightsListView(GeneralListView):
     current_page = "sight"
 
     def get_related_modelset(self):
-        return self.get_slug_object().sights_set.all()
+        q = super().get_related_modelset()
+        if not q:
+            return self.city.sights_set.all()
+        return self.city.sights_set.filter(name__contains=q)
 
 
 class FoodsListView(GeneralListView):

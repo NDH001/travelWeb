@@ -8,14 +8,13 @@
 {% endblock headcontent%}
 
 {% block content%}
-
 <nav class='main-nav'>
 
     <div class='nav-city'> <h1>{{city.pk}}</h1> </div>
     <div class='nav-innersearch'> 
         
         <input id="cat-search-bar-js" placeholder='Search attractions' type='text'/>
-        <img src= "{% static 'journing/icons/mg.png' %}" onclick="search('cat-search-bar-js','temp')"/>
+        <img src= "{% static 'journing/icons/mg.png' %}" onclick="search('cat-search-bar-js','{{redirect_url}}')"/>
 
     </div>
     <div class='nav-innernav'> 

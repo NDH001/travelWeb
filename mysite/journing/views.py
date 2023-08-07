@@ -29,7 +29,7 @@ class HomepageView(ListView):
     template_name = "journing/index.html"
     context_object_name = "cities"
     model = Cities
-    paginate_by = 30
+    paginate_by = 12
 
 
 """-------------------------------------------------------------------------------------------"""

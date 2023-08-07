@@ -1,4 +1,4 @@
-/* background park */
+/* background video */
 
 .promo-video{
     z-index: -1;
@@ -62,12 +62,18 @@
 
 
 /* main grid elements */
-.index-main{
+.index-main-first-page{
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-top: 500px;
     background-color:rgba(0, 0, 0, 0.415);
     padding-top: 100px;
+}
+
+.index-main-not-first-page{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color:rgba(0, 0, 0, 0.415);
 }
 
 .thumbnail-grid{
@@ -90,3 +96,14 @@
 }
 
 /* ------------------------------------------------ */
+
+.page_nav{
+    background-color: black;
+    padding: 20px 0px;
+    text-align: center;
+    font-size: 35px;
+}
+
+.page{
+    margin: 0px 5px;
+}

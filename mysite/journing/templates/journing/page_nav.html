@@ -1,0 +1,30 @@
+{% comment %} page_num {% endcomment %}
+{% if is_paginated %}
+
+<div class='page_nav'>
+    {% if page_obj.has_previous%}
+
+    <a class='button-page-1 page' href="?page=1">First</a>
+    <a class='button-page-p page' href="?page={{page_obj.previous_page_number}}">Previous</a>
+
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+
+    {% if page_obj.number == num %}
+    <p class="currentpage page">{{num}}</p>
+    {% elif num > page_obj.number|add:'-4' and num < page_obj.number|add:'4'%} 
+        <a class='pages page' href="?page={{num}}">{{num}}</a>
+    {% endif %}
+    {% endfor%}
+
+    {% if page_obj.has_next%}
+
+    <a class='button-page-n page' href="?page={{page_obj.next_page_number}}">Next</a>
+    <a class='button-page-l page' href="?page={{page_obj.paginator.num_pages}}">Last</a>
+
+    {% endif %}
+
+</div>
+
+{% endif %}

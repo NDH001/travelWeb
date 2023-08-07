@@ -3,6 +3,7 @@
 
 {% block headcontent%}
 <link rel="stylesheet" href="{% static 'journing/styles/index.css'%}">
+<link rel="stylesheet" href="{% static 'journing/styles/page_nav.css'%}">
 {% endblock headcontent%}
 
 {% block content%}
@@ -55,61 +56,9 @@
         {% endfor %}
 </main>
 
-{% comment %} page_num {% endcomment %}
-{% if is_paginated %}
-
-<div class='page_nav'>
-    {% if page_obj.has_previous%}
-
-    <a class='button-page-1 page' href="?page=1">First</a>
-    <a class='button-page-p page' href="?page={{page_obj.previous_page_number}}">Previous</a>
-
-    {% endif %}
-
-    {% for num in page_obj.paginator.page_range %}
-
-    {% if page_obj.number == num %}
-        {{num}}
-    {% elif num > page_obj.number|add:'-4' and num < page_obj.number|add:'4'%} 
-        <a class='pages page' href="?page={{num}}">{{num}}</a>
-    {% endif %}
-    {% endfor%}
-
-    {% if page_obj.has_next%}
-
-    <a class='button-page-n page' href="?page={{page_obj.next_page_number}}">Next</a>
-    <a class='button-page-l page' href="?page={{page_obj.paginator.num_pages}}">Last</a>
-
-    {% endif %}
-
-</div>
-{% endif %}
-
-
-
-
-
-
-
-
-
-
-
+{% include 'journing/page_nav.html'%}
 
 <!--js code--> 
-<script>
-
-let x = 10;
-window.addEventListener('scroll',()=>{
-    const scrollable = document.documentElement.scrollHeight - window.innerHeight
-    const scrolled = window.scrollY;
-
-    if (Math.ceil(scrolled) === scrollable){
-        hey() 
-    }
-})
-</script>
-
 
 <script src="{% static 'journing/scripts/index.js'%}"></script>
 {% endblock content %}

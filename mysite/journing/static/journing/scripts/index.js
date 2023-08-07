@@ -11,11 +11,3 @@ function smooth_scroll(){
 }
 
 smooth_scroll()
-
-/*
-function hey(){
-    
-    alert(x,'LIAM NEESON')
-    
-}
-*/

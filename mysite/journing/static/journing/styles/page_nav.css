@@ -1,0 +1,22 @@
+.page_nav{
+    background-color: black;
+    padding: 20px 0px;
+    text-align: center;
+    font-size: 35px;
+}
+
+.page{
+    padding: 0px 10px;
+    border-radius: 5px;
+}
+
+.page:hover{
+    background-color: white;
+    color:black
+}
+
+.currentpage{
+    display: inline;
+    background-color: white;
+    color: black;
+}

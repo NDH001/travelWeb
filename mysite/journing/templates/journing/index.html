@@ -34,11 +34,13 @@
 <!-- main page html -->
 
 {% if is_paginated %}
-{% if not page_obj.has_previous%}
-<main class='index-main-first-page' id='index-main-js'>        
+    {% if not page_obj.has_previous%}
+        <main class='index-main-first-page' id='index-main-js'>        
+    {% else %}
+        <main class='index-main-not-first-page' id='index-main-js'>        
+    {% endif %}
 {% else %}
-<main class='index-main-not-first-page' id='index-main-js'>        
-{% endif %}
+        <main class='index-main-not-first-page' id='index-main-js'>        
 {% endif %}
 
         {% for city in cities%}

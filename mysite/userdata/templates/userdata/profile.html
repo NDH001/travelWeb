@@ -85,11 +85,13 @@
 
 </main>
 
+{% endblock content%}
+
+{% block jscontent%}
 <script> 
     let user = "{{user.username}}"
 
 </script>
 
 <script src="{% static 'userdata/scripts/profile.js'%}"></script>
-{% endblock content%}
-
+{% endblock jscontent%}

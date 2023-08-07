@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+	{% url 'journing:index' as index_url %}
 	<head>
 		<title>Journing</title>
 		{% load static %}
@@ -48,6 +49,9 @@
 				</div>
 		</nav>
 		{% block content%} {% endblock content%}
+		<script>
+			let index_url = "{{index_url}}"
+		</script>
 		<script src="{% static 'journing/scripts/search.js'%}"></script>
 		{% block jscontent%}
 		{%endblock jscontent%}

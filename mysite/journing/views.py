@@ -31,6 +31,21 @@ class HomepageView(ListView):
     model = Cities
     paginate_by = 12
 
+    def get_queryset(self) -> QuerySet[Any]:
+        # if no search is performed, return all cities
+        q = self.request.GET.get("q")
+        if not q:
+            return super().get_queryset()
+
+        # else return the related searches
+        queryset = self.model.objects.filter(city__contains=q)
+        return queryset
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["url"] = reverse_lazy("journing:index")
+        return context
+
 
 """-------------------------------------------------------------------------------------------"""
 

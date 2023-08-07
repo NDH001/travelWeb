@@ -1,4 +1,5 @@
 from typing import Any, Dict, Optional
+from django.db import models
 from django.db.models import Exists, OuterRef
 from django.db.models.query import QuerySet
 from django.http import HttpResponse, JsonResponse
@@ -28,6 +29,7 @@ class HomepageView(ListView):
     template_name = "journing/index.html"
     context_object_name = "cities"
     model = Cities
+    paginate_by = 30
 
 
 """-------------------------------------------------------------------------------------------"""
@@ -148,8 +150,18 @@ def sights_info_view(request, pk, slug):
 
 class FoodsInfoView(DetailView):
     model = Foods
-    template_name = None
-    content_object_name = None
+    template_name = "journing/unapplicable.html"
+
+    def get_object(self, queryset=None):
+        return super().get_object(queryset)
+
+
+class ShopsInfoView(DetailView):
+    model = Shops
+    template_name = "journing/unapplicable.html"
+
+    def get_object(self, queryset=None):
+        return super().get_object(queryset)
 
 
 """-------------------------------------------------------------------------------------------"""

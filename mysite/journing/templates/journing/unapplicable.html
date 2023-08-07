@@ -1,0 +1,16 @@
+{% extends 'journing/base.html'%}
+{% load static%}
+
+{% block headcontent%}
+<link rel='stylesheet' href="{% static 'journing/styles/unapplicable.css'%}">
+{% endblock headcontent%}
+
+{% block content%}
+
+<div class='unapplicable'>
+<h1>{{object}}</h1>
+<br>
+<h2>Please check back later!</h2>
+</div>
+
+{% endblock content%}

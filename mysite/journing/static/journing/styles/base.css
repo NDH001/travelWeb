@@ -63,7 +63,7 @@ a{
 	padding-left: 200px;
 }
 
-.search-bar{
+#search-bar-js{
 	background-color: rgb(11, 11, 11);	
 	width: 50%;
 	height: 55px;
@@ -73,15 +73,16 @@ a{
 	border-color: rgb(61, 60, 60);	
 	font-size: large;
 	padding-left: 50px;
+	color: white;
 
 }
 
-.search-bar::placeholder{
+#search-bar-js::placeholder{
 	color: rgb(170, 166, 166);
 	font-size: larger;
 }
 
-.search-button{
+#search-button-js{
 	margin-left: -60px;
 	width: 60px;
 	height: 57px;
@@ -91,7 +92,7 @@ a{
 	height: 70%;
 }
 
-.search-button, .search-button-img{
+#search-button-js, .search-button-img{
 	background-color: rgb(66, 64, 64);
 	border: 0px;
 	border-top-right-radius: 30px;

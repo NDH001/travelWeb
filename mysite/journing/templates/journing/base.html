@@ -21,9 +21,8 @@
 			</div>
 
 			<div class="middle-section nav-bar">
-				<a href='/admin'> admin panel </a> 
-				<input class="search-bar" type="text" placeholder="Where to?" />
-				<button class="search-button">
+				<input id="search-bar-js" type="text" placeholder="Where to?" />
+				<button id="search-button-js" onclick="search()">
 					<img
 						class="search-button-img"
 						src="{% static 'journing/icons/mg.png' %}"
@@ -49,6 +48,8 @@
 				</div>
 		</nav>
 		{% block content%} {% endblock content%}
-		{% block jscontent%} {%endblock jscontent%}
+		{% block jscontent%}
+		<script src="{% static 'journing/scripts/search.js'%}"></script>
+		{%endblock jscontent%}
 	</body>
 </html>

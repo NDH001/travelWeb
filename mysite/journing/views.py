@@ -43,7 +43,7 @@ class HomepageView(ListView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["url"] = reverse_lazy("journing:index")
+
         return context
 
 
@@ -72,7 +72,6 @@ class GeneralListView(ListView):
         context = super().get_context_data(**kwargs)
         context["city"] = self.city
         context["current_page"] = self.current_page
-        context["redirect_url"] = self.request.build_absolute_uri()
         return context
 
     def get_related_queryset(self):
@@ -102,6 +101,13 @@ class SightsListView(GeneralListView):
         if not q:
             return self.city.sights_set.all()
         return self.city.sights_set.filter(name__contains=q)
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["redirect_url"] = reverse_lazy(
+            "journing:sights_list", args=[self.city.slug]
+        )
+        return context
 
 
 class FoodsListView(GeneralListView):

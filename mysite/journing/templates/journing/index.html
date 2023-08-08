@@ -16,9 +16,8 @@
         </video>
     </div>
 
-{% if is_paginated %}
-{% if not page_obj.has_previous%}
-
+{% comment %} either is the first page or no query is passed to the url {% endcomment %}
+{% if not page_obj.has_previous and not request.GET.q%}
     <div class="explore-div">
         <h1 >
             Singapore
@@ -28,13 +27,13 @@
     </div>
 
 {% endif %}
-{% endif %}
 </nav>
 
 <!-- main page html -->
 
 {% if is_paginated %}
-    {% if not page_obj.has_previous%}
+
+    {% if not page_obj.has_previous and not request.GET.q%}
         <main class='index-main-first-page' id='index-main-js'>        
     {% else %}
         <main class='index-main-not-first-page' id='index-main-js'>        

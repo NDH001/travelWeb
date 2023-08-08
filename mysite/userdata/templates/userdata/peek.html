@@ -1,0 +1,21 @@
+{% extends 'journing/base.html'%}
+{% load static%}
+
+{% block headcontent%}
+{% endblock headcontent%}
+
+{% block content%}
+
+{% for t in target_user%}
+{{t.connection_set.all}}
+{% endfor %}
+
+
+
+
+
+
+
+
+
+{% endblock content%}

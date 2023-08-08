@@ -6,12 +6,8 @@
 
 {% block content%}
 
-{% for t in target_user%}
-{{t.connection_set.all}}
-{% endfor %}
-
-
-
+{{target_user}}
+{{followers}}
 
 
 

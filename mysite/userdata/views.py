@@ -1,11 +1,13 @@
 from typing import Any, Callable, Dict, Optional
 from django.db import models
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.views.generic.edit import FormView
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
@@ -125,13 +127,16 @@ class EditProfileView(FormView):
         )
 
 
-class PeekView(DetailView):
+class PeekView(ListView):
     template_name = "userdata/peek.html"
-    context_object_name = "target_user"
+    context_object_name = "followers"
 
-    def get_object(self, queryset=None):
-        target_user = User.objects.filter(pk=self.kwargs.get("pk")).prefetch_related(
-            "connection_set"
+    def get_queryset(self) -> QuerySet[Any]:
+        return Connection.objects.filter(user=self.kwargs.get("pk")).select_related(
+            "follower"
         )
 
-        return target_user
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["target_user"] = User.objects.get(pk=self.kwargs.get("pk"))
+        return context

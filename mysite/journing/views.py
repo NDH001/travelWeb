@@ -43,7 +43,7 @@ class HomepageView(ListView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-
+        context["search"] = self.request.GET.get("q")
         return context
 
 
@@ -60,6 +60,7 @@ class GeneralListView(ListView):
     collection_model = None
     collection_model_set = None
     current_page = None
+    reverse_name = None
 
     # overide these functions
     def get_related_queryset(self):
@@ -72,6 +73,10 @@ class GeneralListView(ListView):
         context = super().get_context_data(**kwargs)
         context["city"] = self.city
         context["current_page"] = self.current_page
+        context["redirect_url"] = reverse_lazy(
+            f"journing:{self.reverse_name}", args=[self.city.slug]
+        )
+        context["search"] = self.request.GET.get("q")
         return context
 
     def get_related_queryset(self):
@@ -95,6 +100,7 @@ class SightsListView(GeneralListView):
     collection_model = UserSightCollection
     collection_model_set = "usersightcollection_set"
     current_page = "sight"
+    reverse_name = "sights_list"
 
     def get_related_modelset(self):
         q = super().get_related_modelset()
@@ -102,18 +108,12 @@ class SightsListView(GeneralListView):
             return self.city.sights_set.all()
         return self.city.sights_set.filter(name__contains=q)
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context["redirect_url"] = reverse_lazy(
-            "journing:sights_list", args=[self.city.slug]
-        )
-        return context
-
 
 class FoodsListView(GeneralListView):
     collection_model = UserFoodCollection
     collection_model_set = "userfoodcollection_set"
     current_page = "food"
+    reverse_name = "foods_list"
 
     def get_related_modelset(self):
         return self.city.foods_set.all()
@@ -123,6 +123,7 @@ class ShopsListView(GeneralListView):
     collection_model = UserShopCollection
     collection_model_set = "usershopcollection_set"
     current_page = "shop"
+    reverse_name = "shops_list"
 
     def get_related_modelset(self):
         return self.city.shops_set.all()

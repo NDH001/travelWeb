@@ -17,7 +17,7 @@
     </div>
 
 {% comment %} either is the first page or no query is passed to the url {% endcomment %}
-{% if not page_obj.has_previous and not request.GET.q%}
+{% if not page_obj.has_previous and not search%}
     <div class="explore-div">
         <h1 >
             Singapore
@@ -33,7 +33,7 @@
 
 {% if is_paginated %}
 
-    {% if not page_obj.has_previous and not request.GET.q%}
+    {% if not page_obj.has_previous and not search%}
         <main class='index-main-first-page' id='index-main-js'>        
     {% else %}
         <main class='index-main-not-first-page' id='index-main-js'>        

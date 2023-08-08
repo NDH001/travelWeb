@@ -2,11 +2,11 @@
 {% if is_paginated %}
 
 <div class='page_nav'>
-    {% if request.GET.q%}
+    {% if search%}
     {% if page_obj.has_previous%}
 
-    <a class='button-page-1 page' href="?page=1&q='{{request.GET.q}}'">First</a>
-    <a class='button-page-p page' href="?page={{page_obj.previous_page_number}}&q='{{request.GET.q}}'">Previous</a>
+    <a class='button-page-1 page' href="?page=1&q={{search}}">First</a>
+    <a class='button-page-p page' href="?page={{page_obj.previous_page_number}}&q={{search}}">Previous</a>
 
     {% endif %}
 
@@ -15,14 +15,14 @@
     {% if page_obj.number == num %}
     <p class="currentpage page">{{num}}</p>
     {% elif num > page_obj.number|add:'-4' and num < page_obj.number|add:'4'%} 
-        <a class='pages page' href="?page={{num}}&q={{request.GET.q}}">{{num}}</a>
+        <a class='pages page' href="?page={{num}}&q={{search}}">{{num}}</a>
     {% endif %}
     {% endfor %}
 
     {% if page_obj.has_next%}
 
-    <a class='button-page-n page' href="?page={{page_obj.next_page_number}}&q={{request.GET.q}}">Next</a>
-    <a class='button-page-l page' href="?page={{page_obj.paginator.num_pages}}&q={{request.GET.q}}">Last</a>
+    <a class='button-page-n page' href="?page={{page_obj.next_page_number}}&q={{search}}">Next</a>
+    <a class='button-page-l page' href="?page={{page_obj.paginator.num_pages}}&q={{search}}">Last</a>
 
     {% endif %}
 

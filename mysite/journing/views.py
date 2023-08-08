@@ -80,6 +80,7 @@ class GeneralListView(ListView):
             user=self.request.user, collection=OuterRef("pk")
         )
 
+    # get the related query set and if user is logged in, retrieve their collections too
     def get_queryset(self) -> QuerySet[Any]:
         self.city = Cities.objects.get(slug=self.kwargs.get("slug"))
 
@@ -137,6 +138,7 @@ class ShopsListView(GeneralListView):
 def sights_info_view(request, pk, slug):
     sight_obj = Sights.objects.filter(pk=pk)
 
+    # retrieve the collection status in the detailed view
     if not request.user.is_anonymous:
         sight_obj = sight_obj.annotate(
             marked=Exists(
@@ -146,8 +148,10 @@ def sights_info_view(request, pk, slug):
             )
         )
     sight_obj = sight_obj.first()
+
     sight_text = Sights_texts.objects.get(pk=pk)
 
+    # code to modify and show the collection texts properly
     descs = str(sight_text.desc).split("->")
     titles = str(sight_text.title).split("->")
     info = []
@@ -194,6 +198,7 @@ class ShopsInfoView(DetailView):
 """-------------------------------------------------------------------------------------------"""
 
 
+# display all the comments
 class CommentsView(LoginRequiredMixin, ListView):
     template_name = "journing/comments.html"
     context_object_name = "comments"

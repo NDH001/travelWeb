@@ -7,6 +7,7 @@
 {% endblock headcontent%}
 
 {% block content%}
+{% comment %} top search bar section {% endcomment %}
 <nav class='main-nav'>
 
     <div class='nav-city'> <h1>{{city.pk}}</h1> </div>
@@ -25,6 +26,7 @@
 
 </nav>
 
+{% comment %} the title floating above the actual contents {% endcomment %}
 <div class='titles'>
     <div>
         Attractions
@@ -41,8 +43,11 @@
 </div>
 
 <main> 
+{% comment %} loop through every item in the queryset for the target category,e.g. shop,sight,food etc {% endcomment %}
 
     {% for item in items%}
+
+{% comment %} the directory to search for image is changed according to the category {% endcomment %}
 
     <div class='individual-list'> 
         <div class='item-img-container'> 
@@ -61,6 +66,7 @@
             {% endif %}
     </div>
 
+{% comment %} pass the item.id and user.id to javascript to mark(star) them {% endcomment %}
     <div class='select-star-js' onclick="get_data('{{item.id}}','{{user.id}}')">
     {% include 'journing/star.html'%}
     </div>
@@ -88,15 +94,16 @@
 </div>
 {% endfor%}
 
+{% comment %} the page nav bar {% endcomment %}
 {% include 'journing/page_nav.html'%}
 </main>
-
 {%endblock content%}
 
 {% block jscontent%}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+{% comment %} the lit and unlit star picture {% endcomment %}
 <script>
 
     let lit = "{% static 'journing/icons/selected-star.png' %}"
@@ -104,7 +111,7 @@
 
 </script>
 
-
+{% comment %} search for search bar, detail for setting the tab's focus color(title right side), star for collection {% endcomment %}
 <script src="{% static 'journing/scripts/search.js'%}"></script>
 <script src="{% static 'journing/scripts/detail.js'%}"></script>
 <script src="{% static 'journing/scripts/star.js'%}"></script>

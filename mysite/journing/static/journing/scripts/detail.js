@@ -1,3 +1,4 @@
+// check the current page to see what cat is the page at right now
 function check_current_url(name){
     let current_url = window.location.href
     if (current_url.indexOf(name)!==-1){

@@ -7,18 +7,19 @@
 
 
 {% block content%}
-
+{% comment %} heading {% endcomment %}
 <div class='create-comment'> 
     <a href="{% url 'journing:sights_create' pk slug %}"> 
         Write review 
     </a> 
 </div>
 
+{% comment %} main comments display {% endcomment %}
 <main class='comment-section'>
 
+{% comment %} loop through every comment relating to the object {% endcomment %}
 {% for c in comments%}
 <div class='comment'> 
-    
 
     <div class='comment-user'>  
        <img src="{{c.user.profile.profile_pic.url}}" >
@@ -29,7 +30,7 @@
 
     <div><h1>{{c.rating}}</h1>/5</div>
     <div>{{c.comment}}</div>
-
+{% comment %} ensures only user who posted the comment can delete or edit the said comment {% endcomment %}
     {% if user == c.user%}
     <div class='comment-edit'>
         <a href="{% url 'journing:sights_update' c.sight.id c.sight.slug c.id%}"><img src="{% static 'journing/icons/edit.png'%}" ></a>
@@ -39,6 +40,7 @@
     </div>
 
     <div class='comment-timestamp'>
+{% comment %} ensures only user who posted the comment can delete or edit the said comment {% endcomment %}
         {% if user == c.user%}
         <div id='pop-up-confirm-js'onclick="pop_up_confirmation('{{c.id}}','{{c.sight.id}}', '{{c.sight.slug}}')"> <img src="{% static 'journing/icons/delete.webp'%}"> </div>
         {%endif%}
@@ -48,10 +50,7 @@
 </div>
 
 {% endfor %}
-
 </main>
-
-
 {% endblock content%}
 
 {% block jscontent %}

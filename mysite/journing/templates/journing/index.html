@@ -16,7 +16,7 @@
         </video>
     </div>
 
-{% comment %} either is the first page or no query is passed to the url {% endcomment %}
+{% comment %} check if either is the first page or no query is passed to the url so that the explore section actually show up {% endcomment %}
 {% if not page_obj.has_previous and not search%}
     <div class="explore-div">
         <h1 >
@@ -32,7 +32,7 @@
 <!-- main page html -->
 
 {% if is_paginated %}
-
+{% comment %} basically if not first page, the class for the index-main need to be changed to ensure the styling is correct when no explore section {% endcomment %}
     {% if not page_obj.has_previous and not search%}
         <main class='index-main-first-page' id='index-main-js'>        
     {% else %}
@@ -42,9 +42,11 @@
         <main class='index-main-not-first-page' id='index-main-js'>        
 {% endif %}
 
+{% comment %} loop and display every city in the database {% endcomment %}
         {% for city in cities%}
         <div class='thumbnail-grid'>
             <div>
+                {% comment %} click here for detail view on the selected city --> direct to the sight list page{% endcomment %}
                 <a href="{% url 'journing:sights_list' city.slug %}">
                 <img class='thumbnail' src="{% static '/cityimgs/'%}{{city.img_local}}">
                 </a>
@@ -56,13 +58,11 @@
         </div>
         {% endfor %}
 </main>
-
+{% comment %} the page nav bar {% endcomment %}
 {% include 'journing/page_nav.html'%}
-
-<!--js code--> 
-
 {% endblock content %}
 
+{% comment %} the index js for smooth scrolling (explore section)  {% endcomment %}
 {% block jscontent%}
 <script src="{% static 'journing/scripts/index.js'%}"></script>
 {% endblock jscontent%}

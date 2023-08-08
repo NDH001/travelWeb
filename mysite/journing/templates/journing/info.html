@@ -10,6 +10,7 @@
 {% endblock headcontent%}
 
 {%block content%}
+{% comment %} the section to display the related images,display one main picture and 3 side picture {% endcomment %}
 <header>
     <div class='left'>        
         <div class='main-thumbnail'> <img src="{% static 'sightmoreimgs/'%}{{imgs.0}}"> </div>
@@ -48,7 +49,7 @@
             <div class="ppl"> <a href="{% url 'journing:sights_comments' sights_info.id slug %}"> People's Opinion </a></div>
         </div>
     </div>
-
+{% comment %} another place to mark the collection {% endcomment %}
 <div class='select-star-js' onclick="get_data('{{item.id}}','{{user.id}}')">
     {% include 'journing/star.html'%}
 </div> 
@@ -56,6 +57,7 @@
 
 <main>
 
+{% comment %} display the title and description for the sight page {% endcomment %}
     {% autoescape off %}
     {% for i in info%}
 
@@ -71,6 +73,7 @@
 
 {%endblock content%}
 
+{% comment %} star variables and js to mark collection {% endcomment %}
 {% block jscontent%}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>

@@ -1,24 +1,26 @@
-{% comment %} page_num {% endcomment %}
+{% comment %} page nav bar {% endcomment %}
 {% if is_paginated %}
 
 <div class='page_nav'>
     {% if search%}
+    {% comment %} if there is a query such as ?q='上海' then the redirect_url must include both ?page=2&q='上海' for example{% endcomment %}
     {% if page_obj.has_previous%}
 
+    {% comment %} display page number before the current page including the last page{% endcomment %}
     <a class='button-page-1 page' href="?page=1&q={{search}}">First</a>
     <a class='button-page-p page' href="?page={{page_obj.previous_page_number}}&q={{search}}">Previous</a>
 
     {% endif %}
 
     {% for num in page_obj.paginator.page_range %}
-    
+    {% comment %} display page numbers around the current page {% endcomment %}
     {% if page_obj.number == num %}
     <p class="currentpage page">{{num}}</p>
     {% elif num > page_obj.number|add:'-4' and num < page_obj.number|add:'4'%} 
         <a class='pages page' href="?page={{num}}&q={{search}}">{{num}}</a>
     {% endif %}
     {% endfor %}
-
+    {% comment %} display page numbers after the current page including the last page {% endcomment %}
     {% if page_obj.has_next%}
 
     <a class='button-page-n page' href="?page={{page_obj.next_page_number}}&q={{search}}">Next</a>
@@ -28,7 +30,7 @@
 
 
     {% else %}
-
+    {% comment %} if there is no query, the redirect_url can just contain ?page= {% endcomment %}
     {% if page_obj.has_previous%}
 
     <a class='button-page-1 page' href="?page=1">First</a>

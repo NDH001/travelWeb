@@ -1,9 +1,12 @@
+// the function that takes the item id and user id from the templates
 let item_data = undefined
 let user_data = undefined
 function get_data(item_id,user_id){
     item_data = item_id 
     user_data = user_id
 }
+
+
 function check_current_url(name){
     let current_url = window.location.href
     if (current_url.indexOf(name)!==-1){
@@ -11,6 +14,8 @@ function check_current_url(name){
     }
     return false
 }
+
+// get the csrftoken 
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -29,8 +34,8 @@ function getCookie(name) {
         
 }
 $(document).ready(function(){
-
-    let redirect_link = 'sights'
+// set the redirect link based on the where the current page is
+    let redirect_link = undefined
     if(check_current_url('sight')){
         redirect_link = 'sights'
     }else if(check_current_url('food')){
@@ -49,7 +54,7 @@ $(document).ready(function(){
         let link = img.attr('src')
         if (link === lit) {
             img.attr('src', unlit);
-
+// delete the collection
         $.ajax({
             url:`/collections/${redirect_link}/delete/${item_data}/`,
             type:'post',
@@ -71,7 +76,7 @@ $(document).ready(function(){
             }
         })
         
-        
+// add collection
     } else {
         img.attr('src', lit);
         

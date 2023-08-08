@@ -8,7 +8,7 @@
 {% block content%}
 
 <main class='all-stack'>
-
+{% comment %} top stack {% endcomment %}
     <div class='top-stack'>
         <div class='profile'>
 
@@ -68,7 +68,7 @@
 
         <div class='details edit-field'> <h3>{{user.profile.desc}}</h3> </div>
     </div>
-
+{% comment %} mid stack {% endcomment %}
     <div class='mid-stack'>
         <div class='activity'> <h2> Activity feed </h2></div>
         <div class='tips'> <h2>Tips </h2> </div>
@@ -90,8 +90,7 @@
 {% block jscontent%}
 <script> 
     let user = "{{user.username}}"
-
 </script>
-
+{% comment %} js to redirect after registraton and login {% endcomment %}
 <script src="{% static 'userdata/scripts/profile.js'%}"></script>
 {% endblock jscontent%}

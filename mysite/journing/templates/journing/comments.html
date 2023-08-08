@@ -22,7 +22,7 @@
 <div class='comment'> 
 
     <div class='comment-user'>  
-       <img src="{{c.user.profile.profile_pic.url}}" >
+       <a href={% url "userdata:peek" c.user.id%}><img src="{{c.user.profile.profile_pic.url}}" ></a>
        {{c.user.username}}
     </div>
 

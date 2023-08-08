@@ -7,7 +7,7 @@
 {% endblock headcontent%}
 
 {% block content %}
-
+{% comment %} post section {% endcomment %}
 <main class='profile-section'>
 <form method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
@@ -48,7 +48,7 @@
         {{p_form.desc}}
         </div>
 
-
+{% comment %} display errors {% endcomment %}
     <div class='errors'>     
 
         {% for error in u_errors%}
@@ -59,7 +59,7 @@
         <p>{{error}}</p>
         {%endfor%}
     </div>
-
+{% comment %} save button {% endcomment %}
     <div class="save-div">
     <input value='Save Change' class='save' name='save' type='submit'>
     </div>

@@ -1,4 +1,5 @@
-from typing import Any, Callable
+from typing import Any, Callable, Dict, Optional
+from django.db import models
 from django.shortcuts import render
 from django.views.generic.edit import FormView
 from django.contrib.auth.models import User
@@ -11,7 +12,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 
 from .forms import UserLoginForm, UserRegForm, UserUpdateForm, ProfileUpdateForm
-from journing.models import Comment
+from .models import Connection
 
 # Create your views here.
 
@@ -122,3 +123,15 @@ class EditProfileView(FormView):
                 "p_errors": p_form.errors.values(),
             },
         )
+
+
+class PeekView(DetailView):
+    template_name = "userdata/peek.html"
+    context_object_name = "target_user"
+
+    def get_object(self, queryset=None):
+        target_user = User.objects.filter(pk=self.kwargs.get("pk")).prefetch_related(
+            "connection_set"
+        )
+
+        return target_user

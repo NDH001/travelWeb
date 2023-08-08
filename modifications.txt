@@ -1,7 +1,5 @@
-scroll to load more
-url contains user profile pk as url path ( not ideal ) add slug or uuid
+follower / unfollow user
 
-------------------------------
-add food and shops
-pagination
-change password ( send email)
+profile page--> show all comments
+
+chat?

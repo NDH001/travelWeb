@@ -42,7 +42,7 @@ urlpatterns = [
         name="sights_create",
     ),
     path(
-        "sights/info/<str:pk>/<slug:slug>/comments/update/<int:comment_pk>",
+        "sights/info/<str:pk>/<slug:slug>/comments/update/<int:comment_pk>/",
         views.UpdateCommentView.as_view(),
         name="sights_update",
     ),

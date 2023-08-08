@@ -1,3 +1,4 @@
+// a js function that modify the reg/login page values (helper function)
 function insert_content(){
     
     let welcome = document.getElementById('welcome-js')

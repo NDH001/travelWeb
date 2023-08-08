@@ -68,9 +68,6 @@ class GeneralListView(ListView):
     def get_related_modelset(self):
         return self.request.GET.get("q")
 
-    def get_slug_object(self):
-        self.city = Cities.objects.get(slug=self.kwargs.get("slug"))
-
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["city"] = self.city
@@ -84,7 +81,7 @@ class GeneralListView(ListView):
         )
 
     def get_queryset(self) -> QuerySet[Any]:
-        self.get_slug_object()
+        self.city = Cities.objects.get(slug=self.kwargs.get("slug"))
 
         queryset = self.get_related_modelset().prefetch_related(
             self.collection_model_set

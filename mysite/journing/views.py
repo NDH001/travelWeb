@@ -62,10 +62,6 @@ class GeneralListView(ListView):
     current_page = None
     reverse_name = None
 
-    # overide these functions
-    def get_related_queryset(self):
-        pass
-
     def get_related_modelset(self):
         return self.request.GET.get("q")
 
@@ -116,7 +112,10 @@ class FoodsListView(GeneralListView):
     reverse_name = "foods_list"
 
     def get_related_modelset(self):
-        return self.city.foods_set.all()
+        q = super().get_related_modelset()
+        if not q:
+            return self.city.foods_set.all()
+        return self.city.foods_set.filter(name__contains=q)
 
 
 class ShopsListView(GeneralListView):
@@ -126,7 +125,10 @@ class ShopsListView(GeneralListView):
     reverse_name = "shops_list"
 
     def get_related_modelset(self):
-        return self.city.shops_set.all()
+        q = super().get_related_modelset()
+        if not q:
+            return self.city.shops_set.all()
+        return self.city.shops_set.filter(name__contains=q)
 
 
 """-------------------------------------------------------------------------------------------"""

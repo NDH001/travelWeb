@@ -113,7 +113,7 @@ class FoodsListView(GeneralListView):
     current_page = "food"
 
     def get_related_modelset(self):
-        return self.get_slug_object().foods_set.all()
+        return self.city.foods_set.all()
 
 
 class ShopsListView(GeneralListView):
@@ -122,7 +122,7 @@ class ShopsListView(GeneralListView):
     current_page = "shop"
 
     def get_related_modelset(self):
-        return self.get_slug_object().shops_set.all()
+        return self.city.shops_set.all()
 
 
 """-------------------------------------------------------------------------------------------"""

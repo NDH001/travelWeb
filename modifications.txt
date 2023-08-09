@@ -1,4 +1,3 @@
-follower / unfollow user
 
 profile page--> show all comments
 

@@ -136,6 +136,9 @@ class PeekView(DetailView):
     def get_object(self, queryset=None):
         return User.objects.select_related("profile").get(pk=self.kwargs.get("pk"))
 
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        return super().get_context_data(**kwargs)
+
 
 class Connect(View):
     def post(self, request, *args, **kwargs):

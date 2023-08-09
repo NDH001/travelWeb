@@ -40,9 +40,7 @@ function connection(status){
 }
 
 $(document).ready(function(){
-
-
-
+    
     $('#connect-js').on('click',function(){
 
         let connect = $(this);

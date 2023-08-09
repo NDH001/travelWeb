@@ -134,10 +134,22 @@ class PeekView(DetailView):
     context_object_name = "target_user"
 
     def get_object(self, queryset=None):
-        return User.objects.select_related("profile").get(pk=self.kwargs.get("pk"))
+        self.target_user = User.objects.select_related("profile").get(
+            pk=self.kwargs.get("pk")
+        )
+        return self.target_user
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        return super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+        try:
+            following = Connection.objects.get(
+                user=self.target_user, follower=self.request.user
+            )
+        except:
+            following = None
+
+        context["following"] = following
+        return context
 
 
 class Connect(View):

@@ -63,8 +63,13 @@
                     <h3>{{target_user.profile.shared}}</h3>
                     </div>
                 </div>
-                
+
+                {% comment %} follow button {% endcomment %}
+                {% if following %}
+                <input id='connect-js' type="button" value="Unfollow">
+                {% else %}
                 <input id='connect-js' type="button" value="Follow">
+                {% endif %}
                 
                 </div>
             </div>

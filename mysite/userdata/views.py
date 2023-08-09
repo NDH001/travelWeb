@@ -138,5 +138,7 @@ class PeekView(ListView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["target_user"] = User.objects.get(pk=self.kwargs.get("pk"))
+        context["target_user"] = User.objects.select_related("profile").get(
+            pk=self.kwargs.get("pk")
+        )
         return context

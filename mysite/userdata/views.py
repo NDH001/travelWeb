@@ -127,18 +127,9 @@ class EditProfileView(FormView):
         )
 
 
-class PeekView(ListView):
+class PeekView(DetailView):
     template_name = "userdata/peek.html"
-    context_object_name = "followers"
+    context_object_name = "target_user"
 
-    def get_queryset(self) -> QuerySet[Any]:
-        return Connection.objects.filter(user=self.kwargs.get("pk")).select_related(
-            "follower"
-        )
-
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context["target_user"] = User.objects.select_related("profile").get(
-            pk=self.kwargs.get("pk")
-        )
-        return context
+    def get_object(self, queryset=None):
+        return User.objects.select_related("profile").get(pk=self.kwargs.get("pk"))

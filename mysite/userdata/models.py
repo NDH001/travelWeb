@@ -43,14 +43,11 @@ class Profile(models.Model):
 class Connection(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     follower = models.ForeignKey(
-        User, on_delete=models.DO_NOTHING, related_name="follower"
+        User, on_delete=models.DO_NOTHING, related_name="as_follower"
     )
 
-    def get_followers(self):
-        return Connection.objects.filter(user=self.user).count()
-
     def __str__(self):
-        return str(self.follower)
+        return f"User:{str(self.user)} Follower:{str(self.follower)}"
 
     class Meta:
         db_table = '"userdata"."connection"'

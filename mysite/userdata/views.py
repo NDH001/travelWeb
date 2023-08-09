@@ -155,6 +155,17 @@ class Connect(View):
         except:
             self.connection = None
 
+    def count(self, request, follow=True):
+        if follow:
+            self.target_user.profile.followers += 1
+            request.user.profile.following += 1
+        else:
+            self.target_user.profile.followers -= 1
+            request.user.profile.following -= 1
+
+        self.target_user.save()
+        request.user.save()
+
 
 class Follow(Connect):
     def post(self, request, *args, **kwargs):
@@ -170,6 +181,7 @@ class Follow(Connect):
             user=self.target_user, follower=request.user
         )
         connection.save()
+        self.count(request, follow=True)
         return JsonResponse({"message": "Followed!"})
 
 
@@ -180,8 +192,10 @@ class Unfollow(Connect):
         if response:
             return response
 
-        if self.connection:
-            self.connection.delete()
-            return JsonResponse({"message": "Unfollowed!"})
+        if not self.connection:
+            return JsonResponse({"message": "Already unfollowed"})
 
-        return JsonResponse({"message": "Already unfollowed"})
+        self.connection.delete()
+
+        self.count(request, follow=False)
+        return JsonResponse({"message": "Unfollowed!"})

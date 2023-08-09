@@ -52,6 +52,7 @@
     <div class='individual-list'> 
         <div class='item-img-container'> 
             {% if current_page == 'sight'%}
+
             <a href="{% url 'journing:sights_info' item.id item.slug %}">
                 <img src= " {% static '/sightimgs/'%}{{item.img_local}} ">
             </a>

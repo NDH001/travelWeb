@@ -137,18 +137,48 @@ class PeekView(DetailView):
         return User.objects.select_related("profile").get(pk=self.kwargs.get("pk"))
 
 
-class Follow(View):
+class Connect(View):
     def post(self, request, *args, **kwargs):
         if request.user.is_anonymous:
             return JsonResponse(
                 {"message": "login", "redirect_url": "/accounts/login/"}
             )
 
-        user = request.POST.get("user")
-        target_user = request.POST.get("target_user")
-        print(user, target_user)
-        return JsonResponse({"message": "hi"})
+        self.target_user = User.objects.get(username=request.POST.get("target_user"))
+        try:
+            self.connection = Connection.objects.get(
+                user=self.target_user.pk, follower=request.user.pk
+            )
+        except:
+            self.connection = None
 
 
-class Unfollow(View):
-    pass
+class Follow(Connect):
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+
+        if response:
+            return response
+
+        if self.connection:
+            return JsonResponse({"message": "Already Followed!"})
+
+        connection = Connection.objects.create(
+            user=self.target_user, follower=request.user
+        )
+        connection.save()
+        return JsonResponse({"message": "Followed!"})
+
+
+class Unfollow(Connect):
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+
+        if response:
+            return response
+
+        if self.connection:
+            self.connection.delete()
+            return JsonResponse({"message": "Unfollowed!"})
+
+        return JsonResponse({"message": "Already unfollowed"})

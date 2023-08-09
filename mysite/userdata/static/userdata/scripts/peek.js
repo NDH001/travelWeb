@@ -17,15 +17,13 @@ function getCookie(name) {
         
 }
 
-$(document).ready(function(){
+function connection(status){
 
-
-
-    $('#connect-js').on('click',function(){
         $.ajax({
-            url:'/accounts/connection/peek/follow/',
+            url:`/accounts/connection/peek/${status}/`,
             type:'post',
             data:{
+                target_user:target_user,
             },
             beforeSend: function(xhr, settings) {
                 xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
@@ -38,5 +36,23 @@ $(document).ready(function(){
             }
 
         })
+
+}
+
+$(document).ready(function(){
+
+
+
+    $('#connect-js').on('click',function(){
+
+        let connect = $(this);
+        if ( connect.val() == 'Follow'){
+            connect.val('Unfollow')
+            connection('follow')
+        }else{
+            connect.val('Follow')
+            connection('unfollow')
+        }
+
     })
 })

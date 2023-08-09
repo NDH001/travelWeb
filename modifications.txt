@@ -3,3 +3,7 @@ follower / unfollow user
 profile page--> show all comments
 
 chat?
+
+posting journal
+
+show on homepage

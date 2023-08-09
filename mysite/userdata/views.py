@@ -6,12 +6,14 @@ from django.views.generic.edit import FormView
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.views.generic import View
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
+from django.http import JsonResponse
 
 from .forms import UserLoginForm, UserRegForm, UserUpdateForm, ProfileUpdateForm
 from .models import Connection
@@ -133,3 +135,20 @@ class PeekView(DetailView):
 
     def get_object(self, queryset=None):
         return User.objects.select_related("profile").get(pk=self.kwargs.get("pk"))
+
+
+class Follow(View):
+    def post(self, request, *args, **kwargs):
+        if request.user.is_anonymous:
+            return JsonResponse(
+                {"message": "login", "redirect_url": "/accounts/login/"}
+            )
+
+        user = request.POST.get("user")
+        target_user = request.POST.get("target_user")
+        print(user, target_user)
+        return JsonResponse({"message": "hi"})
+
+
+class Unfollow(View):
+    pass

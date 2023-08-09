@@ -63,8 +63,8 @@
                     <h3>{{target_user.profile.shared}}</h3>
                     </div>
                 </div>
-
-                <input id='connect' type='submit' value="Follow" >
+                
+                <h1 id='connect-js'>hi</hi>
                 
                 </div>
             </div>
@@ -89,3 +89,13 @@
 </main>
 
 {% endblock content%}
+{% comment %} peek.js for follow or unfollow {% endcomment %}
+{% block jscontent%}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    let user = "{{user}}"
+    let target_user = "{{target_user}}"
+</script>
+<script src="{% static 'userdata/scripts/peek.js'%}"></script>
+{% endblock jscontent%}

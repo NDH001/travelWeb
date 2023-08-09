@@ -16,7 +16,7 @@
 }
 
 .profile-details{
-    margin: 10px 30px;
+    margin: 10px 80px;
 }
 
 .profile-details h3{
@@ -26,8 +26,8 @@
 .profile-img-div{
     width: 150px;
     height: 150px;
-    margin-left:20px;
-    margin-top:20px;
+    margin-left:60px;
+    margin-top:30px;
 }
 .profile-img-div img{
     width: 100%;

@@ -22,7 +22,13 @@
 <div class='comment'> 
 
     <div class='comment-user'>  
-       <a href={% url "userdata:peek" c.user.id%}><img src="{{c.user.profile.profile_pic.url}}" ></a>
+        {% if user.id != c.user.id %}
+        <a href={% url "userdata:peek" c.user.id%}>
+            <img src="{{c.user.profile.profile_pic.url}}" >
+        </a>
+        {%else%}
+            <img src="{{c.user.profile.profile_pic.url}}" >
+        {% endif %}
        {{c.user.username}}
     </div>
 

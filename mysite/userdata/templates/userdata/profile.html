@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block headcontent%}
+<link rel="stylesheet" href="{% static 'journing/styles/comments.css'%}">
 <link rel='stylesheet' href="{% static 'userdata/styles/profile.css'%}">
 {% endblock headcontent%}
 
@@ -81,9 +82,43 @@
     <div class='bot-stack'>
 
         <div class='tab-detail-js' id='activities-detail'>
-            hi
+            {% for c in user.comment_set.all%}
+{% comment %} comment {% endcomment %}
+            <div class='comment'> 
+
+                <div class='comment-user'>  
+                        <img src="{{c.user.profile.profile_pic.url}}" >
+                {{c.user.username}}
+                </div>
+
+                <div class='comment-rating'>
+
+                <div><h1>{{c.rating}}</h1>/5</div>
+                <div>{{c.comment}}</div>
+
+            {% comment %} ensures only user who posted the comment can delete or edit the said comment {% endcomment %}
+                {% if user == c.user%}
+                <div class='comment-edit'>
+                    <a href="{% url 'journing:sights_update' c.sight.pk c.sight.slug c.id %}"><img src="{% static 'journing/icons/edit.png'%}" ></a>
+                </div>
+
+                {%endif%}
+                </div>
+
+
+                <div class='comment-timestamp'>
+            {% comment %} ensures only user who posted the comment can delete or edit the said comment {% endcomment %}
+                    {% if user == c.user%}
+                    <div id='pop-up-confirm-js'onclick="pop_up_confirmation('{{c.id}}','{{c.sight.pk}}', '{{c.sight.slug}}')"> <img src="{% static 'journing/icons/delete.webp'%}"> </div>
+                    {%endif%}
+                    <h4>{{c.created_on}}</h4>
+                </div>
+
+            </div>
+
+            {% endfor %}
         </div>
-    <div class='tab-detail-js' id='default-detail'>
+    <div class='tab-detail-js' id='tips-detail'>
         <h1> Fill out your profile ! </h1>
         <h2> Add photos and info to your profile so people can find you easily and get to know you better !</h2>
     </div>
@@ -102,4 +137,5 @@
 </script>
 {% comment %} js to redirect after registraton and login {% endcomment %}
 <script src="{% static 'userdata/scripts/profile.js'%}"></script>
+<script src="{% static 'journing/scripts/delete.js'%}"></script>
 {% endblock jscontent%}

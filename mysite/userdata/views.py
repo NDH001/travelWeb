@@ -83,9 +83,9 @@ class ProfileView(UserPassesTestMixin, DetailView):
         )
 
     def get_object(self, queryset=None):
-        return self.model.objects.prefetch_related("comment_set").get(
-            pk=self.request.user.pk
-        )
+        return self.model.objects.prefetch_related(
+            "comment_set", "comment_set__sight"
+        ).get(pk=self.request.user.pk)
 
 
 def user_logout(request):

@@ -1,8 +1,7 @@
-
 profile page--> show all comments
+posting journal
 
 chat?
 
-posting journal
 
 show on homepage

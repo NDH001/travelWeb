@@ -134,8 +134,10 @@ class PeekView(DetailView):
     context_object_name = "target_user"
 
     def get_object(self, queryset=None):
-        self.target_user = User.objects.select_related("profile").get(
-            pk=self.kwargs.get("pk")
+        self.target_user = (
+            User.objects.select_related("profile")
+            .prefetch_related("comment_set", "comment_set__sight")
+            .get(pk=self.kwargs.get("pk"))
         )
         return self.target_user
 

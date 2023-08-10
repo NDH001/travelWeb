@@ -39,7 +39,7 @@
 {% comment %} ensures only user who posted the comment can delete or edit the said comment {% endcomment %}
     {% if user == c.user%}
     <div class='comment-edit'>
-        <a href="{% url 'journing:sights_update' c.sight.id c.sight.slug c.id%}"><img src="{% static 'journing/icons/edit.png'%}" ></a>
+        <a href="{% url 'journing:sights_update' view.kwargs.pk view.kwargs.slug c.id %}"><img src="{% static 'journing/icons/edit.png'%}" ></a>
     </div>
 
     {%endif%}
@@ -48,7 +48,7 @@
     <div class='comment-timestamp'>
 {% comment %} ensures only user who posted the comment can delete or edit the said comment {% endcomment %}
         {% if user == c.user%}
-        <div id='pop-up-confirm-js'onclick="pop_up_confirmation('{{c.id}}','{{c.sight.id}}', '{{c.sight.slug}}')"> <img src="{% static 'journing/icons/delete.webp'%}"> </div>
+        <div id='pop-up-confirm-js'onclick="pop_up_confirmation('{{c.id}}','{{view.kwargs.pk}}', '{{view.kwargs.slug}}')"> <img src="{% static 'journing/icons/delete.webp'%}"> </div>
         {%endif%}
         <h4>{{c.created_on}}</h4>
     </div>

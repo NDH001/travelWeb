@@ -33,7 +33,7 @@ urlpatterns = [
     ),
     path(
         "sights/info/<str:pk>/<slug:slug>/comments/delete/",
-        views.comments_delete,
+        views.DeleteCommentView.as_view(),
         name="sights_delete",
     ),
     path(

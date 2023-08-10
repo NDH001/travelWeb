@@ -217,12 +217,24 @@ class CommentsView(LoginRequiredMixin, ListView):
         return context
 
 
-def comments_delete(request, *args, **kwargs):
-    comment = get_object_or_404(Comment, id=request.GET.get("id"))
-    if comment.user == request.user:
+class DeleteCommentView(View):
+    def post(self, request, *args, **kwargs):
+        try:
+            comment = Comment.objects.get(id=request.GET.get("id"))
+        except:
+            comment = None
+
+        if not comment:
+            return JsonResponse({"message": "no valid comment found!"})
+
+        if not comment.user == request.user:
+            return JsonResponse(
+                {"message": "not authorized", "redirect_url": "/login/"}
+            )
+
         comment.delete()
 
-    return redirect(comment.get_absolute_url_sight())
+        return JsonResponse({"message": "delete comment success!"})
 
 
 class CreateCommentView(LoginRequiredMixin, CreateView):

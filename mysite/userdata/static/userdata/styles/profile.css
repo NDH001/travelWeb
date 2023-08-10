@@ -58,7 +58,7 @@
     cursor: pointer;
 }
 
-/* top stack */
+/* mid stack */
 .mid-stack{
     background-color: rgb(31, 30, 30);
     border-radius: inherit;
@@ -69,6 +69,15 @@
     text-align: center;
 }
 
+.tab-js{
+    padding: 20px 0px;
+    border-radius: 10px;
+}
+
+.tab-js:hover{
+    cursor: pointer;
+}
+
 
 /* top stack */
 .bot-stack{
@@ -76,4 +85,12 @@
     border-radius: inherit;
     padding-top: 50px;
     text-align: center;
+}
+
+.tab-detail-js{
+    display: none;
+}
+
+#default-detail{
+    display: block;
 }

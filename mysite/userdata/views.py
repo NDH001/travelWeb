@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.views.generic.edit import FormView
+from django.core import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -11,12 +12,13 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse, reverse_lazy
 from django.http import JsonResponse
+import json
 
 from .forms import UserLoginForm, UserRegForm, UserUpdateForm, ProfileUpdateForm
 from .models import Connection
+from journing.models import Comment
+
 
 # Create your views here.
 
@@ -70,15 +72,19 @@ class UserRegisterView(FormView):
 
 
 class ProfileView(UserPassesTestMixin, DetailView):
-    template_name = "userdata/profile.html"
-    context_object_name = "user"
     model = User
+    template_name = "userdata/profile.html"
     slug_field = "username"
     slug_url_kwarg = "username"
 
     def test_func(self):
         return self.request.user == get_object_or_404(
             self.model, username=self.kwargs.get("username")
+        )
+
+    def get_object(self, queryset=None):
+        return self.model.objects.prefetch_related("comment_set").get(
+            pk=self.request.user.pk
         )
 
 

@@ -70,17 +70,23 @@
     </div>
 {% comment %} mid stack {% endcomment %}
     <div class='mid-stack'>
-        <div class='tab-js' id='activity' onclick= ""> <h2> Activity feed </h2></div>
-        <div class='tab-js' id='tips'> <h2>Tips </h2> </div>
-        <div class='tab-js' id='photos'> <h2>Photos </h2></div>
-        <div class='tab-js' id='reviews'> <h2>Reviews </h2></div>
-        <div class='tab-js' id='badges'> <h2>Badges </h2></div>
-        <div class='tab-js' id='map'><h2>Travel map</h2></div>
+        <div class='tab-js' id='activities' onclick= "highlight('activities')"> <h2> Activity feed </h2></div>
+        <div class='tab-js' id='tips'onclick= "highlight('tips')"> <h2>Tips </h2> </div>
+        <div class='tab-js' id='photos'onclick= "highlight('photos')"> <h2>Photos </h2></div>
+        <div class='tab-js' id='reviews'onclick= "highlight('reviews')"> <h2>Reviews </h2></div>
+        <div class='tab-js' id='badges'onclick= "highlight('badges')"> <h2>Badges </h2></div>
+        <div class='tab-js' id='map'onclick= "highlight('map')"><h2>Travel map</h2></div>
     </div>
 
     <div class='bot-stack'>
+
+        <div class='tab-detail-js' id='activities-detail'>
+            hi
+        </div>
+    <div class='tab-detail-js' id='default-detail'>
         <h1> Fill out your profile ! </h1>
         <h2> Add photos and info to your profile so people can find you easily and get to know you better !</h2>
+    </div>
     </div>
 
 </main>
@@ -89,7 +95,10 @@
 
 {% block jscontent%}
 <script> 
-    let user = "{{user.username}}"
+    let user = {
+        'username':"{{user}}",
+        'id':'{{user.id}}'
+    }
 </script>
 {% comment %} js to redirect after registraton and login {% endcomment %}
 <script src="{% static 'userdata/scripts/profile.js'%}"></script>

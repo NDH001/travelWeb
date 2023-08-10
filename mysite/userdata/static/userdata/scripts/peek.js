@@ -41,15 +41,26 @@ function connection(status){
 
 $(document).ready(function(){
 
-    
-    $('#connect-js').on('click',function(){
+    connect = $('#connect-js')
 
-        let connect = $(this);
+    if (connect.val()=='Follow'){
+
+        connect.css('background-color',"rgb(186, 242, 184)")
+    }else{
+        connect.css({
+            "background-color":'red'
+        })
+    }
+    
+    connect.on('click',function(){
+
         if ( connect.val() == 'Follow'){
             connect.val('Unfollow')
+            connect.css('background-color',"red")
             connection('follow')
         }else{
             connect.val('Follow')
+            connect.css('background-color',"rgb(186, 242, 184)")
             connection('unfollow')
         }
 

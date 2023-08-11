@@ -1,8 +1,13 @@
 from journing.models import Comment
 from traveldata.models import Sights, Cities
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 import random
 import json
+import os
+from os import listdir
+from os.path import isfile, join
+
 
 random_text = [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum interdum erat vel leo euismod, non accumsan justo varius. Vestibulum at erat tellus. Integer dignissim sapien eros, sit amet semper erat hendrerit et. Quisque eget eros malesuada, cursus lacus quis, hendrerit arcu. Morbi ultrices sapien mi, dictum auctor augue placerat sed. Aliquam fringilla convallis ligula vel efficitur. In eros justo, iaculis eu leo quis, hendrerit laoreet sapien. Suspendisse potenti. In sed tortor a dui hendrerit placerat quis a nibh. Nulla sed euismod eros, id convallis orci. Aliquam pretium purus non eros pulvinar volutpat. Proin vehicula aliquet turpis nec eleifend.",
@@ -44,12 +49,9 @@ random_text = [
     "Nunc euismod ac nunc sed dignissim. Ut ut vulputate dui. Suspendisse potenti. Donec malesuada dui commodo arcu lacinia, in volutpat mi maximus. Suspendisse rutrum ipsum quis augue pellentesque porttitor. Vestibulum tincidunt velit ac leo mattis, nec mattis sem eleifend. Pellentesque eget feugiat massa. ",
 ]
 
-
-def create_users():
-    with open("user.json") as f:
-        data = json.load(f)
-
-    print(data)
+path = os.getcwd() + "/media/profile_pics"
+print(path)
+images = [f for f in listdir(path) if isfile(join(path, f))]
 
 
 def get_users():
@@ -60,6 +62,27 @@ def get_users():
 def get_sights():
     sights = list(Sights.objects.filter(city__in=["上海", "北京", "新加坡"]))
     return sights
+
+
+def create_users():
+    imgs_len = len(images)
+    with open("users.json") as f:
+        new_users = json.load(f)
+
+    for i, new_user in enumerate(new_users):
+        print(i)
+        print(new_user["name"], new_user["email"], new_user["password"])
+        user = User.objects.create(
+            username=new_user["name"],
+            email=new_user["email"],
+            password=make_password(new_user["password"]),
+        )
+        gender = random.randint(0, 1)
+        pic = random.randint(0, imgs_len - 1)
+        user.profile.gender = gender
+        user.profile.desc = new_user["statement"]
+        user.profile.profile_pic = "profile_pics/" + images[pic]
+        user.save()
 
 
 def add_comments():
@@ -80,3 +103,8 @@ def add_comments():
             user=users[ur], sight=sights[sr], comment=random_text[tr], rating=rating
         )
         comment.save()
+
+
+def create_users_add_comments():
+    create_users()
+    add_comments()

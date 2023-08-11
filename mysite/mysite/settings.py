@@ -141,7 +141,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-STATICFILES_DIRS = ["/home/jun/Desktop/database_files/"]
+# STATICFILES_DIRS = ["/home/jun/Desktop/database_files/"]
 
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",

@@ -84,11 +84,11 @@
                     {% if c.comment|length > 300%}
 
 
-                    <a href="{% url 'journing:sight-comment_detail'%}"><h4>{{c.comment|slice:":300"}} . . .</h4></a>
+                    <a href="{% url 'journing:sight_comment_detail'%}?q={{c.id}}"><h4>{{c.comment|slice:":300"}} . . .</h4></a>
 
                     {% else %}
 
-                    <a href="{% url 'journing:sight-comment_detail'%}"><h4>{{c.comment}}</h4></a>
+                    <a href="{% url 'journing:sight_comment_detail'%}?q={{c.id}}"><h4>{{c.comment}}</h4></a>
 
                     {% endif %}
 

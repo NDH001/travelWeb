@@ -270,3 +270,14 @@ class UpdateCommentView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         return self.request.user == self.get_object().user
+
+
+class CommentDetailView(DetailView):
+    model = Comment
+    template_name = "journing/detail_comment.html"
+    context_object_name = "comment"
+
+    def get_object(self, queryset=None):
+        return Comment.objects.select_related("user", "sight", "user__profile").get(
+            id=self.request.GET.get("q")
+        )

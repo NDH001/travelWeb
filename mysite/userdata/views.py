@@ -72,6 +72,10 @@ class UserRegisterView(FormView):
         return super().form_valid(form)
 
 
+"""----------------------------------------------------------------------------"""
+
+
+# profile views
 class ProfileView(UserPassesTestMixin, DetailView):
     model = User
     template_name = "userdata/profile.html"
@@ -136,6 +140,10 @@ class EditProfileView(FormView):
         )
 
 
+"""----------------------------------------------------------------------------"""
+
+
+# connections
 class PeekView(DetailView):
     template_name = "userdata/peek.html"
     context_object_name = "target_user"
@@ -208,3 +216,23 @@ class Unfollow(Connect):
 
         self.count(request, follow=False)
         return JsonResponse({"message": "Unfollowed!"})
+
+
+"""-----------------------------------------------------------------------"""
+# connection view
+
+
+class FollowersView(ListView):
+    template_name = "userdata/followers.html"
+    context_object_name = "followers"
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return Connection.objects.filter(user=self.kwargs.get("pk"))
+
+
+class FollowingView(ListView):
+    template_name = "userdata/following.html"
+    context_object_name = "following"
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return Connection.objects.filter(follower=self.kwargs.get("pk"))

@@ -1,7 +1,3 @@
-profile page--> show all comments
 posting journal
-
-chat?
-
-
 show on homepage
+chat?

@@ -115,26 +115,18 @@ def add_connection():
     min_id, max_id = get_userid_min_max()
     print(min_id, max_id)
 
-    users_array = []
-    target_users_array = []
-    for i in range(10000):
-        target_user_id = random.randint(min_id, max_id)
-        user_id = random.randint(min_id, max_id)
-
-        users_array.append(user_id)
-        target_users_array.append(target_user_id)
-
-    users = User.objects.filter(id__in=users_array).select_related("profile")
-    target_users = User.objects.filter(id__in=target_users_array).select_related(
-        "profile"
-    )
+    users = User.objects.all().select_related("profile")
+    target_users = User.objects.all().select_related("profile")
 
     for i in range(10000):
         print(i)
         connect = random.randint(0, 2)
 
-        target_user = target_users[i]
-        user = users[i]
+        ur = random.randint(0, len(users) - 1)
+        tr = random.randint(0, len(target_users) - 1)
+
+        target_user = target_users[ur]
+        user = users[tr]
 
         if user != target_user:
             if connect == 0:
@@ -143,18 +135,23 @@ def add_connection():
             # follow others
             elif connect == 1:
                 connection = Connection.objects.create(user=target_user, follower=user)
-                target_user.profile.follower += 1
+                target_user.profile.followers += 1
+                user.profile.following += 1
                 target_user.save()
                 connection.save()
+                user.save()
+                print(connection)
 
             # target user follow current user
             else:
                 connection = Connection.objects.create(user=user, follower=target_user)
-                user.profile.follower += 1
+                user.profile.followers += 1
+                target_user.profile.following += 1
                 user.save()
                 connection.save()
+                target_user.save()
 
-            print(connection)
+                print(connection)
 
 
 def create_contents():

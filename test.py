@@ -1,7 +1,16 @@
-def test (x):
-    if x ==10:
-        return 'hi'
-    m = 11
+def decorator(ori):
+    print("decorator")
 
-response = test(11)
-print(response)
+    def wrapper(*args, **kwargs):
+        print("wrapper")
+        return ori(*args, **kwargs)
+
+    return wrapper
+
+
+@decorator
+def display(hi, hello):
+    print("display", hi, hello)
+
+
+display("hi", "hello")

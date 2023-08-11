@@ -230,7 +230,7 @@ class DeleteCommentView(View):
         if not comment:
             return JsonResponse({"message": "no valid comment found!"})
 
-        if not comment.user == request.user:
+        if not comment.user == self.user:
             return JsonResponse({"message": "unauthorized", "redirect_url": "/index/"})
 
         comment.delete()

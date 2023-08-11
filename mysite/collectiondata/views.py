@@ -1,9 +1,10 @@
 from django.views.generic import View
 from django.http import JsonResponse
-
 from django.contrib.auth.models import User
+
 from traveldata.models import Sights, Foods, Shops
 from .models import UserFoodCollection, UserShopCollection, UserSightCollection
+from journing.decorator import ajax_check_login
 
 """-------------------------------------------------------------------------------------------"""
 
@@ -14,18 +15,11 @@ class CollectionMod(View):
     target_foreign_model = None
     target_collection_model = None
 
+    @ajax_check_login
     def post(self, request, *args, **kwargs):
-        if request.user.is_anonymous:
-            return JsonResponse(
-                {"message": "login", "redirect_url": "/accounts/login/"}
-            )
-
-        self.user = request.user
-        self.collection = self.get_collection(request)
-        return None
-
-    def get_collection(self, request):
-        return self.target_foreign_model.objects.get(pk=request.POST.get("item"))
+        self.collection = self.target_foreign_model.objects.get(
+            pk=request.POST.get("item")
+        )
 
     def collection_exists(self):
         return self.target_collection_model.objects.filter(
@@ -36,11 +30,7 @@ class CollectionMod(View):
 # the class that handles create activities for all models,e.g. sight,shop,food
 class CreateMod(CollectionMod):
     def post(self, request, *args, **kwargs):
-        # if a jsonresponse is returned which means the user is not logged in
-        response = super().post(request, *args, **kwargs)
-        if response:
-            return response
-
+        super().post(request, *args, **kwargs)
         if self.collection_exists():
             return JsonResponse({"message": "target already in collection"})
 
@@ -55,11 +45,7 @@ class CreateMod(CollectionMod):
 # the class that handles delete activities for all models,e.g. sight,shop,food
 class DeleteMod(CollectionMod):
     def post(self, request, *args, **kwargs):
-        # if a jsonresponse is returned which means the user is not logged in
-        response = super().post(request, *args, **kwargs)
-        if response:
-            return response
-
+        super().post(request, *args, **kwargs)
         if not self.collection_exists():
             return JsonResponse({"message": "target does not exists in collection"})
 

@@ -33,6 +33,31 @@ function getCookie(name) {
     return cookieValue;
         
 }
+
+function starry(redirect_link,action){
+
+        $.ajax({
+            url:`/collections/${redirect_link}/${action}/${item_data}/`,
+            type:'post',
+            data:{
+                user:`${user_data}`,
+                item:`${item_data}`,
+            },
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            },
+            success:function(response){
+               if (response.message === 'login_required'){
+                    console.log(response,response.message,response.login_url)
+                   window.location.href=response.login_url
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error posting data to Django server:', error);
+            }
+        })
+}
+
 $(document).ready(function(){
 // set the redirect link based on the where the current page is
     let redirect_link = undefined
@@ -54,57 +79,15 @@ $(document).ready(function(){
         let link = img.attr('src')
         if (link === lit) {
             img.attr('src', unlit);
-// delete the collection
-        $.ajax({
-            url:`/collections/${redirect_link}/delete/${item_data}/`,
-            type:'post',
-            data:{
-                user:`${user_data}`,
-                item:`${item_data}`,
-            },
-            beforeSend: function(xhr, settings) {
-                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-            },
-            success:function(response){
-               console.log(response.message) 
-               if (response.message === 'login'){
-                   window.location.href='/accounts/login'
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error posting data to Django server:', error);
-            }
-        })
-        
-// add collection
-    } else {
-        img.attr('src', lit);
-        
-        $.ajax({
-            url:`/collections/${redirect_link}/${item_data}/`,
-            type:'post',
-            data:{
-                user:`${user_data}`,
-                item:`${item_data}`,
-            },
-            beforeSend: function(xhr, settings) {
-                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-            },
-            success:function(response){
-                console.log(response.message) 
-                console.log('success')
-                if (response.message === 'login'){
-                    console.log('succ')
-                    window.location.href='/accounts/login'
-                }
-            },
-            error: function(xhr, status, error) {
-                
-                console.error('Error posting data to Django server:', error);
-            }
-        })
-    }
-    location.reload()
-})
+            // delete the collection
+            starry(redirect_link,'delete')
+            
+            // add collection
+        } else {
+            img.attr('src', lit);
+            starry(redirect_link,'create')    
+        }
+        // location.reload()
+    })
 })
 })

@@ -21,6 +21,8 @@ from collectiondata.models import (
 )
 from .models import Comment
 
+from .decorator import ajax_check_login
+
 # Create your views here.
 """-------------------------------------------------------------------------------------------"""
 
@@ -218,6 +220,7 @@ class CommentsView(LoginRequiredMixin, ListView):
 
 
 class DeleteCommentView(View):
+    @ajax_check_login
     def post(self, request, *args, **kwargs):
         try:
             comment = Comment.objects.get(id=request.GET.get("id"))
@@ -228,9 +231,7 @@ class DeleteCommentView(View):
             return JsonResponse({"message": "no valid comment found!"})
 
         if not comment.user == request.user:
-            return JsonResponse(
-                {"message": "not authorized", "redirect_url": "/login/"}
-            )
+            return JsonResponse({"message": "unauthorized", "redirect_url": "/index/"})
 
         comment.delete()
 

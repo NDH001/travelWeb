@@ -18,6 +18,7 @@ import json
 from .forms import UserLoginForm, UserRegForm, UserUpdateForm, ProfileUpdateForm
 from .models import Connection
 from journing.models import Comment
+from journing.decorator import ajax_check_login
 
 
 # Create your views here.
@@ -161,16 +162,12 @@ class PeekView(DetailView):
 
 
 class Connect(View):
+    @ajax_check_login
     def post(self, request, *args, **kwargs):
-        if request.user.is_anonymous:
-            return JsonResponse(
-                {"message": "login", "redirect_url": "/accounts/login/"}
-            )
-
         self.target_user = User.objects.get(username=request.POST.get("target_user"))
         try:
             self.connection = Connection.objects.get(
-                user=self.target_user.pk, follower=request.user.pk
+                user=self.target_user.pk, follower=self.user.pk
             )
         except:
             self.connection = None
@@ -178,27 +175,23 @@ class Connect(View):
     def count(self, request, follow=True):
         if follow:
             self.target_user.profile.followers += 1
-            request.user.profile.following += 1
+            self.user.profile.following += 1
         else:
             self.target_user.profile.followers -= 1
-            request.user.profile.following -= 1
+            self.user.profile.following -= 1
 
         self.target_user.save()
-        request.user.save()
+        self.user.save()
 
 
 class Follow(Connect):
     def post(self, request, *args, **kwargs):
-        response = super().post(request, *args, **kwargs)
-
-        if response:
-            return response
-
+        super().post(request, *args, **kwargs)
         if self.connection:
             return JsonResponse({"message": "Already Followed!"})
 
         connection = Connection.objects.create(
-            user=self.target_user, follower=request.user
+            user=self.target_user, follower=self.user
         )
         connection.save()
         self.count(request, follow=True)
@@ -207,11 +200,7 @@ class Follow(Connect):
 
 class Unfollow(Connect):
     def post(self, request, *args, **kwargs):
-        response = super().post(request, *args, **kwargs)
-
-        if response:
-            return response
-
+        super().post(request, *args, **kwargs)
         if not self.connection:
             return JsonResponse({"message": "Already unfollowed"})
 

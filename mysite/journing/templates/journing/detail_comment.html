@@ -1,0 +1,43 @@
+{% extends 'journing/base.html'%}
+{% load static %}
+
+
+{% block headcontent%}
+<link rel="stylesheet" href="{% static 'journing/styles/detail_comment.css'%}">
+{% endblock headcontent%}
+
+{% block content%}
+
+<div class='main-box'> 
+
+    <div class='top'>
+
+        <div class='top-left'> 
+            <div class='profile-img-div'>
+                <img src="{{comment.user.profile.profile_pic.url}}"></img>
+            </div>     
+            <h3>{{comment.user}}</h3>
+        </div>
+
+        <div class='top-right'>
+            <h1>{{comment.sight}}</h1>
+            </br>
+            <h1 style="display: inline;">{{comment.rating}}</h1>/5
+            </br>
+            </br>
+            <h3> {{comment.created_on}} </h3>
+
+        </div>
+
+    </div>
+
+    <div class='bot'>
+        <h3>{{comment}}</h3>
+    </div>
+
+
+</div>
+
+
+{% endblock content%}
+

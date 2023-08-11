@@ -1,3 +1,7 @@
+a{
+    text-decoration: none;
+}
+
 .main-box{
     display: flex;
     flex-direction: column;

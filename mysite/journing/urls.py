@@ -46,4 +46,9 @@ urlpatterns = [
         views.UpdateCommentView.as_view(),
         name="sights_update",
     ),
+    path(
+        "sights/comment/detail/",
+        views.CommentDetailView.as_view(),
+        name="sight_comment_detail",
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -125,3 +125,6 @@
     margin-left:120px;
     margin-top:-40px;
 }
+.select-star-js:hover{
+    cursor: pointer;
+}

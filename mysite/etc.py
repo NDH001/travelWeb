@@ -1,6 +1,4 @@
-from journing.models import Comment
-from traveldata.models import Sights, Cities
-from django.contrib.auth.models import User
+from django.db.models import Max, Min
 from django.contrib.auth.hashers import make_password
 import random
 import json
@@ -8,6 +6,10 @@ import os
 from os import listdir
 from os.path import isfile, join
 
+from django.contrib.auth.models import User
+from journing.models import Comment
+from traveldata.models import Sights, Cities
+from userdata.models import Connection
 
 random_text = [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum interdum erat vel leo euismod, non accumsan justo varius. Vestibulum at erat tellus. Integer dignissim sapien eros, sit amet semper erat hendrerit et. Quisque eget eros malesuada, cursus lacus quis, hendrerit arcu. Morbi ultrices sapien mi, dictum auctor augue placerat sed. Aliquam fringilla convallis ligula vel efficitur. In eros justo, iaculis eu leo quis, hendrerit laoreet sapien. Suspendisse potenti. In sed tortor a dui hendrerit placerat quis a nibh. Nulla sed euismod eros, id convallis orci. Aliquam pretium purus non eros pulvinar volutpat. Proin vehicula aliquet turpis nec eleifend.",
@@ -50,22 +52,26 @@ random_text = [
 ]
 
 path = os.getcwd() + "/media/profile_pics"
-print(path)
 images = [f for f in listdir(path) if isfile(join(path, f))]
 
 
-def get_users():
-    users = list(User.objects.all())
-    return users
+def get_userid_min_max():
+    min_id = User.objects.aggregate(min_id=Min("id"))["min_id"]
+    max_id = User.objects.aggregate(max_id=Max("id"))["max_id"]
 
-
-def get_sights():
-    sights = list(Sights.objects.filter(city__in=["上海", "北京", "新加坡"]))
-    return sights
+    return min_id, max_id
 
 
 def create_users():
     imgs_len = len(images)
+
+    another_account = User.objects.create(
+        username="jun000111",
+        email="zhijun950@gmail.com",
+        password=make_password("forwhat000"),
+    )
+    another_account.save()
+
     with open("users.json") as f:
         new_users = json.load(f)
 
@@ -86,8 +92,8 @@ def create_users():
 
 
 def add_comments():
-    users = get_users()
-    sights = get_sights()
+    users = list(User.objects.all())
+    sights = list(Sights.objects.filter(city__in=["上海", "北京", "新加坡"]))
 
     user_len = len(users)
     sight_len = len(sights)
@@ -105,6 +111,53 @@ def add_comments():
         comment.save()
 
 
-def create_users_add_comments():
+def add_connection():
+    min_id, max_id = get_userid_min_max()
+    print(min_id, max_id)
+
+    users_array = []
+    target_users_array = []
+    for i in range(10000):
+        target_user_id = random.randint(min_id, max_id)
+        user_id = random.randint(min_id, max_id)
+
+        users_array.append(user_id)
+        target_users_array.append(target_user_id)
+
+    users = User.objects.filter(id__in=users_array).select_related("profile")
+    target_users = User.objects.filter(id__in=target_users_array).select_related(
+        "profile"
+    )
+
+    for i in range(10000):
+        print(i)
+        connect = random.randint(0, 2)
+
+        target_user = target_users[i]
+        user = users[i]
+
+        if user != target_user:
+            if connect == 0:
+                pass
+
+            # follow others
+            elif connect == 1:
+                connection = Connection.objects.create(user=target_user, follower=user)
+                target_user.profile.follower += 1
+                target_user.save()
+                connection.save()
+
+            # target user follow current user
+            else:
+                connection = Connection.objects.create(user=user, follower=target_user)
+                user.profile.follower += 1
+                user.save()
+                connection.save()
+
+            print(connection)
+
+
+def create_contents():
     create_users()
+    add_connection()
     add_comments()

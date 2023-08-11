@@ -29,6 +29,7 @@ class CollectionMod(View):
 
 # the class that handles create activities for all models,e.g. sight,shop,food
 class CreateMod(CollectionMod):
+    @ajax_check_login
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         if self.collection_exists():
@@ -44,6 +45,7 @@ class CreateMod(CollectionMod):
 
 # the class that handles delete activities for all models,e.g. sight,shop,food
 class DeleteMod(CollectionMod):
+    @ajax_check_login
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         if not self.collection_exists():

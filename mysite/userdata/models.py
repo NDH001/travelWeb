@@ -43,7 +43,7 @@ class Profile(models.Model):
 class Connection(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     follower = models.ForeignKey(
-        User, on_delete=models.DO_NOTHING, related_name="as_follower"
+        User, on_delete=models.DO_NOTHING, related_name="follower"
     )
 
     def __str__(self):

@@ -1,7 +1,7 @@
 .main-box{
     display: flex;
     flex-direction: column;
-    width: 700px;
+    width: 900px;
     margin: auto;
     margin-top:50px;
 }
@@ -67,18 +67,22 @@
     display: flex;
     flex-direction: column;
     margin-top: 10px;
-    background-color: rgb(30,30,30);
     border-radius: 20px;
 }
 
 .comment{
     display: grid;
     grid-template-columns: 1fr 3fr;
-    margin:10px 10px;
-    border: white solid 2px;
-    border-radius: 5px;
+    border-radius: 10px;
+    margin-top: 10px;
+    background-color: rgb(30,30,30)
+}
+
+.comment-left{
+    margin: auto;
+    padding: 20px 20px;
 }
 
 .comment-right{
-    padding:10px 15px;
+    padding:10px 30px;
 }

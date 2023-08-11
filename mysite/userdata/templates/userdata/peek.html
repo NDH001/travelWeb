@@ -75,11 +75,23 @@
             {% for c in target_user.comment_set.all%}
 
             <div class='comment'>
+
                 <div class='comment-left'> <img src="{% static '/sightimgs/'%}{{c.sight.img_local}}"> </div>
 
                 <div class='comment-right'> 
                     <h1>{{ c.sight }}</h1>
+
+                    {% if c.comment|length > 300%}
+
+                    <h4>{{c.comment|slice:":300"}} . . .</h4>
+
+                    {% else %}
+
                     <h4>{{c.comment}}</h4>
+
+                    {% endif %}
+
+                    
                 </div>
                 
             </div>

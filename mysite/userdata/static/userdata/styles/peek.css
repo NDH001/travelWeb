@@ -7,16 +7,21 @@
 }
 .profile{
     display: grid;
-    position: relative;
+    grid-template-rows: 1fr 1fr;
     width: 100%;
-    height: 300px;
-    grid-template-columns: 2fr 3fr;
+    position: relative;
     background-color: rgb(30,30,30);
-    border-radius: 20px;
+    border-radius: 20px;    
+}
+
+.profile-connection{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
 }
 
 .profile-details{
-    margin: 10px 80px;
+    padding-left: 60px;
+    padding-top: 40px;
 }
 
 .profile-details h3{
@@ -34,16 +39,13 @@
     height: 100%;
     border-radius: 75px;
 }
-.connect-grid{
-    display: grid;
-    grid-template-rows:3fr 1fr ;
-}
 
 .connection{
+    margin-left:50px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    margin-top: 50px;
-    text-align: center;
+    column-gap: 5px;
+    padding: 50px 20px;
 }
 
 #connect-js{
@@ -53,12 +55,13 @@
     border-radius: 5px;
     position: absolute;
     right:180px;
-    top:150px;
+    top:140px;
     width: 100px;
     text-align: center;
     padding: 5px 10px;
+    
 }
-
+/* comment sections */
 .comments{
     display: flex;
     flex-direction: column;

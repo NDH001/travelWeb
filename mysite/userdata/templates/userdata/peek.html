@@ -12,40 +12,13 @@
 
         <div class='profile'> 
 
-    {% comment %} profile left  {% endcomment %}
+    {% comment %} profile upper  {% endcomment %}
 
-            <div class= 'profile-left'>
+            <div class= 'profile-connection'>
                 <div class="profile-img-div">
                     <img src="{{target_user.profile.profile_pic.url}}">
                 </div>
 
-                <div class="profile-details">
-                    <h3> {{target_user}} </h3>
-
-                    {% if target_user.profile_gender%}
-                    <h3> Male </h3>
-                    {% else%}
-                    <h3> Female </h3>
-                    {% endif %}
-
-                    {% if target_user.profile.city%}
-                    <h3> {{target_user.profile.city}} </h3>
-                    {% endif %}
-
-                    {% if target_user.profile.website%}
-                    <h3> {{target_user.profile.website}} </h3>
-                    {% endif %}
-
-                    {% if not target_user.profile.desc == 'Write some details about yourself'%}
-                    <h3> {{target_user.profile.desc}} </h3>
-                    {% endif %}
-
-                </div>
-
-            </div> 
-    {% comment %} profile right {% endcomment %}
-
-            <div class="connect-grid">
                 <div class='connection'>
 
                     <div>
@@ -72,8 +45,31 @@
                 {% endif %}
                 
                 </div>
+                {% comment %} profile lower {% endcomment %}
+                
+            <div class="profile-details">
+                <h3> {{target_user}} </h3>
+                
+                {% if target_user.profile_gender%}
+                <h3> Male </h3>
+                {% else%}
+                <h3> Female </h3>
+                {% endif %}
+                
+                {% if target_user.profile.city%}
+                <h3> {{target_user.profile.city}} </h3>
+                {% endif %}
+                
+                {% if target_user.profile.website%}
+                <h3> {{target_user.profile.website}} </h3>
+                {% endif %}
+                
+                {% if not target_user.profile.desc == 'Write some details about yourself'%}
+                <h3> <i>"{{target_user.profile.desc}}"</i></h3>
+                {% endif %}
+                
             </div>
-
+        </div> 
 
         <div class="comments">
             {% for c in target_user.comment_set.all%}

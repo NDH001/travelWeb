@@ -2,6 +2,7 @@ from journing.models import Comment
 from traveldata.models import Sights, Cities
 from django.contrib.auth.models import User
 import random
+import json
 
 random_text = [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum interdum erat vel leo euismod, non accumsan justo varius. Vestibulum at erat tellus. Integer dignissim sapien eros, sit amet semper erat hendrerit et. Quisque eget eros malesuada, cursus lacus quis, hendrerit arcu. Morbi ultrices sapien mi, dictum auctor augue placerat sed. Aliquam fringilla convallis ligula vel efficitur. In eros justo, iaculis eu leo quis, hendrerit laoreet sapien. Suspendisse potenti. In sed tortor a dui hendrerit placerat quis a nibh. Nulla sed euismod eros, id convallis orci. Aliquam pretium purus non eros pulvinar volutpat. Proin vehicula aliquet turpis nec eleifend.",
@@ -42,6 +43,13 @@ random_text = [
     "Donec dolor nibh, hendrerit id erat non, sagittis egestas nunc. Quisque bibendum sed dolor et rhoncus. In non facilisis quam. ",
     "Nunc euismod ac nunc sed dignissim. Ut ut vulputate dui. Suspendisse potenti. Donec malesuada dui commodo arcu lacinia, in volutpat mi maximus. Suspendisse rutrum ipsum quis augue pellentesque porttitor. Vestibulum tincidunt velit ac leo mattis, nec mattis sem eleifend. Pellentesque eget feugiat massa. ",
 ]
+
+
+def create_users():
+    with open("user.json") as f:
+        data = json.load(f)
+
+    print(data)
 
 
 def get_users():

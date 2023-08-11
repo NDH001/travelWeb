@@ -35,7 +35,13 @@
     <div class='comment-rating'>
 
     <div><h1>{{c.rating}}</h1>/5</div>
-    <div>{{c.comment}}</div>
+
+    {% if c.comment|length > 300%}
+    <a href="{% url 'journing:sight_comment_detail'%}?q={{c.id}}"><div>{{c.comment|slice:"300"}} . . .</div></a>
+    {% else %}
+    <a href="{% url 'journing:sight_comment_detail'%}?q={{c.id}}"><div>{{c.comment}}</div></a>
+    {% endif %}
+
 {% comment %} ensures only user who posted the comment can delete or edit the said comment {% endcomment %}
     {% if user == c.user%}
     <div class='comment-edit'>

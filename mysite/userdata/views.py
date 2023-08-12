@@ -224,10 +224,13 @@ class Unfollow(Connect):
 
 class FollowersView(ListView):
     template_name = "userdata/followers.html"
-    context_object_name = "followers"
+    context_object_name = "connections"
+    paginate_by = 10
 
     def get_queryset(self) -> QuerySet[Any]:
-        return Connection.objects.filter(user=self.kwargs.get("pk"))
+        return Connection.objects.filter(user=self.kwargs.get("pk")).select_related(
+            "user", "follower", "follower__profile"
+        )
 
 
 class FollowingView(ListView):

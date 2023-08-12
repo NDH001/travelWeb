@@ -1,0 +1,42 @@
+{% extends 'journing/base.html'%}
+{% load static %}
+
+{% block headcontent%}
+<link rel='stylesheet' href="{% static 'userdata/styles/connection.css'%}">
+<link rel='stylesheet' href="{% static 'journing/styles/page_nav.css'%}">
+{% endblock headcontent%}
+
+{% block content%}
+
+
+
+{% for connection in connections%}
+
+<div class=follower > 
+    <div class=follower-profile-div>
+        <img src="{{connection.follower.profile.profile_pic.url}}"></img>
+    </div>
+
+    <div class=follower-name>
+        <h2>{{connection.follower}}</h2>
+    </div>
+    <div class=follower-action>
+
+        <input type="button" value="follow">
+    </div>
+</div>
+
+
+{% endfor %}
+
+{% include 'journing/page_nav.html'%}
+
+
+
+
+
+
+{% endblock content%}
+
+
+

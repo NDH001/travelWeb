@@ -3,6 +3,7 @@ from django.contrib.auth.hashers import make_password
 import random
 import json
 import os
+import time
 from os import listdir
 from os.path import isfile, join
 
@@ -72,23 +73,43 @@ def create_users():
     )
     another_account.save()
 
-    with open("users.json") as f:
-        new_users = json.load(f)
+    another_account = User.objects.create(
+        username="jun000222",
+        email="zhijun952@gmail.com",
+        password=make_password("forwhat000"),
+    )
+    another_account.save()
 
-    for i, new_user in enumerate(new_users):
-        print(i)
-        print(new_user["name"], new_user["email"], new_user["password"])
-        user = User.objects.create(
-            username=new_user["name"],
-            email=new_user["email"],
-            password=make_password(new_user["password"]),
-        )
-        gender = random.randint(0, 1)
-        pic = random.randint(0, imgs_len - 1)
-        user.profile.gender = gender
-        user.profile.desc = new_user["statement"]
-        user.profile.profile_pic = "profile_pics/" + images[pic]
-        user.save()
+    another_account = User.objects.create(
+        username="jun000333",
+        email="zhijun953@gmail.com",
+        password=make_password("forwhat000"),
+    )
+    another_account.save()
+
+    another_account = User.objects.create(
+        username="jun000444",
+        email="zhijun954@gmail.com",
+        password=make_password("forwhat000"),
+    )
+    another_account.save()
+    # with open("users.json") as f:
+    #     new_users = json.load(f)
+
+    # for i, new_user in enumerate(new_users):
+    #     print(i)
+    #     print(new_user["name"], new_user["email"], new_user["password"])
+    #     user = User.objects.create(
+    #         username=new_user["name"],
+    #         email=new_user["email"],
+    #         password=make_password(new_user["password"]),
+    #     )
+    #     gender = random.randint(0, 1)
+    #     pic = random.randint(0, imgs_len - 1)
+    #     user.profile.gender = gender
+    #     user.profile.desc = new_user["statement"]
+    #     user.profile.profile_pic = "profile_pics/" + images[pic]
+    #     user.save()
 
 
 def add_comments():
@@ -117,44 +138,61 @@ def add_connection():
 
     users = User.objects.all().select_related("profile")
     target_users = User.objects.all().select_related("profile")
+    print(users, target_users)
 
-    for i in range(10000):
-        print(i)
+    for i in range(10):
         connect = random.randint(0, 2)
+        print("number: ", i, connect)
 
         ur = random.randint(0, len(users) - 1)
         tr = random.randint(0, len(target_users) - 1)
 
         target_user = target_users[ur]
-        user = users[tr]
+        current_user = users[tr]
+        print("current: ", current_user, target_user)
 
-        if user != target_user:
-            if connect == 0:
-                pass
+        if current_user != target_user:
+            try:
+                exists = Connection.objects.get(
+                    user=current_user, follower=target_user
+                ) and Connection.objects.get(user=target_user, follower=current_user)
+            except:
+                exists = False
+                print("does not exist")
 
-            # follow others
-            elif connect == 1:
-                connection = Connection.objects.create(user=target_user, follower=user)
-                target_user.profile.followers += 1
-                user.profile.following += 1
-                target_user.save()
-                connection.save()
-                user.save()
-                print(connection)
+            if not exists:
+                if connect == 0:
+                    pass
 
-            # target user follow current user
-            else:
-                connection = Connection.objects.create(user=user, follower=target_user)
-                user.profile.followers += 1
-                target_user.profile.following += 1
-                user.save()
-                connection.save()
-                target_user.save()
+                # follow others
+                elif connect == 1:
+                    connection = Connection.objects.create(
+                        user=target_user, follower=current_user
+                    )
+                    connection.user.profile.followers += 1
+                    connection.follower.profile.following += 1
+                    print("saving following")
+                    connection.save()
+                    connection.user.save()
+                    connection.follower.save()
+                    print(connection)
 
-                print(connection)
+                # target user follow current user
+                # else:
+                #     connection = Connection.objects.create(
+                #         user=current_user, follower=target_user
+                #     )
+                #     connection.user.profile.followers += 1
+                #     connection.follower.profile.following += 1
+                #     connection.save()
+                #     connection.user.save()
+                #     connection.follower.save()
+                #     print("saving follower")
+
+                #     print(connection)
 
 
 def create_contents():
     create_users()
     add_connection()
-    add_comments()
+    # add_comments()

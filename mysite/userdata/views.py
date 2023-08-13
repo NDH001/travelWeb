@@ -235,11 +235,12 @@ class FollowersView(ListView):
 
         connections = connections.annotate(
             following=Case(
-                When(follower=self.request.user, then=False),
-                default=True,
+                When(follower_id=self.request.user, then=True),
+                default=False,
                 output_field=BooleanField(),
             )
         )
+        print(connections.filter(user=self.request.user))
         return connections
 
 

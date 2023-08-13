@@ -19,10 +19,14 @@
 
     <div class=follower-name>
         <h2>{{connection.follower}}</h2>
+        {{connection.following}}
     </div>
     <div class=follower-action>
-
-        <input type="button" value="follow">
+        {% if following %}
+        <input class="connect-js" type="button" value="Unfollow" onclick="connect('{{connection.follower}}','unfollow')">
+        {% else %}
+        <input class="connect-js" type="button" value="Follow" onclick="connect('{{connection.follower}}','follow')">
+        {% endif %}
     </div>
 </div>
 
@@ -30,13 +34,10 @@
 {% endfor %}
 
 {% include 'journing/page_nav.html'%}
-
-
-
-
-
-
 {% endblock content%}
 
+{% block jscontent%}
+<script src="{% static 'userdata/scripts/connection.js'%}"></script>
+{% endblock jscontent%}
 
 

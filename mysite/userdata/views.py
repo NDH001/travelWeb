@@ -1,6 +1,7 @@
 from typing import Any, Callable, Dict, Optional
 from django.db import models
 from django.db.models.query import QuerySet
+from django.db.models import Exists, OuterRef, Case, When, BooleanField
 from django.shortcuts import render
 from django.views.generic.edit import FormView
 from django.core import serializers
@@ -228,9 +229,18 @@ class FollowersView(ListView):
     paginate_by = 10
 
     def get_queryset(self) -> QuerySet[Any]:
-        return Connection.objects.filter(user=self.kwargs.get("pk")).select_related(
-            "user", "follower", "follower__profile"
+        connections = Connection.objects.filter(
+            user=self.kwargs.get("pk")
+        ).select_related("user", "follower", "follower__profile")
+
+        connections = connections.annotate(
+            following=Case(
+                When(follower=self.request.user, then=False),
+                default=True,
+                output_field=BooleanField(),
+            )
         )
+        return connections
 
 
 class FollowingView(ListView):

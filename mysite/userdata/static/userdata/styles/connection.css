@@ -25,3 +25,12 @@
     height: 100%;
     border-radius:50px;
 }
+
+.connect-js{
+    font-size: larger;
+    padding: 8px 10px;
+    background-color: pink;
+    border: none;
+    border-radius: 3px;
+    
+}

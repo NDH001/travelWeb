@@ -10,8 +10,6 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     gender = models.BooleanField(choices=[(0, "Female"), (1, "Male")], default=False)
     profile_pic = models.ImageField(default="default.jpg", upload_to="profile_pics")
-    followers = models.PositiveIntegerField(default=0, editable=False)
-    following = models.PositiveIntegerField(default=0, editable=False)
     shared = models.PositiveIntegerField(
         default=0, verbose_name="Journal shared", editable=False
     )

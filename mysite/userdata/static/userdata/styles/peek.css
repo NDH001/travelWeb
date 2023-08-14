@@ -51,6 +51,7 @@ a{
     grid-template-columns: 1fr 1fr 1fr;
     column-gap: 5px;
     padding: 50px 20px;
+    text-align: center;
 }
 
 #connect-js{

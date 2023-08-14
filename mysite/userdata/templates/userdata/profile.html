@@ -26,13 +26,13 @@
             <div class='profile-followers'>
                 <h1>Followers</h1>
                 <br>
-                <a href="{% url 'userdata:view_followers' user.id%}"><h2>{{user.profile.followers}}</h2></a>
+                <a href="{% url 'userdata:view_followers' user.id%}"><h2>{{followers}}</h2></a>
             </div>
 
             <div class='profile-following'>
                 <h1>Following</h1>
                 <br>
-                <a href="{% url 'userdata:view_following' user.id%}"><h2>{{user.profile.following}}</h2></a>
+                <a href="{% url 'userdata:view_following' user.id%}"><h2>{{following}}</h2></a>
             </div>
 
             <button type='button' id='profile-edit'> Edit profile</button>

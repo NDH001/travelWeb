@@ -23,12 +23,12 @@
 
                     <div>
                     <h2> Follower </h2>
-                    <h3>{{target_user.profile.followers}}</h3>
+                    <h3>{{followers}}</h3>
                     </div>
                     
                     <div>
                     <h2> Following </h2>
-                    <h3>{{target_user.profile.following}}</h3>
+                    <h3>{{following}}</h3>
                     </div>
 
                     <div>
@@ -38,7 +38,7 @@
                 </div>
 
                 {% comment %} follow button {% endcomment %}
-                {% if following %}
+                {% if is_following %}
                 <input id='connect-js' type="button" value="Unfollow">
                 {% else %}
                 <input id='connect-js' type="button" value="Follow">

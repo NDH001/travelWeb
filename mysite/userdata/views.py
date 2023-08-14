@@ -93,6 +93,14 @@ class ProfileView(UserPassesTestMixin, DetailView):
             "comment_set", "comment_set__sight"
         ).get(pk=self.request.user.pk)
 
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["following"] = Connection.objects.filter(
+            follower=self.request.user
+        ).count()
+        context["followers"] = Connection.objects.filter(user=self.request.user).count()
+        return context
+
 
 def user_logout(request):
     logout(request)
@@ -160,13 +168,18 @@ class PeekView(DetailView):
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         try:
-            following = Connection.objects.get(
+            is_following = Connection.objects.get(
                 user=self.target_user, follower=self.request.user
             )
         except:
-            following = None
+            is_following = None
 
-        context["following"] = following
+        context["is_following"] = is_following
+        context["followers"] = Connection.objects.filter(user=self.request.user).count()
+        context["following"] = Connection.objects.filter(
+            follower=self.request.user
+        ).count()
+
         return context
 
 

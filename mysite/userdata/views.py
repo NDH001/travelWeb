@@ -194,14 +194,6 @@ class Connect(View):
         except:
             self.connection = None
 
-    def count(self, request, follow=True):
-        if follow:
-            self.target_user.profile.followers += 1
-            self.user.profile.following += 1
-        else:
-            self.target_user.profile.followers -= 1
-            self.user.profile.following -= 1
-
         self.target_user.save()
         self.user.save()
 
@@ -216,7 +208,6 @@ class Follow(Connect):
             user=self.target_user, follower=self.user
         )
         connection.save()
-        self.count(request, follow=True)
         return JsonResponse({"message": "Followed!"})
 
 
@@ -228,7 +219,6 @@ class Unfollow(Connect):
 
         self.connection.delete()
 
-        self.count(request, follow=False)
         return JsonResponse({"message": "Unfollowed!"})
 
 
@@ -242,18 +232,31 @@ class FollowersView(ListView):
     paginate_by = 10
 
     def get_queryset(self) -> QuerySet[Any]:
-        connections = Connection.objects.filter(
-            user=self.kwargs.get("pk")
-        ).select_related("user", "follower", "follower__profile")
+        # connections = Connection.objects.filter(
+        #     user=self.kwargs.get("pk")
+        # ).select_related("user", "follower", "follower__profile")
+
+        # connections = connections.annotate(
+        #     is_following=Case(
+        #         When(follower_id=self.request.user.id, then=True),
+        #         default=False,
+        #         output_field=BooleanField(),
+        #     )
+        # )
+        # print(connections)
+
+        connections = Connection.objects.all()
 
         connections = connections.annotate(
-            following=Case(
-                When(follower_id=self.request.user, then=True),
+            is_following=Case(
+                When(follower_id=self.request.user.id, then=True),
                 default=False,
                 output_field=BooleanField(),
             )
         )
-        print(connections.filter(user=self.request.user))
+
+        connections = connections.filter(user=self.request.user.id)
+
         return connections
 
 

@@ -1,18 +1,11 @@
 // the function that takes the item id and user id from the templates
-let item_data = undefined
-let user_data = undefined
-function get_data(item_id,user_id){
-    item_data = item_id 
-    user_data = user_id
-}
-
-
-function check_current_url(name){
-    let current_url = window.location.href
-    if (current_url.indexOf(name)!==-1){
-        return true
-    }
-    return false
+let current_user = undefined
+let target_user = undefined
+let action = undefined
+function get_data(current_user_data,target_user_data,act_data){
+    current_user = current_user_data
+    target_user = target_user_data
+    action = act_data
 }
 
 // get the csrftoken 
@@ -34,19 +27,20 @@ function getCookie(name) {
         
 }
 
-function starry(redirect_link,action){
+function follow_unfollow(){
 
         $.ajax({
-            url:`/collections/${redirect_link}/${action}/${item_data}/`,
+            url:`/accounts/connection/peek/${action}/`,
             type:'post',
             data:{
-                user:`${user_data}`,
-                item:`${item_data}`,
+                current_user:`${current_user}`,
+                target_user:`${target_user}`,
             },
             beforeSend: function(xhr, settings) {
                 xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
             },
             success:function(response){
+                console.log(response.message)
                if (response.message === 'login_required'){
                     console.log(response,response.message,response.login_url)
                    window.location.href=response.login_url
@@ -60,34 +54,14 @@ function starry(redirect_link,action){
 
 $(document).ready(function(){
 // set the redirect link based on the where the current page is
-    let redirect_link = undefined
-    if(check_current_url('sight')){
-        redirect_link = 'sights'
-    }else if(check_current_url('food')){
-        redirect_link = 'foods'
-    }else{
-        redirect_link='shops'
-    }
 
-    // control the stars
-    $('.select-star-js').each(function(){
-    let star = $(this);
-  
-    star.on('click', function(){
-        console.log(item_data)
-        let img = star.find('img');
-        let link = img.attr('src')
-        if (link === lit) {
-            img.attr('src', unlit);
-            // delete the collection
-            starry(redirect_link,'delete')
+    $('.connect-js').each(function(){
+        let connect_button = $(this)
+
+        connect_button.on('click',function(){
+            console.log(current_user,target_user,action)
+            follow_unfollow()
             
-            // add collection
-        } else {
-            img.attr('src', lit);
-            starry(redirect_link,'create')    
-        }
-        location.reload()
+        })
     })
-})
 })

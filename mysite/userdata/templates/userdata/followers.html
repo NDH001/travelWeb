@@ -19,12 +19,13 @@
 
     <div class=follower-name>
         <h2>{{connection.follower}}</h2>
+        {{connection.is_following}}
     </div>
     <div class=follower-action>
         {% if following %}
-        <input class="connect-js" type="button" value="Unfollow" onclick="connect('{{connection.follower}}','unfollow')">
+        <input class="connect-js" type="button" value="Unfollow" onclick="get_data('{{connection.user}}','{{connection.follower}}','unfollow')">
         {% else %}
-        <input class="connect-js" type="button" value="Follow" onclick="connect('{{connection.follower}}','follow')">
+        <input class="connect-js" type="button" value="Follow" onclick="get_data('{{connection.user}}','{{connection.follower}}','follow')">
         {% endif %}
     </div>
 </div>

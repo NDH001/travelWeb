@@ -226,43 +226,47 @@ class Unfollow(Connect):
 # connection view
 
 
-class FollowersView(ListView):
-    template_name = "userdata/followers.html"
-    context_object_name = "connections"
-    paginate_by = 10
+# class FollowersView(ListView):
+#     template_name = "userdata/followers.html"
+#     context_object_name = "connections"
+#     paginate_by = 10
 
-    def get_queryset(self) -> QuerySet[Any]:
-        # connections = Connection.objects.filter(
-        #     user=self.kwargs.get("pk")
-        # ).select_related("user", "follower", "follower__profile")
+#     def get_queryset(self) -> QuerySet[Any]:
+#         # connections = Connection.objects.filter(
+#         #     user=self.kwargs.get("pk")
+#         # ).select_related("user", "follower", "follower__profile")
 
-        # connections = connections.annotate(
-        #     is_following=Case(
-        #         When(follower_id=self.request.user.id, then=True),
-        #         default=False,
-        #         output_field=BooleanField(),
-        #     )
-        # )
-        # print(connections)
+#         # connections = connections.annotate(
+#         #     is_following=Case(
+#         #         When(follower_id=self.request.user.id, then=True),
+#         #         default=False,
+#         #         output_field=BooleanField(),
+#         #     )
+#         # )
+#         # print(connections)
 
-        connections = Connection.objects.all()
+#         connections = Connection.objects.all()
 
-        connections = connections.annotate(
-            is_following=Case(
-                When(follower_id=self.request.user.id, then=True),
-                default=False,
-                output_field=BooleanField(),
-            )
-        )
+#         connections = connections.annotate(
+#             is_following=Case(
+#                 When(follower_id=self.request.user.id, then=True),
+#                 default=False,
+#                 output_field=BooleanField(),
+#             )
+#         )
 
-        connections = connections.filter(user=self.request.user.id)
+#         for i, connect in enumerate(connections):
+#             if connect.is_following:
+#                 print(i, "\n")
+#                 print(connect.user, connect.follower)
+#         connections = connections.filter(user=self.request.user.id)
 
-        return connections
+#         return connections
 
 
-class FollowingView(ListView):
-    template_name = "userdata/following.html"
-    context_object_name = "following"
+# class FollowingView(ListView):
+#     template_name = "userdata/following.html"
+#     context_object_name = "following"
 
-    def get_queryset(self) -> QuerySet[Any]:
-        return Connection.objects.filter(follower=self.kwargs.get("pk"))
+#     def get_queryset(self) -> QuerySet[Any]:
+#         return Connection.objects.filter(follower=self.kwargs.get("pk"))

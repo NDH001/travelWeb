@@ -88,8 +88,8 @@ DATABASES = {
         "NAME": os.environ.get("DBNAME"),
         "USER": os.environ.get("DBUSER"),
         "PASSWORD": os.environ.get("DBPASS"),
-        "PORT": "5433",
-        "HOST": "localhost",
+        "PORT": "80",
+        "HOST": "0.0.0.0",
         "OPTIONS": {
             "options": "-c search_path=django,traveldata,userdata,journingdata,collectiondata"
         },

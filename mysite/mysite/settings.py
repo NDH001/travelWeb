@@ -89,7 +89,7 @@ DATABASES = {
         "USER": os.environ.get("DBUSER"),
         "PASSWORD": os.environ.get("DBPASS"),
         "PORT": "5432",
-        "HOST": "54.179.176.85",
+        "HOST": "127.0.0.0",  # "54.179.176.85",
         "OPTIONS": {
             "options": "-c search_path=django,traveldata,userdata,journingdata,collectiondata"
         },

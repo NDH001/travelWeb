@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-cnx-#u)zic*@-u%!&+3y-rvg9=q3w6ten%+(y+vbbcvhvs(9@w
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    # "54.179.176.85",
+    "18.139.145.4",
     # "db-jun-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com",
 ]
 

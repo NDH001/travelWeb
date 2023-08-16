@@ -92,7 +92,7 @@ DATABASES = {
         "USER": os.environ.get("DBUSER"),
         "PASSWORD": os.environ.get("DBPASS"),
         "PORT": "5432",
-        "HOST": "127.0.0.1",  # "db-jun-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com",
+        "HOST": "localhost",  # "db-jun-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com",
         "OPTIONS": {
             "options": "-c search_path=django,traveldata,userdata,journingdata,collectiondata"
         },

@@ -27,8 +27,8 @@ SECRET_KEY = "django-insecure-cnx-#u)zic*@-u%!&+3y-rvg9=q3w6ten%+(y+vbbcvhvs(9@w
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "54.179.176.85",
-    "db-jun-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com",
+    # "54.179.176.85",
+    # "db-jun-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com",
 ]
 
 
@@ -92,7 +92,7 @@ DATABASES = {
         "USER": os.environ.get("DBUSER"),
         "PASSWORD": os.environ.get("DBPASS"),
         "PORT": "5432",
-        "HOST": "db-jun-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com",
+        "HOST": "127.0.0.0",  # "db-jun-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com",
         "OPTIONS": {
             "options": "-c search_path=django,traveldata,userdata,journingdata,collectiondata"
         },

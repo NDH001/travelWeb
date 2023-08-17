@@ -43,14 +43,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "storages"
-    # "debug_toolbar",
+    "storages",
+    "debug_toolbar",
     # "crispy_forms",
     # "crispy_bootstrap4",
 ]
 
 MIDDLEWARE = [
-    # "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -91,8 +91,8 @@ DATABASES = {
         "NAME": os.environ.get("DBNAME"),
         "USER": os.environ.get("DBUSER"),
         "PASSWORD": os.environ.get("DBPASS"),
-        "PORT": "5432",
-        "HOST": "db-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com",
+        "PORT": "5433",
+        "HOST": "localhost",
         "OPTIONS": {
             "options": "-c search_path=public,django,traveldata,userdata,journingdata,collectiondata"
         },

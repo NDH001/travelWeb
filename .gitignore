@@ -160,7 +160,4 @@ cython_debug/
 #.idea/
 
 *imgs
-*logos
-*icons
 *vidoes
-*.sql

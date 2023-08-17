@@ -26,10 +26,7 @@ SECRET_KEY = "django-insecure-cnx-#u)zic*@-u%!&+3y-rvg9=q3w6ten%+(y+vbbcvhvs(9@w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "18.139.145.4",
-    # "db-jun-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com",
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -88,13 +85,13 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "journing",  # os.environ.get("DBNAME"),
-        "USER": "postgres",  # os.environ.get("DBUSER"),
-        "PASSWORD": "Forwhat000!",  # os.environ.get("DBPASS"),
+        "NAME": os.environ.get("DBNAME"),
+        "USER": os.environ.get("DBUSER"),
+        "PASSWORD": os.environ.get("DBPASS"),
         "PORT": "5432",
         "HOST": "db-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com",
         "OPTIONS": {
-            "options": "-c search_path=django,traveldata,userdata,journingdata,collectiondata"
+            "options": "-c search_path=public,django,traveldata,userdata,journingdata,collectiondata"
         },
     }
 }

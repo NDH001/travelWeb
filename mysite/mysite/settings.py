@@ -88,11 +88,11 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DBNAME"),
-        "USER": os.environ.get("DBUSER"),
-        "PASSWORD": os.environ.get("DBPASS"),
-        "PORT": "",
-        "HOST": "localhost",  # "db-jun-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com",
+        "NAME": "journing",  # os.environ.get("DBNAME"),
+        "USER": "postgres",  # os.environ.get("DBUSER"),
+        "PASSWORD": "Forwhat000!",  # os.environ.get("DBPASS"),
+        "PORT": "5432",
+        "HOST": "db-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com",
         "OPTIONS": {
             "options": "-c search_path=django,traveldata,userdata,journingdata,collectiondata"
         },
@@ -165,3 +165,13 @@ MEDIA_URL = "/media/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 INTERNAL_IPS = ["127.0.0.1"]
+
+AWS_ACCESS_KEY_ID = "AKIAXOKFZM4I6JHAKUDQ"
+AWS_SECRET_ACCESS_KEY = "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"
+AWS_STORAGE_BUCKET_NAME = "journingbucket"
+AWS_S3_SIGNATURE_NAME = ("s3v4",)
+AWS_S3_REGION_NAME = "ap-southeast-1"
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_S3_VERITY = True
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"

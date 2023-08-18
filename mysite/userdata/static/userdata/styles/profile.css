@@ -3,7 +3,6 @@
     .profile{
         grid-template-columns: 1fr 1fr 1fr 1fr 80px 80px;
         font-size: 10px;
-        background-color: pink;
 
     }
     .profile-pic-container img{
@@ -70,7 +69,6 @@
     margin-top:80px;
     padding: 5px 20px;
     width: 80%;
-    background-color: pink;
     grid-template-rows: 5fr 1fr 2fr;
     row-gap: 20px;
     border-radius: 10px;

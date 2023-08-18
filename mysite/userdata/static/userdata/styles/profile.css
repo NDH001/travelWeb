@@ -1,3 +1,68 @@
+@media (min-width:400px){
+    
+    .profile{
+        grid-template-columns: 1fr 1fr 1fr 1fr 80px 80px;
+        font-size: 10px;
+        background-color: pink;
+
+    }
+    .profile-pic-container img{
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+    }
+
+    #profile-edit,#profile-logout{
+        height: 25px;
+        width: 80%;
+        font-size: 10px;
+    }
+    .edit-field{
+        padding-left: 25px;
+    }
+
+    .mid-stack{
+        font-size: small;
+    }
+
+    .bot-stack{
+        padding-top: 15px;
+        font-size: small;
+        padding-bottom: 15px;
+    }
+}
+@media (min-width:1000px){
+    
+    .profile{
+        grid-template-columns: 300px 300px 300px 300px 1fr 1fr;
+        font-size: larger;
+
+    }
+    .profile-pic-container img{
+        width: 150px;
+        height: 150px;
+        border-radius: 100px;
+    }
+
+    #profile-edit,#profile-logout{
+        height: 45px;
+        width: 80%;
+        font-size: 15px;
+    }
+
+    .edit-field{
+        padding-left: 50px;
+    }
+    .mid-stack{
+        font-size: larger;
+    }
+    .bot-stack{
+        padding-top: 50px;
+        font-size: large;
+        padding-bottom: 50px;
+    }
+}
+
 .all-stack{
     display:flex;
     flex-direction: column;
@@ -5,6 +70,7 @@
     margin-top:80px;
     padding: 5px 20px;
     width: 80%;
+    background-color: pink;
     grid-template-rows: 5fr 1fr 2fr;
     row-gap: 20px;
     border-radius: 10px;
@@ -22,29 +88,18 @@
 
 .profile{
     display:grid;
-    grid-template-columns: 300px 300px 300px 300px 1fr 1fr;
     align-items: center;
     text-align: center;
     padding-top: 50px;
     
 }
 
-.profile-pic-container img{
-    width: 150px;
-    height: 150px;
-    border-radius: 100px;
-}
-
 .edit-field{
-    padding-left: 50px;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
 #profile-edit,#profile-logout{
-    height: 45px;
-    width: 80%;
-    font-size: 15px;
     font-weight: 700;
     border: None;
     border-radius: 5px;
@@ -80,11 +135,10 @@
 }
 
 
-/* top stack */
+/* bot stack */
 .bot-stack{
     background-color: rgb(31, 30, 30);
     border-radius: inherit;
-    padding-top: 50px;
     text-align: center;
 }
 

@@ -23,7 +23,11 @@
         
     }
     .pop-score{
-        font-size: 6px;
+        font-size: 12px;
+        width: 20px;
+    }
+    .score h4{
+        margin-left:3px;
     }
 
     .info-title{
@@ -34,9 +38,6 @@
         font-size: 5px;
     }
 
-    .score h4{
-        margin-left:-3px;
-    }
 }
 @media (min-width:1000px){
     header,main{

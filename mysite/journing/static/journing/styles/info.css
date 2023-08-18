@@ -6,12 +6,12 @@
     }
 
     .right{
-        font-size: 13px;
-        grid-template-rows:50px 30px 120px 40px 10px 20px;    
+        font-size: 5px;
+        grid-template-rows:50px 30px 120px 30px 10px 20px;    
     }
 
     .name{
-        font-size: 20px;
+        font-size: 7px;
         font-weight: 700;
     }
     .side-thumbnails{
@@ -23,15 +23,15 @@
         
     }
     .pop-score{
-        font-size: 15px;
+        font-size: 5px;
     }
 
     .info-title{
-        font-size: small;
+        font-size: 8px;
     }
 
     .info-desc{
-        font-size: smaller;
+        font-size: 5px;
     }
 }
 @media (min-width:1000px){

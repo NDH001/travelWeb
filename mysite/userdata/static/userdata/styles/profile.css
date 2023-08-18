@@ -140,6 +140,7 @@
     background-color: rgb(31, 30, 30);
     border-radius: inherit;
     text-align: center;
+    padding-top: 0px;
 }
 
 .tab-detail-js{
@@ -152,4 +153,8 @@
 
 #tips-detail{
     display: block;
+}
+
+.comment{
+    background-color: rgb(44, 44, 44);
 }

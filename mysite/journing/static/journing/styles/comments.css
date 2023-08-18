@@ -3,6 +3,9 @@
     .create-comment{
         padding-right: 80px;
     }
+    .comment-section{
+        font-size: 7px;
+    }
 
 }
 
@@ -11,6 +14,9 @@
     .create-comment{
         padding-right: 150px;
 
+    }
+    .comment-section{
+        font-size: 20px;
     }
 }
 a{

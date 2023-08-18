@@ -1,3 +1,18 @@
+@media (min-width:400px){
+
+    .create-comment{
+        padding-right: 80px;
+    }
+
+}
+
+@media (min-width:1000px){
+    
+    .create-comment{
+        padding-right: 150px;
+
+    }
+}
 a{
     text-decoration: none;
 }
@@ -5,7 +20,6 @@ a{
 .create-comment{
     text-align: right;
     margin-top: 50px;
-    padding-right: 420px;
 }
 
 .comment-section{

@@ -11,7 +11,7 @@
     }
 
     .name{
-        font-size: 7px;
+        font-size: 6px;
         font-weight: 700;
     }
     .side-thumbnails{
@@ -23,7 +23,7 @@
         
     }
     .pop-score{
-        font-size: 5px;
+        font-size: 6px;
     }
 
     .info-title{
@@ -32,6 +32,10 @@
 
     .info-desc{
         font-size: 5px;
+    }
+
+    .score h4{
+        margin-left:-3px;
     }
 }
 @media (min-width:1000px){
@@ -67,6 +71,9 @@
 
     .info-desc{
         font-size: large;
+    }
+    .score h4{
+        margin-left:-10px;
     }
 }
 
@@ -108,10 +115,6 @@ header{
 .right{
     display: grid;
     font-weight: 700;
-}
-
-.score h4{
-    margin-left:-10px;
 }
 
 .score, .address, .hours, .contacts,.pop {

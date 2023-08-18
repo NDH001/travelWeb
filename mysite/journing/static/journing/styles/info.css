@@ -1,13 +1,42 @@
+@media (min-width:400px){
+
+    header,main{
+        margin: 50px 30px;
+        padding: 50px 30px;
+    }
+
+    .right{
+        font-size: 10px;
+    }
+
+    .name{
+        font-size: 20px;
+        font-weight: 700;
+    }
+}
+@media (min-width:1000px){
+    header,main{
+        margin: 50px 100px;
+        padding: 50px 100px;
+    }
+    .right{
+        font-size: 20px;
+    }
+
+    .name{
+        font-size: 40px;
+        font-weight: 700;
+    }
+
+}
+
 header, main{
-    margin: 50px 100px;
-    padding: 50px 100px;
     background-color: rgb(42, 42, 42);
     border-radius: 10px;
     position: relative;
 }
 
 header{
-    padding:40px 100px;
     display: grid;
     grid-template-columns: 5fr 2fr;
 
@@ -25,11 +54,11 @@ header{
     height: 100%;
 }
 
+
 .side-thumbnails{
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
 }
-
 .side-thumbnails div img{
     padding: 0px 10px; 
     height: 150px;
@@ -40,12 +69,6 @@ header{
 .right{
     display: grid;
     grid-template-rows:1fr 50px 2fr 50px 1fr 1fr;    
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.name{
-    font-size: 40px;
     font-weight: 700;
 }
 
@@ -58,7 +81,6 @@ header{
     grid-template-columns: 1fr 5fr;
     align-items: center; 
 } 
-
 .address{
     margin-top: -30px;
 }

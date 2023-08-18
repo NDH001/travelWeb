@@ -1,3 +1,68 @@
+@media (min-width:400px){
+    .left-section{	
+		width: 300px;
+    }
+
+	.logo-container{
+		width: 230px;
+	}
+
+	.logo{
+
+		background-color:var(--black);
+		height: 100%;
+		width: 100%;
+		padding-left: 50px;
+	}
+
+	.middle-section{
+		padding-left: 50px;
+		padding-right: 50px;
+		width: 300px;
+	}
+	#search-button-js{
+
+		top: 0px;
+		right: 50px;
+	}
+
+	.right-section{
+		padding-left: 0px;
+	}
+}
+
+@media (min-width:1000px){
+    .left-section{		
+		width: 500px;
+    }
+
+	.logo-container{
+		width: 300px;
+	}
+
+	.logo{
+
+		background-color:var(--black);
+		height: 100%;
+		width: 100%;
+		padding-left: 100px;
+	}
+
+	.middle-section{	
+		width: 650px;
+		padding-left:100px;
+		padding-right:100px;
+	}	
+	#search-button-js{
+
+	top: 0px;
+	right: 100px;
+	}
+
+	.right-section{
+		padding-left: 100px;
+	}
+}
 /* set the entire page to black*/
 
 :root{
@@ -31,42 +96,6 @@ a{
 
 }
 
-@media (min-width:400px){
-    .left-section{	
-		width: 300px;
-    }
-
-	.logo-container{
-		width: 230px;
-	}
-
-	.logo{
-
-		background-color:var(--black);
-		height: 100%;
-		width: 100%;
-		padding-left: 50px;
-	}
-}
-
-@media (min-width:1000px){
-    .left-section{		
-		width: 500px;
-    }
-
-	.logo-container{
-		width: 300px;
-	}
-
-	.logo{
-
-		background-color:var(--black);
-		height: 100%;
-		width: 100%;
-		padding-left: 100px;
-	}
-}
-
 /* left section */
 
 .logo-container:hover{
@@ -77,34 +106,6 @@ a{
 /* ------------------------------- */
 
 /* middle section */
-
-@media (min-width:400px){
-
-	.middle-section{
-		padding-left: 50px;
-		padding-right: 50px;
-		width: 300px;
-	}
-	#search-button-js{
-
-		top: 0px;
-		right: 50px;
-	}
-
-}
-
-@media (min-width:1000px){
-	.middle-section{	
-		width: 650px;
-		padding-left:100px;
-		padding-right:100px;
-	}	
-	#search-button-js{
-
-	top: 0px;
-	right: 100px;
-	}
-}
 
 .middle-section{
 	display: flex;
@@ -155,18 +156,6 @@ a{
 /* ------------------------------- */
 
 /* right section */
-@media (min-width:400px){
-
-	.right-section{
-		padding: 0px;
-	}
-}
-@media (min-width:1000px){
-	.right-section{
-		padding-left: 100px;
-	}
-		
-}
 .right-section{
 	flex:3;
 	display:flex;

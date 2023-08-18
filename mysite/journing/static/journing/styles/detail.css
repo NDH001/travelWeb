@@ -1,16 +1,132 @@
 /* navbar code */
+
+@media (min-width:400px){
+    .nav-city{
+        margin-left: 50px;
+        width: 100px;
+    }
+    .nav-city h1{
+        font-size: 40px;
+    }
+    
+    .nav-innersearch{
+        margin-left:-30px;
+    }
+    
+    .nav-innernav{
+        width: 250px;
+        padding-left: 50px;
+    }
+    .nav-innernav button{
+        font-size: 15px;
+    }
+    .titles{
+        padding-left: 250px;
+        margin-top: 30px;
+        font-size: large;
+    }
+    /*address*/
+    .titles div:nth-child(2){
+        width: 100px;
+        margin-left: 100px;
+    }
+    /*popularity*/
+    .titles div:nth-child(3){
+        width: 100px;
+        margin-left:-40px
+        
+    }
+    /*score*/
+    .titles div:nth-child(4){
+        width: 100px;
+        margin-left:-30px
+    }
+
+    .individual-list{
+        font-size: 8px;
+        grid-template-columns: 1fr 100px 150px 350px 100px 100px;
+        margin: 20px 20px;
+    }
+    .individual-list div:nth-child(5){
+        font-size: 12px;
+    }
+    /* score */
+    .individual-list div:nth-child(6){
+        font-size: 12px;
+    }
+
+    .select-star-js{
+        margin-top:-40px;
+    }
+}
+
+@media (min-width:1000px){
+    .nav-city{
+        margin-left: 100px;
+    }
+    .nav-city h1{
+        font-size: 50px;
+    }
+    .nav-innernav{
+        width: 400px;
+        padding-left: 0px;
+    }
+    .nav-innernav button{
+
+        font-size: 20px;
+    }
+    .titles{
+        padding-left: 550px;
+        font-size: xx-large;
+        margin-top: 100px;
+    }
+    /*star*/
+    .titles div:nth-child(2){
+        width: 450px;
+        margin-left: 50px;
+    }
+    /*attractions*/
+    .titles div:nth-child(3){
+        width: 200px;
+        margin-left: -190px;    
+    }
+    /*address*/
+    .titles div:nth-child(4){
+        width: 200px;
+        margin-left: -150px; 
+    }
+
+    .individual-list{
+        font-size: 12px;
+        grid-template-columns: 1fr 1fr 2fr 2fr 1fr 1fr;
+        margin: 20px 100px;
+    }
+    /* pop */
+    .individual-list div:nth-child(5){
+        font-size: 20px;
+    }
+    /* score */
+    .individual-list div:nth-child(6){
+        font-size: 20px;
+    }
+
+    .select-star-js{
+
+        margin-left:120px;
+        margin-top:-40px;
+    }
+}
+
 .main-nav{
     display: grid;
     grid-template-columns: 2fr 5fr 2fr;
     align-items: center;
+    width: 100%;
 }
 
 /* navbar left */
 .nav-city h1{
     color: inherit;
-    font-size: 50px;
-    text-align: center;
-    padding-left: 50px;
 }
 
 /* navbar middle */
@@ -23,7 +139,6 @@
 .nav-innersearch input{
     color:white;
     height: 40px;
-    margin: 0px 150px;
     border: 1px solid rgb(61, 60, 60);
     border-radius: 15px;
     padding-left: 20px;
@@ -38,7 +153,7 @@
 }
 
 .nav-innersearch img{
-    margin-left: -200px;
+    margin-left: -50px;
     width: 15%; 
 }
 
@@ -46,13 +161,11 @@
 .nav-innernav{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    width: 400px;
     margin-left: -100px;
 }
 
 .nav-innernav button{
     background-color: gray;
-    font-size: 20px;
     font-weight: 700;
     border: 1px solid white;
     padding: 5px 5px;
@@ -65,32 +178,13 @@
 }
 
 /* titles */
-
 .titles{
-    font-size: xx-large;
     font-weight: 700;
     display: grid;
     grid-template-columns: 1fr 2fr 0.5fr 0.5fr;
     text-align: center;
-    padding-left: 550px;
-    margin-top: 100px;
 }
 
-/*address*/
-.titles div:nth-child(2){
-    width: 450px;
-    margin-left: 50px;
-}
-/*popularity*/
-.titles div:nth-child(3){
-    width: 200px;
-    margin-left: -190px;    
-}
-/*address*/
-.titles div:nth-child(4){
-    width: 200px;
-    margin-left: -150px; 
-}
 
 /* main display */
 
@@ -98,13 +192,9 @@
     display: grid;
     align-items: center;
     text-align: center;
-    font-size: 12px;
-    grid-template-columns: 1fr 1fr 2fr 2fr 1fr 1fr;
     background-color: rgb(36, 36, 36);
-    margin: 20px 100px;
     border-radius: 10px;
 }
-
 
 .individual-list img{
     margin:20px;
@@ -112,18 +202,10 @@
     border-radius: 5px;
 }
 
-.individual-list div:nth-child(5){
-    font-size: 20px;
-}
-.individual-list div:nth-child(6){
-    font-size: 20px;
-}
 
 .select-star-js{
     width: 50px;
     height: 50px;
-    margin-left:120px;
-    margin-top:-40px;
 }
 .select-star-js:hover{
     cursor: pointer;

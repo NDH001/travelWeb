@@ -21,6 +21,8 @@ from .models import Connection
 from journing.models import Comment
 from journing.decorator import ajax_check_login
 
+from django.urls import reverse_lazy
+
 
 # Create your views here.
 
@@ -28,7 +30,7 @@ from journing.decorator import ajax_check_login
 class UserLoginView(FormView):
     template_name = "userdata/login.html"
     form_class = UserLoginForm
-    success_url = "/index"
+    success_url = reverse_lazy("journing:index")
 
     def get(self, request):
         form = self.form_class()
@@ -53,7 +55,8 @@ class UserLoginView(FormView):
 class UserRegisterView(FormView):
     template_name = "userdata/register.html"
     form_class = UserRegForm
-    success_url = "/index"
+
+    success_url = reverse_lazy("journing:index")
 
     def get(self, request):
         form = self.form_class()
@@ -111,7 +114,8 @@ class EditProfileView(FormView):
     template_name = "userdata/edit_profile.html"
     user_form_class = UserUpdateForm
     profile_form_class = ProfileUpdateForm
-    success_url = "/index"
+
+    success_url = reverse_lazy("journing:index")
 
     def get(self, request, *args, **kwargs):
         u_form = self.user_form_class(instance=request.user)

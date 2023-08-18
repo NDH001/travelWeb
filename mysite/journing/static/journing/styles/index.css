@@ -77,30 +77,34 @@
 /* ------------------------------------------------ */
 
 @media (min-width:400px){
-    #index-main-js{
+    .index-main-first-page{
         grid-template-columns: 1fr;
         margin-top: 50px;
+    }
+    .index-main-not-first-page{
+        grid-template-columns: 1fr;
     }
 }
 
 @media (min-width:1000px){
-    #index-main-js{
+    .index-main-first-page{
         grid-template-columns: 1fr 1fr;
         margin-top: 500px;
+    }
+    .index-main-not-first-page{
+        grid-template-columns: 1fr 1fr;
     }
 }
 
 /* main grid elements */
 .index-main-first-page{
     display: grid;
-    grid-template-columns: 1fr 1fr;
     background-color:rgba(0, 0, 0, 0.415);
     padding-top: 100px;
 }
 
 .index-main-not-first-page{
     display: grid;
-    grid-template-columns: 1fr 1fr;
     background-color:rgba(0, 0, 0, 0.415);
 }
 

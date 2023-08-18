@@ -1,0 +1,36 @@
+.follower{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 600px;
+    margin: auto;
+    row-gap: 20px;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom:20px;
+    padding: 10px 0px;
+    background-color: rgb(30,30,30);
+    border-radius: 15px;
+}
+
+.follower-profile-div{
+    height: 100px;
+    width: 100px;
+    margin: auto;
+    margin-top:20px;
+}
+
+.follower-profile-div img{
+    width: 100%;
+    height: 100%;
+    border-radius:50px;
+}
+
+.connect-js{
+    font-size: larger;
+    padding: 8px 10px;
+    background-color: pink;
+    border: none;
+    border-radius: 3px;
+    
+}

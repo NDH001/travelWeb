@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-cnx-#u)zic*@-u%!&+3y-rvg9=q3w6ten%+(y+vbbcvhvs(9@w"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["13.250.194.206"]
+ALLOWED_HOSTS = ["13.250.194.206","www.journing.co","journing.co"]
 
 
 # Application definition
@@ -88,11 +88,11 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DBNAME"),
-        "USER": os.environ.get("DBUSER"),
-        "PASSWORD": os.environ.get("DBPASS"),
-        "PORT": "5432",
-        "HOST": "db-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com",
+        "NAME":'journing',
+        'USER':'postgres',
+        'PASSWORD':'Forwhat000!',
+        'PORT':'5432',
+        'HOST':'db-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com',
         "OPTIONS": {
             "options": "-c search_path=public,django,traveldata,userdata,journingdata,collectiondata"
         },

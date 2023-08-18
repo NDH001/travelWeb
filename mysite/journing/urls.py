@@ -6,7 +6,7 @@ from . import views
 app_name = "journing"
 urlpatterns = [
     # -----------------------------------------------------------------------------------------------------#
-    path("index/", views.HomepageView.as_view(), name="index"),
+    path("", views.HomepageView.as_view(), name="index"),
     # -----------------------------------------------------------------------------------------------------#
     path("sights/<slug:slug>/", views.SightsListView.as_view(), name="sights_list"),
     path("foods/<slug:slug>/", views.FoodsListView.as_view(), name="foods_list"),

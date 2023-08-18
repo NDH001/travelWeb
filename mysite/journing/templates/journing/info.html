@@ -61,9 +61,9 @@
     {% autoescape off %}
     {% for i in info%}
 
-        <div> <h1>{{i.0}} </h1></div>
+        <div class='info-title'> <h1>{{i.0}} </h1></div>
 
-        <div>{{i.1}}</div>
+        <div class='info-desc'>{{i.1}}</div>
         <br>
 
     {% endfor%}

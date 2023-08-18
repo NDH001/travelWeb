@@ -1,7 +1,7 @@
 @media (min-width:400px){
     
     .profile{
-        grid-template-columns: 1fr 1fr 1fr 1fr 80px 80px;
+        grid-template-columns: 200px 150px 100px 100px 80px 80px;
         font-size: 10px;
 
     }
@@ -15,19 +15,25 @@
         height: 25px;
         width: 80%;
         font-size: 10px;
+        margin-left: 20px;
     }
     .edit-field{
         padding-left: 25px;
+        font-size: 13px;
     }
 
     .mid-stack{
-        font-size: small;
+        font-size: 10px;
     }
 
     .bot-stack{
         padding-top: 15px;
-        font-size: small;
+        font-size: 10px;
         padding-bottom: 15px;
+    }
+
+    .comment{
+        font-size: 7px;
     }
 }
 @media (min-width:1000px){
@@ -59,6 +65,9 @@
         padding-top: 50px;
         font-size: large;
         padding-bottom: 50px;
+    }
+    .comment{
+        font-size: 20px;
     }
 }
 
@@ -155,4 +164,5 @@
 
 .comment{
     background-color: rgb(44, 44, 44);
+    
 }

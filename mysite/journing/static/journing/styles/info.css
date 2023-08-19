@@ -6,14 +6,13 @@
     }
 
     .right{
-        font-size: 5px;
-        grid-template-rows:80px 30px 80px 30px 10px 20px;    
+        font-size: 14px;
+        grid-template-rows:2fr 1fr 2fr 1fr 1fr 2fr;
     }
 
     .name{
         font-size: 18px;
         font-weight: 700;
-        background-color: pink;
     }
     .side-thumbnails{
         display: grid;

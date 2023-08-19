@@ -55,7 +55,7 @@ function starry(redirect_link,action){
             },
             error: function(xhr, status, error) {
                 console.error('Error posting data to Django server:', error);
-                window.location.href=response.login_url
+                window.location.href='/accounts/login/'
             }
         })
 }

@@ -161,6 +161,5 @@ cython_debug/
 
 *imgs
 *vidoes
-/mysite/mysite/settings.py
 /mysite/mysite
 /mysite/static

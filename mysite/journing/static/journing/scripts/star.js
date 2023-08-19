@@ -49,7 +49,7 @@ function starry(redirect_link,action){
             success:function(response){
                if (response.message === 'login_required'){
                     console.log(response,response.message,response.login_url)
-                   window.location.href=response.login_url
+                //    window.location.href=response.login_url
                 }
             },
             error: function(xhr, status, error) {

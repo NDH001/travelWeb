@@ -163,3 +163,4 @@ cython_debug/
 *vidoes
 /mysite/mysite/settings.py
 /mysite/mysite
+/mysite/static

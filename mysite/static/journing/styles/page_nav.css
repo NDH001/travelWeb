@@ -3,6 +3,10 @@
     padding: 20px 0px;
     text-align: center;
     font-size: 35px;
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
 }
 
 .page{

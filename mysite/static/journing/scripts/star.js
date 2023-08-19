@@ -8,6 +8,7 @@ function get_data(item_id,user_id){
 
 
 function check_current_url(name){
+
     let current_url = window.location.href
     if (current_url.indexOf(name)!==-1){
         return true
@@ -54,6 +55,7 @@ function starry(redirect_link,action){
             },
             error: function(xhr, status, error) {
                 console.error('Error posting data to Django server:', error);
+                window.location.href='/accounts/login/'
             }
         })
 }

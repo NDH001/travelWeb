@@ -34,7 +34,3 @@ function init_page_nav(){
 }
 
 init_page_nav()
-
-function show_page_nav(){
-
-}

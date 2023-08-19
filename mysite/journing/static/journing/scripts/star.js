@@ -8,8 +8,9 @@ function get_data(item_id,user_id){
 
 
 function check_current_url(name){
+
     let current_url = window.location.href
-    console.log(current_url)
+    console.log('im in 2',current_url)
     if (current_url.indexOf(name)!==-1){
         return true
     }
@@ -62,6 +63,7 @@ function starry(redirect_link,action){
 $(document).ready(function(){
 // set the redirect link based on the where the current page is
     let redirect_link = undefined
+    console.log('im in 1')
     if(check_current_url('sight')){
         redirect_link = 'sights'
     }else if(check_current_url('food')){
@@ -76,6 +78,7 @@ $(document).ready(function(){
   
     star.on('click', function(){
         console.log(item_data)
+        console.log('im in 3',redirect_link)
         let img = star.find('img');
         let link = img.attr('src')
         if (link === lit) {

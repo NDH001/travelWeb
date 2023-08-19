@@ -1,0 +1,51 @@
+{% extends 'journing/base.html'%}
+{% load static %}
+
+{% block headcontent%}
+<link rel='stylesheet' href="{% static 'userdata/styles/connection.css'%}">
+<link rel='stylesheet' href="{% static 'journing/styles/page_nav.css'%}">
+{% endblock headcontent%}
+
+{% block content%}
+
+
+
+{% for connection in connections%}
+
+<div class=connection > 
+    <div class=connection-profile-div>
+        {% block profile-pic %}
+            {% comment %} <img src="{{connection.follower.profile.profile_pic.url}}"></img> {% endcomment %}
+        {% endblock profile-pic%}
+    </div>
+
+    <div class=connection-name>
+        {% block name%}
+        {% comment %} <h2>{{connection.follower}}</h2> {% endcomment %} 
+        {% endblock name%}
+    </div>
+    <div class=connection-action>
+
+        {% block button%}
+        {% comment %} {% if connection.follower.id in following %}
+        <input id='unfollow-connect' class="connect-js" type="button" value="Unfollow" onclick="get_data('{{connection.user}}','{{connection.follower}}','unfollow')">
+        {% else %}
+        <input id='follow-connect' class="connect-js" type="button" value="Follow" onclick="get_data('{{connection.user}}','{{connection.follower}}','follow')">
+        {% endif %} {% endcomment %}
+        {% endblock button%}
+
+
+    </div>
+</div>
+
+
+{% endfor %}
+
+{% include 'journing/page_nav.html'%}
+{% endblock content%}
+
+{% block jscontent%}
+<script src="{% static 'userdata/scripts/connection.js'%}"></script>
+{% endblock jscontent%}
+
+

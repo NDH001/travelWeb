@@ -17,6 +17,6 @@ urlpatterns = [
     ),
     path("connection/peek/follow/", views.Follow.as_view(), name="follow"),
     path("connection/peek/unfollow/", views.Unfollow.as_view(), name="unfollow"),
-    # path("followers/<str:pk>/", views.FollowersView.as_view(), name="view_followers"),
-    # path("following/<str:pk>/", views.FollowingView.as_view(), name="view_following"),
+    path("followers/<str:pk>/", views.FollowersView.as_view(), name="view_followers"),
+    path("following/<str:pk>/", views.FollowingView.as_view(), name="view_following"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

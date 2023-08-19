@@ -1,7 +1,7 @@
 from typing import Any, Callable, Dict, Optional
 from django.db import models
 from django.db.models.query import QuerySet
-from django.db.models import Exists, OuterRef, Case, When, BooleanField
+from django.db.models import F, Exists
 from django.shortcuts import render
 from django.views.generic.edit import FormView
 from django.core import serializers
@@ -230,47 +230,43 @@ class Unfollow(Connect):
 # connection view
 
 
-# class FollowersView(ListView):
-#     template_name = "userdata/followers.html"
-#     context_object_name = "connections"
-#     paginate_by = 10
+class FollowersView(ListView):
+    template_name = "userdata/followers.html"
+    context_object_name = "connections"
+    paginate_by = 13
 
-#     def get_queryset(self) -> QuerySet[Any]:
-#         # connections = Connection.objects.filter(
-#         #     user=self.kwargs.get("pk")
-#         # ).select_related("user", "follower", "follower__profile")
+    def get_queryset(self) -> QuerySet[Any]:
+        followers = Connection.objects.filter(
+            user_id=self.kwargs.get("pk")
+        ).select_related("user", "follower__profile")
 
-#         # connections = connections.annotate(
-#         #     is_following=Case(
-#         #         When(follower_id=self.request.user.id, then=True),
-#         #         default=False,
-#         #         output_field=BooleanField(),
-#         #     )
-#         # )
-#         # print(connections)
+        return followers
 
-#         connections = Connection.objects.all()
-
-#         connections = connections.annotate(
-#             is_following=Case(
-#                 When(follower_id=self.request.user.id, then=True),
-#                 default=False,
-#                 output_field=BooleanField(),
-#             )
-#         )
-
-#         for i, connect in enumerate(connections):
-#             if connect.is_following:
-#                 print(i, "\n")
-#                 print(connect.user, connect.follower)
-#         connections = connections.filter(user=self.request.user.id)
-
-#         return connections
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        following = list(
+            Connection.objects.filter(follower=self.kwargs.get("pk")).values_list(
+                "user", flat=True
+            )
+        )
+        context["following"] = following
+        return context
 
 
-# class FollowingView(ListView):
-#     template_name = "userdata/following.html"
-#     context_object_name = "following"
+class FollowingView(ListView):
+    template_name = "userdata/following.html"
+    context_object_name = "connections"
+    paginate_by = 13
 
-#     def get_queryset(self) -> QuerySet[Any]:
-#         return Connection.objects.filter(follower=self.kwargs.get("pk"))
+    def get_queryset(self) -> QuerySet[Any]:
+        return Connection.objects.filter(follower=self.kwargs.get("pk"))
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        following = list(
+            Connection.objects.filter(user=self.kwargs.get("pk")).values_list(
+                "follower", flat=True
+            )
+        )
+        context["following"] = following
+        return context

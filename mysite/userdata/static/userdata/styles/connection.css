@@ -1,4 +1,4 @@
-.follower{
+.connection{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     width: 600px;
@@ -13,14 +13,14 @@
     border-radius: 15px;
 }
 
-.follower-profile-div{
+.connection-profile-div{
     height: 100px;
     width: 100px;
     margin: auto;
     margin-top:20px;
 }
 
-.follower-profile-div img{
+.connection-profile-div img{
     width: 100%;
     height: 100%;
     border-radius:50px;
@@ -29,8 +29,16 @@
 .connect-js{
     font-size: larger;
     padding: 8px 10px;
-    background-color: pink;
     border: none;
     border-radius: 3px;
+    font-weight: 700;
     
+}
+
+#follow-connect{
+    background-color: rgb(188, 245, 188);
+}
+
+#unfollow-connect{
+    background-color: rgb(243, 165, 165);
 }

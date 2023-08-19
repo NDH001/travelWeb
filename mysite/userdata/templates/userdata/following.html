@@ -1,22 +1,19 @@
-{% extends 'journing/base.html'%}
-{% load static %}
+{% extends 'userdata/connections.html'%}
 
-{% block headcontent%}
-{% endblock headcontent%}
+{% block profile-pic%}
+<img src="{{connection.user.profile.profile_pic.url}}"></img>
+{% endblock profile-pic%}
 
-{% block content%}
+{% block name %}
+<h2>{{connection.user}}</h2> 
+{% endblock name%}
 
+{% block button%}
 
+{% if connection.user.id in following %}
+<input id='unfollow-connect' class="connect-js" type="button" value="Unfollow" onclick="get_data('{{connection.user}}','{{connection.follower}}','unfollow')">
+{% else %}
+<input id='follow-connect' class="connect-js" type="button" value="Follow" onclick="get_data('{{connection.user}}','{{connection.follower}}','follow')">
+{% endif %} 
 
-{{following}}
-
-
-
-
-
-
-
-{% endblock content%}
-
-
-
+{% endblock %}

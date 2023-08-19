@@ -1,43 +1,19 @@
-{% extends 'journing/base.html'%}
-{% load static %}
+{% extends 'userdata/connections.html'%}
 
-{% block headcontent%}
-<link rel='stylesheet' href="{% static 'userdata/styles/connection.css'%}">
-<link rel='stylesheet' href="{% static 'journing/styles/page_nav.css'%}">
-{% endblock headcontent%}
+{% block profile-pic%}
+<img src="{{connection.follower.profile.profile_pic.url}}"></img>
+{% endblock profile-pic%}
 
-{% block content%}
+{% block name %}
+<h2>{{connection.follower}}</h2> 
+{% endblock name%}
 
+{% block button%}
 
+{% if connection.follower.id in following %}
+<input id='unfollow-connect' class="connect-js" type="button" value="Unfollow" onclick="get_data('{{connection.user}}','{{connection.follower}}','unfollow')">
+{% else %}
+<input id='follow-connect' class="connect-js" type="button" value="Follow" onclick="get_data('{{connection.user}}','{{connection.follower}}','follow')">
+{% endif %} 
 
-{% for connection in connections%}
-
-<div class=follower > 
-    <div class=follower-profile-div>
-        <img src="{{connection.follower.profile.profile_pic.url}}"></img>
-    </div>
-
-    <div class=follower-name>
-        <h2>{{connection.follower}}</h2>
-        {{connection.is_following}}
-    </div>
-    <div class=follower-action>
-        {% if following %}
-        <input class="connect-js" type="button" value="Unfollow" onclick="get_data('{{connection.user}}','{{connection.follower}}','unfollow')">
-        {% else %}
-        <input class="connect-js" type="button" value="Follow" onclick="get_data('{{connection.user}}','{{connection.follower}}','follow')">
-        {% endif %}
-    </div>
-</div>
-
-
-{% endfor %}
-
-{% include 'journing/page_nav.html'%}
-{% endblock content%}
-
-{% block jscontent%}
-<script src="{% static 'userdata/scripts/connection.js'%}"></script>
-{% endblock jscontent%}
-
-
+{% endblock %}

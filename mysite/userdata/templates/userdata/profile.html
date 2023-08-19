@@ -26,17 +26,17 @@
             <div class='profile-followers'>
                 <h1>Followers</h1>
                 <br>
-                {% comment %} <a href="{% url 'userdata:view_followers' user.id%}"> {% endcomment %}
+                <a href="{% url 'userdata:view_followers' user.id%}">
                     <h2>{{followers}}</h2>
-                {% comment %} </a> {% endcomment %}
+                </a>
             </div>
 
             <div class='profile-following'>
                 <h1>Following</h1>
                 <br>
-                {% comment %} <a href="{% url 'userdata:view_following' user.id%}"> {% endcomment %}
+                <a href="{% url 'userdata:view_following' user.id%}">
                     <h2>{{following}}</h2>
-                {% comment %} </a> {% endcomment %}
+                </a>
             </div>
 
             <button type='button' id='profile-edit'> Edit profile</button>

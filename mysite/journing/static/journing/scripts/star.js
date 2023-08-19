@@ -9,6 +9,7 @@ function get_data(item_id,user_id){
 
 function check_current_url(name){
     let current_url = window.location.href
+    console.log(current_url)
     if (current_url.indexOf(name)!==-1){
         return true
     }
@@ -87,7 +88,7 @@ $(document).ready(function(){
             img.attr('src', lit);
             starry(redirect_link,'create')    
         }
-        location.reload()
+        // location.reload()
     })
 })
 })

@@ -10,7 +10,6 @@ function get_data(item_id,user_id){
 function check_current_url(name){
 
     let current_url = window.location.href
-    console.log('im in 2',current_url)
     if (current_url.indexOf(name)!==-1){
         return true
     }
@@ -51,7 +50,7 @@ function starry(redirect_link,action){
             success:function(response){
                if (response.message === 'login_required'){
                     console.log(response,response.message,response.login_url)
-                //    window.location.href=response.login_url
+                   window.location.href=response.login_url
                 }
             },
             error: function(xhr, status, error) {
@@ -63,7 +62,6 @@ function starry(redirect_link,action){
 $(document).ready(function(){
 // set the redirect link based on the where the current page is
     let redirect_link = undefined
-    console.log('im in 1')
     if(check_current_url('sight')){
         redirect_link = 'sights'
     }else if(check_current_url('food')){
@@ -78,7 +76,6 @@ $(document).ready(function(){
   
     star.on('click', function(){
         console.log(item_data)
-        console.log('im in 3',redirect_link)
         let img = star.find('img');
         let link = img.attr('src')
         if (link === lit) {
@@ -91,7 +88,7 @@ $(document).ready(function(){
             img.attr('src', lit);
             starry(redirect_link,'create')    
         }
-        // location.reload()
+        location.reload()
     })
 })
 })

@@ -142,7 +142,7 @@ def add_connection():
 
     seen = set()
     count = 0
-    for i in range(1000):
+    for i in range(5000):
         print(i)
 
         ur = random.randint(0, len(user1) - 1)

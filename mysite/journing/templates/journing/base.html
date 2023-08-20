@@ -37,8 +37,22 @@
 		{% comment %} right section {% endcomment %}
 			<div class="right-section nav-bar">	
 				<a href='#'><img class="list-button-img" src="{% static 'journing/icons/journal.png' %}"/></a>
-				<a href='#'><img class="noti-button-img" src="{% static 'journing/icons/bell.png' %}" /></a>
-				
+				{% if user.notification_set.all%}
+				<div class='noti-button-div'><img class="noti-button-img" src="{% static 'journing/icons/bell.png' %}" >
+				<div class='dot'> </div>
+				</div>
+
+					<div class='all-noti-js'>
+						
+						{% for noti in user.notification_set.all %}
+							<div class='noti-js'> {{noti}}</div>
+
+						{% endfor %}
+					</div>
+				{% else %}
+					<a href='#'><img class="noti-button-img" src="{% static 'journing/icons/bell.png' %}" /></a>
+				{% endif%}
+								
 		{% comment %} authenticated {% endcomment %}
 				{% if user.is_authenticated%}
 
@@ -61,6 +75,8 @@
 {% comment %} default js {% endcomment %}
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<script src="{% static 'journing/scripts/search.js'%}"></script>
+		<script src="{% static 'journing/scripts/noti.js'%}"></script>
+
 {% comment %} insert js here {% endcomment %}
 		{% block jscontent%}{%endblock jscontent%}
 	</body>

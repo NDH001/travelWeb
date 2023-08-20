@@ -51,4 +51,5 @@ urlpatterns = [
         views.CommentDetailView.as_view(),
         name="sight_comment_detail",
     ),
+    path("reset/notification/", views.ResetNotification.as_view(), name="reset_noti"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

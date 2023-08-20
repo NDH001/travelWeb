@@ -73,44 +73,44 @@ def create_users():
     )
     another_account.save()
 
-    # another_account = User.objects.create(
-    #     username="jun000222",
-    #     email="zhijun952@gmail.com",
-    #     password=make_password("forwhat000"),
-    # )
-    # another_account.save()
+    another_account = User.objects.create(
+        username="jun000222",
+        email="zhijun952@gmail.com",
+        password=make_password("forwhat000"),
+    )
+    another_account.save()
 
-    # another_account = User.objects.create(
-    #     username="jun000333",
-    #     email="zhijun953@gmail.com",
-    #     password=make_password("forwhat000"),
-    # )
-    # another_account.save()
+    another_account = User.objects.create(
+        username="jun000333",
+        email="zhijun953@gmail.com",
+        password=make_password("forwhat000"),
+    )
+    another_account.save()
 
-    # another_account = User.objects.create(
-    #     username="jun000444",
-    #     email="zhijun954@gmail.com",
-    #     password=make_password("forwhat000"),
-    # )
-    # another_account.save()
+    another_account = User.objects.create(
+        username="jun000444",
+        email="zhijun954@gmail.com",
+        password=make_password("forwhat000"),
+    )
+    another_account.save()
 
-    with open("users.json") as f:
-        new_users = json.load(f)
+    # with open("users.json") as f:
+    #     new_users = json.load(f)
 
-    for i, new_user in enumerate(new_users):
-        print(i)
-        print(new_user["name"], new_user["email"], new_user["password"])
-        user = User.objects.create(
-            username=new_user["name"],
-            email=new_user["email"],
-            password=make_password(new_user["password"]),
-        )
-        gender = random.randint(0, 1)
-        pic = random.randint(0, imgs_len - 1)
-        user.profile.gender = gender
-        user.profile.desc = new_user["statement"]
-        user.profile.profile_pic = "profile_pics/" + images[pic]
-        user.save()
+    # for i, new_user in enumerate(new_users):
+    #     print(i)
+    #     print(new_user["name"], new_user["email"], new_user["password"])
+    #     user = User.objects.create(
+    #         username=new_user["name"],
+    #         email=new_user["email"],
+    #         password=make_password(new_user["password"]),
+    #     )
+    #     gender = random.randint(0, 1)
+    #     pic = random.randint(0, imgs_len - 1)
+    #     user.profile.gender = gender
+    #     user.profile.desc = new_user["statement"]
+    #     user.profile.profile_pic = "profile_pics/" + images[pic]
+    #     user.save()
 
 
 def add_comments():
@@ -142,7 +142,7 @@ def add_connection():
 
     seen = set()
     count = 0
-    for i in range(5000):
+    for i in range(20):
         print(i)
 
         ur = random.randint(0, len(user1) - 1)
@@ -167,4 +167,4 @@ def add_connection():
 def create_contents():
     create_users()
     add_connection()
-    add_comments()
+    # add_comments()

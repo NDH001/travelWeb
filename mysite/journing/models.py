@@ -28,3 +28,15 @@ class Comment(models.Model):
     class Meta:
         db_table = '"journingdata"."comments"'
         ordering = ["-created_on"]
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.CharField(max_length=50, null=False)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.message)
+
+    class Meta:
+        db_table = '"journingdata"."noti"'

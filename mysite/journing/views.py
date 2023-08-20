@@ -19,7 +19,7 @@ from collectiondata.models import (
     UserFoodCollection,
     UserShopCollection,
 )
-from .models import Comment
+from .models import Comment, Notification
 
 from .decorator import ajax_check_login
 
@@ -281,3 +281,15 @@ class CommentDetailView(DetailView):
         return Comment.objects.select_related("user", "sight", "user__profile").get(
             id=self.request.GET.get("q")
         )
+
+
+# ---------------------------------------------------------------------------------------------------#
+
+
+class ResetNotification(View):
+    @ajax_check_login
+    def post(self, request, *args, **kwargs):
+        notifications = Notification.objects.filter(user=self.user)
+        notifications.delete()
+
+        return JsonResponse({"message": "Notification reset success"})

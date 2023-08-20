@@ -45,9 +45,11 @@ class Connection(models.Model):
     follower = models.ForeignKey(
         User, on_delete=models.DO_NOTHING, related_name="follower"
     )
+    followed_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"User:{str(self.user)} Follower:{str(self.follower)}"
 
     class Meta:
         db_table = '"userdata"."connection"'
+        ordering = ["-followed_on"]

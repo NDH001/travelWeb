@@ -161,11 +161,20 @@ a{
 	display:flex;
 	align-items: center;
 	justify-content: space-evenly;
+	position: relative;
 }
 
 .profile-unlogged-img,.profile-logged-img,.noti-button-img{
 	height: 40px;
 	width: 40px;
+}
+
+.noti-button-div{
+	position: relative;
+}
+
+.noti-button-div:hover{
+	cursor: pointer;
 }
 
 .profile-unlogged-img{
@@ -184,3 +193,29 @@ a{
 	width: 50px;
 }
 
+.all-noti-js{
+
+	background-color: gray;
+	color: white;
+	position: absolute;
+	bottom: -30px;
+	left:120px;
+	padding: 5px 8px;
+	border-radius: 3px;
+	display: none;
+}
+
+.noti-js{
+	background-color: rgb(18,18,18);
+	padding: 3px 5px;
+}
+
+.dot{
+	position: absolute;
+	width: 18px;
+	height: 18px;
+	background-color: red;
+	border-radius: 9px;
+	top: 0px;
+	right: 0px;
+}

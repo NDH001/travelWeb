@@ -18,7 +18,7 @@ import json
 
 from .forms import UserLoginForm, UserRegForm, UserUpdateForm, ProfileUpdateForm
 from .models import Connection
-from journing.models import Comment
+from journing.models import Notification
 from journing.decorator import ajax_check_login
 
 from django.urls import reverse_lazy
@@ -209,6 +209,13 @@ class Follow(Connect):
             user=self.target_user, follower=self.user
         )
         connection.save()
+
+        notification = Notification.objects.create(
+            user=self.target_user, message=f"{self.user} followed you !"
+        )
+
+        notification.save()
+
         return JsonResponse({"message": "Followed!"})
 
 

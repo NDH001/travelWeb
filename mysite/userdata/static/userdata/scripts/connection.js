@@ -1,11 +1,9 @@
 // the function that takes the item id and user id from the templates
 let current_user = undefined
 let target_user = undefined
-let action = undefined
-function get_data(current_user_data,target_user_data,act_data){
+function get_data(current_user_data,target_user_data){
     current_user = current_user_data
     target_user = target_user_data
-    action = act_data
 }
 
 // get the csrftoken 
@@ -27,8 +25,8 @@ function getCookie(name) {
         
 }
 
-function follow_unfollow(){
-
+function follow_unfollow(action){
+        
         $.ajax({
             url:`/accounts/connection/peek/${action}/`,
             type:'post',
@@ -57,10 +55,26 @@ $(document).ready(function(){
 
     $('.connect-js').each(function(){
         let connect_button = $(this)
-
+        
         connect_button.on('click',function(){
-            console.log(current_user,target_user,action)
-            follow_unfollow()
+            state = connect_button.attr('value')
+            action = undefined
+            if (state === 'Unfollow'){
+                connect_button.attr('value','Follow')
+                connect_button.css({
+                    'background-color':'rgb(188, 245, 188)'
+                })
+                action = 'unfollow'
+            }else{
+                
+                connect_button.attr('value','Unfollow')
+                connect_button.css({
+                    'background-color':'rgb(243, 165, 165)'
+                })
+                action = 'follow'
+            }
+            console.log(current_user,target_user)
+            follow_unfollow(action)
             
         })
     })

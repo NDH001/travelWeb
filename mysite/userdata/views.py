@@ -193,13 +193,10 @@ class Connect(View):
         self.target_user = User.objects.get(username=request.POST.get("target_user"))
         try:
             self.connection = Connection.objects.get(
-                user=self.target_user.pk, follower=self.user.pk
+                user=self.target_user, follower=self.user
             )
         except:
             self.connection = None
-
-        self.target_user.save()
-        self.user.save()
 
 
 class Follow(Connect):
@@ -219,7 +216,7 @@ class Unfollow(Connect):
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         if not self.connection:
-            return JsonResponse({"message": "Already unfollowed"})
+            return JsonResponse({"message": "Already unfollowed!"})
 
         self.connection.delete()
 
@@ -260,13 +257,3 @@ class FollowingView(ListView):
 
     def get_queryset(self) -> QuerySet[Any]:
         return Connection.objects.filter(follower=self.kwargs.get("pk"))
-
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        following = list(
-            Connection.objects.filter(user=self.kwargs.get("pk")).values_list(
-                "follower", flat=True
-            )
-        )
-        context["following"] = following
-        return context

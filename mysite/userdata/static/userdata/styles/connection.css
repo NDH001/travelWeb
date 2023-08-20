@@ -13,6 +13,10 @@
     border-radius: 15px;
 }
 
+.connection:nth-child(14){
+    margin-bottom: 100px;
+}
+
 .connection-profile-div{
     height: 100px;
     width: 100px;
@@ -33,6 +37,10 @@
     border-radius: 3px;
     font-weight: 700;
     
+}
+
+.connect-js:hover{
+    cursor: pointer;
 }
 
 #follow-connect{

@@ -10,10 +10,6 @@
 
 {% block button%}
 
-{% if connection.user.id in following %}
-<input id='unfollow-connect' class="connect-js" type="button" value="Unfollow" onclick="get_data('{{connection.user}}','{{connection.follower}}','unfollow')">
-{% else %}
-<input id='follow-connect' class="connect-js" type="button" value="Follow" onclick="get_data('{{connection.user}}','{{connection.follower}}','follow')">
-{% endif %} 
+<input id='unfollow-connect' class="connect-js" type="button" value="Unfollow" onclick="get_data('{{connection.follower}}','{{connection.user}}','unfollow')">
 
 {% endblock %}

@@ -198,8 +198,6 @@ a{
 	background-color: gray;
 	color: white;
 	position: absolute;
-	bottom: -30px;
-	left:120px;
 	padding: 5px 8px;
 	border-radius: 3px;
 	display: none;
@@ -208,6 +206,8 @@ a{
 .noti-js{
 	background-color: rgb(18,18,18);
 	padding: 3px 5px;
+	margin: 3px 5px;
+	border-radius: 3px;
 }
 
 .dot{

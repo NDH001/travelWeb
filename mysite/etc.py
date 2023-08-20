@@ -137,41 +137,34 @@ def add_connection():
     min_id, max_id = get_userid_min_max()
     print(min_id, max_id)
 
-    users = User.objects.all().select_related("profile")
-    target_users = User.objects.all().select_related("profile")
-    print(users, target_users)
+    user1 = User.objects.all().select_related("profile")
+    user2 = User.objects.all().select_related("profile")
 
-    for i in range(10000):
+    seen = set()
+    count = 0
+    for i in range(1000):
         print(i)
-        connect = random.randint(0, 2)
 
-        ur = random.randint(0, len(users) - 1)
-        tr = random.randint(0, len(target_users) - 1)
+        ur = random.randint(0, len(user1) - 1)
+        tr = random.randint(0, len(user2) - 1)
 
-        target_user = target_users[ur]
-        current_user = users[tr]
+        user_2 = user2[ur]
+        user_1 = user1[tr]
 
-        try:
-            exists = Connection.objects.get(
-                user=current_user, follower=target_user
-            ) or Connection.objects.get(user=target_user, follower=current_user)
-        except:
-            exists = False
+        if user_2 != user_1 and (user_2, user_1) not in seen:
+            count += 1
+            seen.add((user_2, user_1))
 
-        if target_user != current_user and not exists:
-            if connect == 1:
-                connection = Connection.objects.create(
-                    user=current_user, follower=target_user
-                )
-                connection.save()
-            else:
-                connection = Connection.objects.create(
-                    user=target_user, follower=current_user
-                )
-                connection.save()
+            connection = Connection.objects.create(user=user_1, follower=user_2)
+            connection.save()
+            print(connection.id, user_2.id, user_1.id, "new connection")
+        else:
+            print(user_2.id, user_1.id, "duplicated")
+
+    print(f"total: {count}")
 
 
 def create_contents():
     create_users()
     add_connection()
-    # add_comments()
+    add_comments()

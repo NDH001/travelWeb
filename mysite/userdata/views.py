@@ -256,4 +256,6 @@ class FollowingView(ListView):
     paginate_by = 13
 
     def get_queryset(self) -> QuerySet[Any]:
-        return Connection.objects.filter(follower=self.kwargs.get("pk"))
+        return Connection.objects.filter(follower=self.kwargs.get("pk")).select_related(
+            "user", "follower", "user__profile"
+        )

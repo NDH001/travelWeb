@@ -4,7 +4,7 @@ from django.db.models import Exists, OuterRef
 from django.db.models.query import QuerySet
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import ListView, DetailView
-from django.views.generic import View
+from django.views.generic import View, FormView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
@@ -20,6 +20,7 @@ from collectiondata.models import (
     UserShopCollection,
 )
 from .models import Comment, Notification
+from .forms import NewJournalForm
 
 from .decorator import ajax_check_login
 
@@ -298,18 +299,26 @@ class ResetNotification(View):
 # ---------------------------------------------------------------------------------------------------#
 
 
-class JournalView(LoginRequiredMixin, View):
+class JournalView(LoginRequiredMixin, FormView):
     template_name = "journing/journal.html"
+    form_class = NewJournalForm
 
     def get(self, request, *args, **kwargs):
         return render(
             request,
             self.template_name,
-            {
-                "user": User.objects.prefetch_related(
-                    "usersightcollection_set",
-                    "userfoodcollection_set",
-                    "usershopcollection_set",
-                ).get(pk=self.request.user.id)
-            },
+            {"form": self.form_class},
         )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user"] = User.objects.prefetch_related(
+            "usersightcollection_set",
+            "userfoodcollection_set",
+            "usershopcollection_set",
+        ).get(pk=self.request.user.id)
+        return context
+
+
+# class NewJournalView(LoginRequiredMixin,View):
+#     template_name = 'journing/new_journal.html'

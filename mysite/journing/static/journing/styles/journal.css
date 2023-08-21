@@ -15,11 +15,9 @@
     margin: auto;
 }
 
-.create-journal{
+.create-journal-js,.real-create-journal-js{
     margin: auto;
     margin-top: 50px;
-    width: 40%;
-    height: 50%;
     border: none;
     border-radius: 8px;
     font-size: 15px;
@@ -28,6 +26,36 @@
     background-color: rgb(180, 242, 182);
 }
 
-.create-journal:hover{
+.create-journal-js{
+    width: 40%;
+    height: 50%;
+}
+
+.create-journal-js:hover{
     cursor: pointer;
+}
+
+.new-journal{
+    background-color:rgb(50,50,50);
+    width: 400px;
+    height: 300px;
+    margin: auto;
+    margin-top:100px;
+    border: none;
+    border-radius: 15px;
+    padding: 30px 30px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+ 
+}
+
+.submit-div{
+    text-align: center;
+}
+
+.city,.start-date,.end-date{
+    font-size: 20px;
+    margin: 10px 3px;
+    padding: 5px 3px;
 }

@@ -14,7 +14,15 @@
 
     <div class='book-icon-div'><img src="{% static 'journing/icons/book.png'%}"></div>
     <h1> No journal found... Create one now!</h1>
-    <input class='create-journal' type='button' value='Create new Journal'>
+    <input class='create-journal-js' type='button' value='Create new Journal'>
+</div>
+
+<div class='new-journal'>
+    <form method='post'>
+        {% csrf_token %}
+        <h2>{{form.as_p}}</h2>
+        <div class='submit-div'><button class='real-create-journal-js' type='submit'> Create now !</button></div>
+    </form>
 </div>
 
 {% endif %}
@@ -23,4 +31,7 @@
 
 
 {% block jscontent%}
+
+<script src="{% static 'journing/scripts/journal.js'%}">
+</script>
 {% endblock jscontent%}

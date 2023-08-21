@@ -293,3 +293,23 @@ class ResetNotification(View):
         notifications.delete()
 
         return JsonResponse({"message": "Notification reset success"})
+
+
+# ---------------------------------------------------------------------------------------------------#
+
+
+class JournalView(LoginRequiredMixin, View):
+    template_name = "journing/journal.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(
+            request,
+            self.template_name,
+            {
+                "user": User.objects.prefetch_related(
+                    "usersightcollection_set",
+                    "userfoodcollection_set",
+                    "usershopcollection_set",
+                ).get(pk=self.request.user.id)
+            },
+        )

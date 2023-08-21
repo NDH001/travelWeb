@@ -15,12 +15,9 @@ $(document).ready(function(){
             noti_box.css({
                 'display':'none'
             })
-        }
-        
+        }   
         reset_noti()
     })
-
-
 })
 
 // get the csrftoken 

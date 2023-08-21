@@ -2,12 +2,23 @@
 {% load static%}
 
 {% block headcontent%}
+<link rel='stylesheet' href="{% static 'journing/styles/journal.css'%}">
 {% endblock headcontent%}
 
 
 {% block content%}
-{{user}}
-{{user.usersightcollection_set.all}}
+
+{% if not user.journal_set.all %}
+
+<div class='no-journal'>
+
+    <div class='book-icon-div'><img src="{% static 'journing/icons/book.png'%}"></div>
+    <h1> No journal found... Create one now!</h1>
+    <input class='create-journal' type='button' value='Create new Journal'>
+</div>
+
+{% endif %}
+
 {% endblock content%}
 
 

@@ -6,6 +6,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 
 from traveldata.models import Sights, Foods, Shops
 
+
 # Create your models here.
 
 
@@ -40,3 +41,28 @@ class Notification(models.Model):
 
     class Meta:
         db_table = '"journingdata"."noti"'
+
+
+class Journal(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.user) + " " + str(self.created_on)
+
+    class Meta:
+        db_table = '"journingdata"."journal"'
+
+
+class Record(models.Model):
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_uuid = models.UUIDField()
+    content_object = GenericForeignKey("content_type", "object_uuid")
+    date_time = models.DateTimeField(default=None)
+    journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.content_object) + " " + str(self.date_time)
+
+    class Meta:
+        db_table = '"journingdata"."record"'

@@ -302,6 +302,7 @@ class ResetNotification(View):
 class JournalView(LoginRequiredMixin, FormView):
     template_name = "journing/journal.html"
     form_class = NewJournalForm
+    success_url = reverse_lazy("journing:new_journal")
 
     def get(self, request, *args, **kwargs):
         return render(
@@ -309,6 +310,14 @@ class JournalView(LoginRequiredMixin, FormView):
             self.template_name,
             {"form": self.form_class},
         )
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+
+        if not form.is_valid():
+            return self.form_invalid(form)
+
+        return self.form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -319,6 +328,49 @@ class JournalView(LoginRequiredMixin, FormView):
         ).get(pk=self.request.user.id)
         return context
 
+    def form_valid(self, form):
+        cleaned_data = form.cleaned_data
+        self.request.session["destination"] = cleaned_data["where_to"].city
+        self.request.session["start"] = cleaned_data["start_date"].isoformat()
+        self.request.session["end"] = cleaned_data["start_date"].isoformat()
 
-# class NewJournalView(LoginRequiredMixin,View):
-#     template_name = 'journing/new_journal.html'
+        return super().form_valid(form)
+
+
+class NewJournalView(LoginRequiredMixin, View):
+    template_name = "journing/new_journal.html"
+
+    def get(self, request, *args, **kwargs):
+        destination = request.session.get("destination")
+        start = request.session.get("start")
+        end = request.session.get("end")
+
+        city = Cities.objects.get(pk=destination)
+
+        sights = Sights.objects.filter(city=city)
+
+        shops = Shops.objects.filter(city=city)
+
+        foods = Foods.objects.filter(city=city)
+
+        sight_collections = UserSightCollection.objects.filter(
+            user=request.user, collection__in=sights
+        ).select_related("user", "collection")
+
+        food_collections = UserFoodCollection.objects.filter(
+            user=request.user, collection__in=foods
+        ).select_related("user", "collection")
+
+        shop_collections = UserShopCollection.objects.filter(
+            user=request.user, collection__in=shops
+        ).select_related("user", "collection")
+
+        return render(
+            request,
+            self.template_name,
+            {
+                "sight_collections": sight_collections,
+                "food_collections": food_collections,
+                "shop_collections": shop_collections,
+            },
+        )

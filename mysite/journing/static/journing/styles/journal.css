@@ -31,7 +31,7 @@
     height: 50%;
 }
 
-.create-journal-js:hover{
+.create-journal-js:hover,.real-create-journal-js:hover{
     cursor: pointer;
 }
 

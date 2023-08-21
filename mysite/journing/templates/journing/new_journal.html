@@ -1,0 +1,33 @@
+{% extends 'journing/base.html'%}
+{% load static%}
+
+
+{% block headcontent%}
+<link rel='stylesheet' href="{% static 'journing/styles/new_journal.css'%}">
+{% endblock headcontent%}
+
+{% block content%}
+
+<div class='main'>
+    <div class='sight-list list'>
+        {% for s in sight_collections%}
+        <img src="{% static '/sightimgs/' %}{{s.collection.img_local}}">
+        {% endfor %}
+    </div>
+    <div class='food-list list'>
+        {% for f in food_collections%}
+        <img src="{% static '/foodimgs/' %}{{f.collection.img_local}}">
+        {% endfor %}
+</div>
+    <div class='shop-list list'>
+        {% for s in shop_collections%}
+        <img src="{% static '/shopimgs/' %}{{s.collection.img_local}}">
+        {% endfor %}
+</div>
+    <div class='planner'></div>
+</div>
+
+{% endblock content%}
+
+{% block jscontent%}
+{% endblock jscontent%}

@@ -195,13 +195,16 @@
     border-radius: 10px;
 }
 
+.individual-list:nth-child(12){
+    margin-bottom: 100px;
+    
+}
+
 .individual-list img{
     margin:20px;
     width: 100%;
     border-radius: 5px;
 }
-
-
 .select-star-js{
     width: 50px;
     height: 50px;

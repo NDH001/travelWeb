@@ -11,28 +11,28 @@
 <div class='main'>
     <div class='sight-list list'>
         {% for s in sight_collections%}
-        <img class='collection-img' src="{% static '/sightimgs/' %}{{s.collection.img_local}}">
+        <img class='collection-img' ondragstart="get_data('{{s.collection}}')" src="{% static '/sightimgs/' %}{{s.collection.img_local}}">
         {% endfor %}
     </div>
     <div class='food-list list'>
         {% for f in food_collections%}
-        <img class='collection-img' src="{% static '/foodimgs/' %}{{f.collection.img_local}}">
+        <img class='collection-img' onclick="get_data('{{f.collection}}')" src="{% static '/foodimgs/' %}{{f.collection.img_local}}">
         {% endfor %}
 </div>
     <div class='shop-list list'>
         {% for s in shop_collections%}
-        <img class='collection-img' src="{% static '/shopimgs/' %}{{s.collection.img_local}}">
+        <img class='collection-img' onclick="get_data('{{s.collection}}')" src="{% static '/shopimgs/' %}{{s.collection.img_local}}">
         {% endfor %}
 </div>
     <div class='planner'>
         {% for hour in hours %}
         
-        <div class='hour-div'>
+        <div class='hour-div' id="hour-div-{{forloop.counter}}" >
 
             <div class='time element'><h2>{{hour}}</h2></div>
-            <div class='drop-area element'></div>
-            <div class='name element'>*</div>
-            <div class='remarks element'>'''</div>
+            <div class='drop-area element' id="{{forloop.counter}}"></div>
+            <div class='name element'> - </div>
+            <div class='remarks element'>Add remarks here..</div>
 
         </div>        
         {% endfor%}

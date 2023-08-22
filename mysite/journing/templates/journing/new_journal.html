@@ -11,29 +11,37 @@
 <div class='main'>
     <div class='sight-list list'>
         {% for s in sight_collections%}
-        <img class='collection-img' ondragstart="get_data('{{s.collection}}')" src="{% static '/sightimgs/' %}{{s.collection.img_local}}">
+        <div class='collection-img' ondragstart="get_data('{{s.collection}}','sight_collections')" >
+        <img src="{% static '/sightimgs/' %}{{s.collection.img_local}}">
+        </div>
         {% endfor %}
     </div>
     <div class='food-list list'>
         {% for f in food_collections%}
-        <img class='collection-img' onclick="get_data('{{f.collection}}')" src="{% static '/foodimgs/' %}{{f.collection.img_local}}">
+        <div>
+        <img class='collection-img' onclick="get_data('{{f.collection}}','food_collections')" src="{% static '/foodimgs/' %}{{f.collection.img_local}}">
+        </div>
         {% endfor %}
 </div>
     <div class='shop-list list'>
         {% for s in shop_collections%}
-        <img class='collection-img' onclick="get_data('{{s.collection}}')" src="{% static '/shopimgs/' %}{{s.collection.img_local}}">
+        <div>
+        <img class='collection-img' onclick="get_data('{{s.collection}}','shop_collections')" src="{% static '/shopimgs/' %}{{s.collection.img_local}}">
+        </div>
         {% endfor %}
 </div>
     <div class='planner'>
         {% for hour in hours %}
-        
+         
         <div class='hour-div' id="hour-div-{{forloop.counter}}" >
 
             <div class='time element'><h2>{{hour}}</h2></div>
             <div class='drop-area element' id="{{forloop.counter}}"></div>
             <div class='name element'> - </div>
+            <div class='activity element'> </div>
             <div class='remarks element'>Add remarks here..</div>
 
+        <div class='restore-item' onclick="restore_div('{{forloop.counter}}')"> <u>Restore</u> </div>
         </div>        
         {% endfor%}
     </div>
@@ -44,4 +52,7 @@
 {% block jscontent%}
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{% static 'journing/scripts/new_journal.js'%}"></script>
+<script>
+    sighticon = "{% static 'journing/icons/attraction.png'%}"
+</script>
 {% endblock jscontent%}

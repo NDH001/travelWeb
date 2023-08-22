@@ -23,3 +23,47 @@
     border-radius: 5px;
 }
 
+.planner{
+    
+    right: 0px;
+    margin-right: 20px;
+    padding: 50px 30px;
+    background-color: rgb(50,50,50);
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.hour-div{
+    display: grid;
+    border-radius: 20px;
+    grid-template-columns: 2fr 3fr 1fr 5fr;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    background-color:rgb(22,22,22);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left:10px;
+    margin-right:5px;
+    padding: 10px;
+}
+
+.element{
+    margin: 20px;
+    
+}
+
+.drop-area{
+    height: 130px;
+    padding: 20px;
+    background-color:gray;
+    text-align: center;
+    border-radius: 20px;
+}
+
+
+
+
+
+

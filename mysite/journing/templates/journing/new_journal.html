@@ -11,23 +11,39 @@
 <div class='main'>
     <div class='sight-list list'>
         {% for s in sight_collections%}
-        <img src="{% static '/sightimgs/' %}{{s.collection.img_local}}">
+        <img class='collection-img' src="{% static '/sightimgs/' %}{{s.collection.img_local}}">
         {% endfor %}
     </div>
     <div class='food-list list'>
         {% for f in food_collections%}
-        <img src="{% static '/foodimgs/' %}{{f.collection.img_local}}">
+        <img class='collection-img' src="{% static '/foodimgs/' %}{{f.collection.img_local}}">
         {% endfor %}
 </div>
     <div class='shop-list list'>
         {% for s in shop_collections%}
-        <img src="{% static '/shopimgs/' %}{{s.collection.img_local}}">
+        <img class='collection-img' src="{% static '/shopimgs/' %}{{s.collection.img_local}}">
         {% endfor %}
 </div>
-    <div class='planner'></div>
+    <div class='planner'>
+        {% for hour in hours %}
+        
+        <div class='hour-div'>
+
+            <div class='time element'><h2>{{hour}}</h2></div>
+            <div class='drop-area element'></div>
+            <div class='name element'>*</div>
+            <div class='remarks element'>'''</div>
+
+        </div>
+
+        
+        {% endfor%}
+    </div>
 </div>
 
 {% endblock content%}
 
 {% block jscontent%}
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{% static 'journing/scripts/new_journal.js'%}"></script>
 {% endblock jscontent%}

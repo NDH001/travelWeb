@@ -70,12 +70,12 @@
 
 }
 
-.restore-item{
+.clear-item{
     position: absolute;
     left: 10px;
     top:10px;
 }
-.restore-item:hover{
+.clear-item:hover{
     cursor: pointer;
 }
 
@@ -87,7 +87,7 @@
 .drop-area{
     height: 130px;
     padding: 10px;
-    background-color:gray;
+    background-color:rgb(133, 133, 133);
     text-align: center;
     border-radius: 10px;
 }

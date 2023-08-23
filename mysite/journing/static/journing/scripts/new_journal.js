@@ -36,46 +36,51 @@ $(document).ready(function(){
             ui.helper.data({'activity_name':activity_name})
             ui.helper.data({'list_name':list_name})
         }
-        
+
     }) 
+
     drop.droppable({
         accept: ".collection-img",
         drop: function(event, ui) {
             time = $(this).attr('id')
-            current_element = $(this)
+            let current_element = ui.draggable
+            console.log(current_element.html())
             
             if ($(this).children().length>0){
                 restore_div(time)
 
             }
-                $(this).append(ui.draggable);
+            $(this).append(current_element);
 
-                ui.draggable.css({'height':'100%','width':'100%','border-radius':'10px'}); 
-                ui.draggable.find('img').css({'height':'100%','width':'100%','border-radius':'5px'})
+            ui.draggable.css({'height':'100%','width':'100%','border-radius':'10px'}); 
+            ui.draggable.find('img').css({'height':'100%','width':'100%','border-radius':'5px'})
 
-                $(`#hour-div-${time} .name`).text(ui.helper.data('activity_name'))
-                
-                let selected_icon = undefined
-                let chosen_id = undefined
-                
-                
-                console.log(ui.helper.data('list_name'))
-                console.log(ui.helper.data('activity_name'))
-                
-                if (ui.helper.data('list_name') === 'sight_collections'){
-                    selected_icon = sighticon
-                    chosen_id = 'sight'
-                }else if (ui.helper.data('list_name')==='food_collections'){
-                    selected_icon = foodicon 
-                    chosen_id = 'food'
-                }else{
-                    selected_icon = shopicon
-                    chosen_id = 'shop'
-                }
+            $(`#hour-div-${time} .name`).text(ui.helper.data('activity_name'))
+            
+            let selected_icon = undefined
+            let chosen_id = undefined
+             
+            console.log(ui.helper.data('list_name'))
+            console.log(ui.helper.data('activity_name'))
+            
+            if (ui.helper.data('list_name') === 'sight_collections'){
+                selected_icon = sighticon
+                chosen_id = 'sight'
+            }else if (ui.helper.data('list_name')==='food_collections'){
+                selected_icon = foodicon 
+                chosen_id = 'food'
+            }else{
+                selected_icon = shopicon
+                chosen_id = 'shop'
+            }
 
-                $(`#hour-div-${time} .activity`).html(
-                    `<img id="${chosen_id}" src="${selected_icon}"/>`
-                )
+            $(`#hour-div-${time} .activity`).html(
+                `<img id="${chosen_id}" src="${selected_icon}"/>`
+            )
+
+
+
+
     }
     })
 

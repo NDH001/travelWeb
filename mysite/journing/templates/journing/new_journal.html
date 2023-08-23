@@ -18,21 +18,21 @@
     </div>
     <div class='food-list list'>
         {% for f in food_collections%}
-        <div>
-        <img class='collection-img' onclick="get_data('{{f.collection}}','food_collections')" src="{% static '/foodimgs/' %}{{f.collection.img_local}}">
+        <div class='collection-img' ondragstart="get_data('{{f.collection}}','food_collections')">
+        <img src="{% static '/foodimgs/' %}{{f.collection.img_local}}">
         </div>
         {% endfor %}
 </div>
     <div class='shop-list list'>
         {% for s in shop_collections%}
-        <div>
-        <img class='collection-img' onclick="get_data('{{s.collection}}','shop_collections')" src="{% static '/shopimgs/' %}{{s.collection.img_local}}">
+        <div class='collection-img' ondragstart="get_data('{{s.collection}}','shop_collections')" >
+        <img src="{% static '/shopimgs/' %}{{s.collection.img_local}}">
         </div>
         {% endfor %}
 </div>
     <div class='planner'>
         {% for hour in hours %}
-         
+
         <div class='hour-div' id="hour-div-{{forloop.counter}}" >
 
             <div class='time element'><h2>{{hour}}</h2></div>
@@ -54,5 +54,8 @@
 <script src="{% static 'journing/scripts/new_journal.js'%}"></script>
 <script>
     sighticon = "{% static 'journing/icons/attraction.png'%}"
+    shopicon = "{% static 'journing/icons/shopping.png'%}"
+    foodicon = "{% static 'journing/icons/food.png'%}"
+
 </script>
 {% endblock jscontent%}

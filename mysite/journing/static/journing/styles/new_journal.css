@@ -20,12 +20,17 @@
     height: 75px;
     width: 120px;
     margin: 10px;
+    padding:auto
 }
 
 .list img{
     width: 100%;
     height: 100%;
     border-radius: 5px;
+}
+
+.collection-img:hover{
+    cursor: pointer;
 }
 
 .planner{

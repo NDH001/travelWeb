@@ -1,23 +1,39 @@
+// the dimensions for the image in different zones
+const LIST_IMG_HEIGHT= '75px'
+const LIST_IMG_WIDTH= '120px'
+const HOUR_IMG_HEIGHT= '130px'
+const HOUR_IMG_WIDTH= '220px'
+
+// the parameters unique to each collection
 let activity_name = undefined
 let list_name = undefined
 function get_data(data,list){
     activity_name=data
     list_name=list
 }
+
+// to clear a selected hour div and return the collection back to the pool
 function restore_div(index){
+
+    // look for the clicked hour div according to the index passed in
     div = $(`#hour-div-${index}`)
     ori_list = div.find('.activity').find('img').attr('id')
     ori_list = '.' + ori_list + '-list';
     
+    // return back to the pool with the preset dimension
     current_element = div.find('.drop-area').find('div')
     current_element.css({
-        'height':'75px',
-        'width':'120px'
+        'height':`${LIST_IMG_HEIGHT}`,
+        'width':`${LIST_IMG_WIDTH}`
+    })
+    div.find('.drop-area').find('div').find('img').css({
+        'height':`${LIST_IMG_HEIGHT}`,
+        'width':`${LIST_IMG_WIDTH}`
     })
 
-    
     $(ori_list).append(current_element)
-
+    
+    // clear the rest hour sections 
     div.find('.drop-area').empty()
     div.find('.name').text('-')
     div.find('.activity').html('')
@@ -25,6 +41,7 @@ function restore_div(index){
 }
 
 $(document).ready(function(){
+    //  the draggable and droppable elements
     let collections = $('.collection-img')
     let drop = $('.drop-area')
 
@@ -33,8 +50,11 @@ $(document).ready(function(){
         appendTo:'body',
         helper:'clone', 
         start:function(event,ui){
+            // pass the collection parameters during drag (' simple variable reference wouldn't work ')
             ui.helper.data({'activity_name':activity_name})
             ui.helper.data({'list_name':list_name})
+            // a variable that determines if the collection is dragged from pool or within a hour div ( false means from the pool)
+            ui.helper.data({'duplicate':false})
         }
 
     }) 
@@ -42,21 +62,36 @@ $(document).ready(function(){
     drop.droppable({
         accept: ".collection-img",
         drop: function(event, ui) {
-            time = $(this).attr('id')
-            let current_element = ui.draggable
-            console.log(current_element.html())
-            
-            if ($(this).children().length>0){
-                restore_div(time)
 
+            // locate the hour div index --> time
+            time = $(this).attr('id')
+
+            // if collection is dragged and dropped from hour div, duplicate it so that the collection would remain in both hour div
+            let current_element = undefined
+            if (ui.helper.data('duplicate')){
+                current_element = ui.draggable.clone()
+            // else remove the collection from the original pool and add it to the div
+            }else{
+                current_element = ui.draggable
             }
+            
+            // check if there is existing collection in a hour div
+            if ($(this).children().length>0){
+                // remove the existing collection to the pool 
+                restore_div(time)
+            }
+
+            // add the collection to the current hour div
             $(this).append(current_element);
 
-            ui.draggable.css({'height':'100%','width':'100%','border-radius':'10px'}); 
-            ui.draggable.find('img').css({'height':'100%','width':'100%','border-radius':'5px'})
+            // set the css of the collection in the hour div
+            current_element.css({'height':`${HOUR_IMG_HEIGHT}`,'width':`${HOUR_IMG_WIDTH}`,'border-radius':'10px'}); 
+            current_element.find('img').css({'height':`${HOUR_IMG_HEIGHT}`,'width':`${HOUR_IMG_WIDTH}`,'border-radius':'5px'})
 
+            // show the activity name e.g. dong fang ming zhu 
             $(`#hour-div-${time} .name`).text(ui.helper.data('activity_name'))
             
+            // set the activity icon and chosen_id is used to keep track which pool did the collection came from 
             let selected_icon = undefined
             let chosen_id = undefined
              
@@ -78,12 +113,20 @@ $(document).ready(function(){
                 `<img id="${chosen_id}" src="${selected_icon}"/>`
             )
 
+            // while the collection is dragged within a hour div, set the duplicate condition to true
+            current_element.draggable({
+                revert:'invalid',
+                appendTo:'body',
+                helper:'clone', 
+                start:function(event,ui){
+                    ui.helper.data({'activity_name':activity_name})
+                    ui.helper.data({'list_name':list_name})
+                    ui.helper.data({'duplicate':true})
+                }
 
-
+            }) 
 
     }
     })
-
-
     
 })

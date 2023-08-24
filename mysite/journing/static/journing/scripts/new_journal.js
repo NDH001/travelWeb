@@ -208,6 +208,8 @@ $(document).ready(function(){
             journal[filled_hour]['remark'] = filled_hour_remark
         }
         journal['uuid'] = journal_id
+        journal['start'] = start
+        journal['end'] = end
         
         console.log(journal)
         $.ajax({

@@ -419,13 +419,18 @@ class SaveJournal(View):
         try:
             journal = Journal.objects.get(pk=data["uuid"])
         except:
-            journal = Journal.objects.create(pk=data["uuid"], user=self.request.user)
+            journal = Journal.objects.create(
+                pk=data["uuid"],
+                user=self.request.user,
+                start_date=data["start"],
+                end_date=data["end"],
+            )
 
         for record in data.items():
             hour = record[0]
             details = record[1]
 
-            if hour == "uuid":
+            if hour == "uuid" or hour == "start" or hour == "end":
                 continue
 
             if details["list_name"] == "sight_collections":

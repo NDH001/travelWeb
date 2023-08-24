@@ -21,13 +21,12 @@ function restore_div(index,new_collection_id=null){
     current_drop_zone_item_id = journal[index].collection_id
     // console.log(current_drop_zone_item_id,'this one')
     // console.log(journal[index].activity_name)
-
     delete journal[index]
-    journal_set.splice(index-1,1)
+    delete journal_id_only[index]
 
     // console.log(journal,'journal after delete')
-    // console.log(journal_set,'after delete')
-    // console.log(journal_set.includes(current_drop_zone_item_id))
+    // console.log(journal_id_only,'after delete')
+    // console.log(journal_id_only.includes(current_drop_zone_item_id))
     
     // look for the clicked hour div according to the index passed in
     div = $(`#hour-div-${index}`)
@@ -44,9 +43,10 @@ function restore_div(index,new_collection_id=null){
         'height':`${LIST_IMG_HEIGHT}`,
         'width':`${LIST_IMG_WIDTH}`
     })
+    // console.log(current_drop_zone_item_id!=new_collection_id)
 
     // if the current item is not in any other hour div and current item id does not equal to the id of the newly coming in item then return it back to the pool
-    if ( !journal_set.includes(current_drop_zone_item_id) && current_drop_zone_item_id !=new_collection_id){
+    if ( !Object.values(journal_id_only).includes(current_drop_zone_item_id) && current_drop_zone_item_id !=new_collection_id){
         current_element.draggable({
             revert:'invalid',
             appendTo:'body',
@@ -77,7 +77,7 @@ $(document).ready(function(){
 
     // records
     journal = {}
-    journal_set = []
+    journal_id_only = {}
 
     //  the draggable and droppable elements
     let collections = $('.collection-img')
@@ -126,10 +126,10 @@ $(document).ready(function(){
             }
 
             journal[time] = {collection_id,list_name,activity_name}
-            journal_set.push(collection_id)
+            journal_id_only[time] = collection_id
             
             console.log(journal)
-            // console.log(journal_set)
+            // console.log(journal_id_only)
 
             // add the collection to the current hour div
             $(this).append(current_element);

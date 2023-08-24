@@ -11,21 +11,21 @@
 <div class='main'>
     <div class='sight-list list'>
         {% for s in sight_collections%}
-        <div class='collection-img' ondragstart="get_data('{{s.collection}}','sight_collections')" >
+        <div class='collection-img' ondragstart="get_data('{{s.collection}}','sight_collections','{{s.collection.id}}')" >
         <img src="{% static '/sightimgs/' %}{{s.collection.img_local}}">
         </div>
         {% endfor %}
     </div>
     <div class='food-list list'>
         {% for f in food_collections%}
-        <div class='collection-img' ondragstart="get_data('{{f.collection}}','food_collections')">
+        <div class='collection-img' ondragstart="get_data('{{f.collection}}','food_collections','{{f.collection.id}}')">
         <img src="{% static '/foodimgs/' %}{{f.collection.img_local}}">
         </div>
         {% endfor %}
 </div>
     <div class='shop-list list'>
         {% for s in shop_collections%}
-        <div class='collection-img' ondragstart="get_data('{{s.collection}}','shop_collections')" >
+        <div class='collection-img' ondragstart="get_data('{{s.collection}}','shop_collections','{{s.collection.id}}')" >
         <img src="{% static '/shopimgs/' %}{{s.collection.img_local}}">
         </div>
         {% endfor %}

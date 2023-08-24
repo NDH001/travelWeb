@@ -7,9 +7,12 @@ const HOUR_IMG_WIDTH= '220px'
 // the parameters unique to each collection
 let activity_name = undefined
 let list_name = undefined
-function get_data(data,list){
+let collection_id = undefined
+
+function get_data(data,list,id){
     activity_name=data
     list_name=list
+    collection_id = id
 }
 
 // to clear a selected hour div and return the collection back to the pool
@@ -41,6 +44,10 @@ function restore_div(index){
 }
 
 $(document).ready(function(){
+
+    // records
+    journal = {}
+
     //  the draggable and droppable elements
     let collections = $('.collection-img')
     let drop = $('.drop-area')
@@ -53,10 +60,11 @@ $(document).ready(function(){
             // pass the collection parameters during drag (' simple variable reference wouldn't work ')
             ui.helper.data({'activity_name':activity_name})
             ui.helper.data({'list_name':list_name})
+            ui.helper.data({'collection_id':collection_id})
             // a variable that determines if the collection is dragged from pool or within a hour div ( false means from the pool)
             ui.helper.data({'duplicate':false})
         }
-
+        
     }) 
 
     drop.droppable({
@@ -65,7 +73,11 @@ $(document).ready(function(){
 
             // locate the hour div index --> time
             time = $(this).attr('id')
-
+            
+            list_name = ui.helper.data('list_name')
+            activity_name= ui.helper.data('activity_name')
+            console.log(ui.helper.data('collection_id'))
+            console.log(collection_id,'hi')
             // if collection is dragged and dropped from hour div, duplicate it so that the collection would remain in both hour div
             let current_element = undefined
             if (ui.helper.data('duplicate')){
@@ -89,19 +101,16 @@ $(document).ready(function(){
             current_element.find('img').css({'height':`${HOUR_IMG_HEIGHT}`,'width':`${HOUR_IMG_WIDTH}`,'border-radius':'5px'})
 
             // show the activity name e.g. dong fang ming zhu 
-            $(`#hour-div-${time} .name`).text(ui.helper.data('activity_name'))
+            $(`#hour-div-${time} .name`).text(activity_name)
             
             // set the activity icon and chosen_id is used to keep track which pool did the collection came from 
             let selected_icon = undefined
             let chosen_id = undefined
-             
-            console.log(ui.helper.data('list_name'))
-            console.log(ui.helper.data('activity_name'))
             
-            if (ui.helper.data('list_name') === 'sight_collections'){
+            if (list_name === 'sight_collections'){
                 selected_icon = sighticon
                 chosen_id = 'sight'
-            }else if (ui.helper.data('list_name')==='food_collections'){
+            }else if (list_name==='food_collections'){
                 selected_icon = foodicon 
                 chosen_id = 'food'
             }else{

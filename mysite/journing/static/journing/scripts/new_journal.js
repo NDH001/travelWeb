@@ -1,3 +1,22 @@
+// get the csrftoken 
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Check if the cookie name matches the requested name
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                // Extract and decode the cookie value
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+        
+}
+
 // the dimensions for the image in different zones
 const LIST_IMG_HEIGHT= '75px'
 const LIST_IMG_WIDTH= '120px'
@@ -66,10 +85,11 @@ function restore_div(index,new_collection_id=null){
     }
     
     
-    // clear the rest hour sections 
+    // clear the rest of the hour sections 
     div.find('.drop-area').empty()
     div.find('.name').text('-')
     div.find('.activity').html('')
+    div.find('.remarks textarea').val('')
 
 }
 
@@ -125,10 +145,10 @@ $(document).ready(function(){
                 restore_div(time,collection_id)
             }
 
-            journal[time] = {collection_id,list_name,activity_name}
+            journal[time] = {collection_id,list_name,activity_name,}
             journal_id_only[time] = collection_id
             
-            console.log(journal)
+            // console.log(journal)
             // console.log(journal_id_only)
 
             // add the collection to the current hour div
@@ -175,6 +195,39 @@ $(document).ready(function(){
             }) 
 
     }
+    })
+
+    $('.save').on('click',function(){
+
+        let filled_hours_keys = Object.keys(journal)
+        
+        for (let key in filled_hours_keys){
+            filled_hour = filled_hours_keys[key]
+            let filled_hour_remark = $(`#hour-div-${filled_hour}`).find('.remarks textarea').val()
+            
+            journal[filled_hour]['remark'] = filled_hour_remark
+        }
+        journal['uuid'] = journal_id
+        
+        console.log(journal)
+        $.ajax({
+            url:`/journal/save/`,
+            type:'post',
+            data:JSON.stringify(journal),
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            },
+            success:function(response){
+                if (response.message === 'login_required'){
+                    console.log(response,response.message,response.login_url)
+                    window.location.href=response.login_url
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error posting data to Django server:', error);
+                // window.location.href='/accounts/login/'
+            }
+        })
     })
     
 })

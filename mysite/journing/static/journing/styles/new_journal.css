@@ -7,6 +7,12 @@
     
 }
 
+.journal-id{
+    position: absolute;
+    left:30px;
+    top:110px;
+}
+
 .list{
     margin-left:10px;
     margin-right:10px;
@@ -87,7 +93,7 @@
 .drop-area{
     height: 130px;
     padding: 10px;
-    background-color:rgb(133, 133, 133);
+    background-color:rgb(81, 79, 79);
     text-align: center;
     border-radius: 10px;
 }
@@ -102,7 +108,30 @@
     width: 100%;
 }
 
+.remarks textarea{
+    height: 100px;
+    width: 70%;
+    padding: 10px;
+    margin: 10px;
+    background-color:rgb(238, 208, 153)
+}
 
+.save{
+    right:400px;
+    position: absolute;
+    border: none;
+    border-radius: 5px;
+    font-size: large;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left:20px;
+    padding-right: 20px;
+
+}
+
+.save:hover{
+    cursor: pointer;
+}
 
 
 

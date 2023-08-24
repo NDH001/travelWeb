@@ -58,7 +58,9 @@ class Record(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_uuid = models.UUIDField()
     content_object = GenericForeignKey("content_type", "object_uuid")
-    date_time = models.DateTimeField(default=None)
+    hour = models.SmallIntegerField(default=None)
+    remark = models.CharField(max_length=1000, default=None)
+    date_time = models.DateTimeField(default=None, null=True)
     journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
 
     def __str__(self):

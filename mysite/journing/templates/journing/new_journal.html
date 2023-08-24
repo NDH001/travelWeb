@@ -8,6 +8,8 @@
 
 {% block content%}
 
+<button class='save'> Save </button>
+<i class='journal-id'> Journal ID: {{journal_id}}</i>
 <div class='main'>
     <div class='sight-list list'>
         {% for s in sight_collections%}
@@ -39,7 +41,7 @@
             <div class='drop-area element' id="{{forloop.counter}}"></div>
             <div class='name element'> - </div>
             <div class='activity element'> </div>
-            <div class='remarks element'>Add remarks here..</div>
+            <div class='remarks element'><textarea></textarea></div>
 
         <div class='clear-item' onclick="restore_div('{{forloop.counter}}')"> <u>Clear</u> </div>
         </div>        
@@ -56,6 +58,6 @@
     sighticon = "{% static 'journing/icons/attraction.png'%}"
     shopicon = "{% static 'journing/icons/shopping.png'%}"
     foodicon = "{% static 'journing/icons/food.png'%}"
-
+    journal_id = "{{journal_id}}"
 </script>
 {% endblock jscontent%}

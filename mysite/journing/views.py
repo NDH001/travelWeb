@@ -19,10 +19,13 @@ from collectiondata.models import (
     UserFoodCollection,
     UserShopCollection,
 )
-from .models import Comment, Notification
+from .models import Comment, Notification, Record, Journal
 from .forms import NewJournalForm
 
 from .decorator import ajax_check_login
+
+import json
+import uuid
 
 # Create your views here.
 """-------------------------------------------------------------------------------------------"""
@@ -400,5 +403,36 @@ class NewJournalView(LoginRequiredMixin, View):
                 "food_collections": food_collections,
                 "shop_collections": shop_collections,
                 "hours": hours,
+                "journal_id": uuid.uuid4(),
             },
         )
+
+
+class SaveJournal(View):
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+
+        try:
+            journal = Journal.objects.get(data["uuid"])
+        except:
+            journal = Journal.objects.create(user=self.request.user)
+
+        print(journal)
+
+        for record in data.items():
+            hour = record[0]
+            details = record[1]
+
+            if details["list_name"] == "sight_collections":
+                ref = Sights.objects.get(pk=details["collection_id"])
+            elif details["list_name"] == "food_collections":
+                ref = Foods.objects.get(pk=details["collection_id"])
+            else:
+                ref = Shops.objects.get(pk=details["collection_id"])
+
+            new_record = Record.objects.create(
+                content_object=ref, hour=hour, remark=details["remark"], journal=journal
+            )
+            new_record.save()
+
+        return JsonResponse({"message": "Journal saved!"})

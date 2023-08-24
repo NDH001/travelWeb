@@ -16,8 +16,19 @@ function get_data(data,list,id){
 }
 
 // to clear a selected hour div and return the collection back to the pool
-function restore_div(index){
+function restore_div(index,new_collection_id=null){
 
+    current_drop_zone_item_id = journal[index].collection_id
+    // console.log(current_drop_zone_item_id,'this one')
+    // console.log(journal[index].activity_name)
+
+    delete journal[index]
+    journal_set.splice(index-1,1)
+
+    // console.log(journal,'journal after delete')
+    // console.log(journal_set,'after delete')
+    // console.log(journal_set.includes(current_drop_zone_item_id))
+    
     // look for the clicked hour div according to the index passed in
     div = $(`#hour-div-${index}`)
     ori_list = div.find('.activity').find('img').attr('id')
@@ -34,7 +45,26 @@ function restore_div(index){
         'width':`${LIST_IMG_WIDTH}`
     })
 
-    $(ori_list).append(current_element)
+    // if the current item is not in any other hour div and current item id does not equal to the id of the newly coming in item then return it back to the pool
+    if ( !journal_set.includes(current_drop_zone_item_id) && current_drop_zone_item_id !=new_collection_id){
+        current_element.draggable({
+            revert:'invalid',
+            appendTo:'body',
+            helper:'clone', 
+            start:function(event,ui){
+                // pass the collection parameters during drag (' simple variable reference wouldn't work ')
+                ui.helper.data({'activity_name':activity_name})
+                ui.helper.data({'list_name':list_name})
+                ui.helper.data({'collection_id':collection_id})
+                // a variable that determines if the collection is dragged from pool or within a hour div ( false means from the pool)
+                ui.helper.data({'duplicate':false})
+            }
+        
+    }) 
+
+        $(ori_list).append(current_element)
+    }
+    
     
     // clear the rest hour sections 
     div.find('.drop-area').empty()
@@ -47,6 +77,7 @@ $(document).ready(function(){
 
     // records
     journal = {}
+    journal_set = []
 
     //  the draggable and droppable elements
     let collections = $('.collection-img')
@@ -76,13 +107,14 @@ $(document).ready(function(){
             
             list_name = ui.helper.data('list_name')
             activity_name= ui.helper.data('activity_name')
-            console.log(ui.helper.data('collection_id'))
-            console.log(collection_id,'hi')
+            collection_id = ui.helper.data('collection_id')
+
+            
             // if collection is dragged and dropped from hour div, duplicate it so that the collection would remain in both hour div
             let current_element = undefined
             if (ui.helper.data('duplicate')){
                 current_element = ui.draggable.clone()
-            // else remove the collection from the original pool and add it to the div
+                // else remove the collection from the original pool and add it to the div
             }else{
                 current_element = ui.draggable
             }
@@ -90,8 +122,14 @@ $(document).ready(function(){
             // check if there is existing collection in a hour div
             if ($(this).children().length>0){
                 // remove the existing collection to the pool 
-                restore_div(time)
+                restore_div(time,collection_id)
             }
+
+            journal[time] = {collection_id,list_name,activity_name}
+            journal_set.push(collection_id)
+            
+            console.log(journal)
+            // console.log(journal_set)
 
             // add the collection to the current hour div
             $(this).append(current_element);
@@ -130,6 +168,7 @@ $(document).ready(function(){
                 start:function(event,ui){
                     ui.helper.data({'activity_name':activity_name})
                     ui.helper.data({'list_name':list_name})
+                    ui.helper.data({'collection_id':collection_id})
                     ui.helper.data({'duplicate':true})
                 }
 

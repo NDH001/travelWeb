@@ -13,6 +13,34 @@
     top:110px;
 }
 
+.destination{
+    position: absolute;
+    left:720px;
+}
+
+.date{
+    position: absolute;
+    left: 970px;
+    top:110px;
+}
+
+.save{
+    right:400px;
+    position: absolute;
+    border: none;
+    border-radius: 5px;
+    font-size: large;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left:20px;
+    padding-right: 20px;
+
+}
+
+.save:hover{
+    cursor: pointer;
+}
+
 .list{
     margin-left:10px;
     margin-right:10px;
@@ -114,23 +142,6 @@
     padding: 10px;
     margin: 10px;
     background-color:rgb(238, 208, 153)
-}
-
-.save{
-    right:400px;
-    position: absolute;
-    border: none;
-    border-radius: 5px;
-    font-size: large;
-    padding-top:10px;
-    padding-bottom:10px;
-    padding-left:20px;
-    padding-right: 20px;
-
-}
-
-.save:hover{
-    cursor: pointer;
 }
 
 

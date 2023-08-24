@@ -404,6 +404,9 @@ class NewJournalView(LoginRequiredMixin, View):
                 "shop_collections": shop_collections,
                 "hours": hours,
                 "journal_id": uuid.uuid4(),
+                "start": start,
+                "end": end,
+                "destination": destination,
             },
         )
 
@@ -411,17 +414,19 @@ class NewJournalView(LoginRequiredMixin, View):
 class SaveJournal(View):
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
+        print(data)
 
         try:
-            journal = Journal.objects.get(data["uuid"])
+            journal = Journal.objects.get(pk=data["uuid"])
         except:
-            journal = Journal.objects.create(user=self.request.user)
-
-        print(journal)
+            journal = Journal.objects.create(pk=data["uuid"], user=self.request.user)
 
         for record in data.items():
             hour = record[0]
             details = record[1]
+
+            if hour == "uuid":
+                continue
 
             if details["list_name"] == "sight_collections":
                 ref = Sights.objects.get(pk=details["collection_id"])
@@ -431,7 +436,11 @@ class SaveJournal(View):
                 ref = Shops.objects.get(pk=details["collection_id"])
 
             new_record = Record.objects.create(
-                content_object=ref, hour=hour, remark=details["remark"], journal=journal
+                content_object=ref,
+                hour=hour,
+                remark=details["remark"],
+                date=details["date"].strip(),
+                journal=journal,
             )
             new_record.save()
 

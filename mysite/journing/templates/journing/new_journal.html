@@ -9,7 +9,9 @@
 {% block content%}
 
 <button class='save'> Save </button>
+<h2 class='destination'> {{destination}} </h2>
 <i class='journal-id'> Journal ID: {{journal_id}}</i>
+<h2 class='date'> {{start}} </h2>
 <div class='main'>
     <div class='sight-list list'>
         {% for s in sight_collections%}

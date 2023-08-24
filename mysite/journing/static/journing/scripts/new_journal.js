@@ -128,8 +128,8 @@ $(document).ready(function(){
             list_name = ui.helper.data('list_name')
             activity_name= ui.helper.data('activity_name')
             collection_id = ui.helper.data('collection_id')
-
-            
+            date = $('.date').text()
+ 
             // if collection is dragged and dropped from hour div, duplicate it so that the collection would remain in both hour div
             let current_element = undefined
             if (ui.helper.data('duplicate')){
@@ -145,7 +145,7 @@ $(document).ready(function(){
                 restore_div(time,collection_id)
             }
 
-            journal[time] = {collection_id,list_name,activity_name,}
+            journal[time] = {collection_id,list_name,activity_name,date}
             journal_id_only[time] = collection_id
             
             // console.log(journal)

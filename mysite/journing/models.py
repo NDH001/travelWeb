@@ -44,6 +44,7 @@ class Notification(models.Model):
 
 
 class Journal(models.Model):
+    id = models.UUIDField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
 
@@ -60,7 +61,7 @@ class Record(models.Model):
     content_object = GenericForeignKey("content_type", "object_uuid")
     hour = models.SmallIntegerField(default=None)
     remark = models.CharField(max_length=1000, default=None)
-    date_time = models.DateTimeField(default=None, null=True)
+    date = models.DateField(default=None, null=True)
     journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -207,15 +207,18 @@ $(document).ready(function(){
             
             journal[filled_hour]['remark'] = filled_hour_remark
         }
-        journal['uuid'] = journal_id
-        journal['start'] = start
-        journal['end'] = end
         
         console.log(journal)
         $.ajax({
             url:`/journal/save/`,
             type:'post',
-            data:JSON.stringify(journal),
+            data:JSON.stringify({
+            'journal':journal,
+            'uuid' : journal_id,
+            'start' : start,
+            'end' : end,
+            'destination_id' : destination_id,
+            }),
             beforeSend: function(xhr, settings) {
                 xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
             },
@@ -223,6 +226,8 @@ $(document).ready(function(){
                 if (response.message === 'login_required'){
                     console.log(response,response.message,response.login_url)
                     window.location.href=response.login_url
+                }else if(response.message==='saved'){
+                    window.location.href=`/journal/edit/${journal_id}/?date=${date}&city=${destination_id}`
                 }
             },
             error: function(xhr, status, error) {

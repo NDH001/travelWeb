@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
-from traveldata.models import Sights, Foods, Shops
+from traveldata.models import Sights, Foods, Shops, Cities
 
 
 # Create your models here.
@@ -48,6 +48,7 @@ class Journal(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
+    city = models.ForeignKey(Cities, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -67,7 +68,25 @@ class Record(models.Model):
     journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.content_object) + " " + str(self.date_time)
+        return str(self.content_object) + " " + str(self.date)
+
+    @property
+    def activity_name(self):
+        return str(self.content_object) if self.content_object else None
+
+    @property
+    def list_name(self):
+        if isinstance(self.content_object, Sights):
+            return "sight_collections"
+
+        if isinstance(self.content_object, Foods):
+            return "food_collections"
+
+        return "shop_collections"
+
+    @property
+    def image(self):
+        return self.content_object.img_local
 
     class Meta:
         db_table = '"journingdata"."record"'

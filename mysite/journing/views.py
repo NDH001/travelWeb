@@ -406,27 +406,34 @@ class NewJournalView(LoginRequiredMixin, View):
                 "journal_id": uuid.uuid4(),
                 "start": start,
                 "end": end,
-                "destination": destination,
+                "destination": city,
             },
         )
 
 
 class SaveJournal(View):
+    @ajax_check_login
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
-        print(data)
+        journal_uuid = data["uuid"]
+        start_date = data["start"]
+        end_date = data["end"]
+        city_id = data["destination_id"]
+        journal_data = data["journal"]
 
-        try:
-            journal = Journal.objects.get(pk=data["uuid"])
-        except:
-            journal = Journal.objects.create(
-                pk=data["uuid"],
-                user=self.request.user,
-                start_date=data["start"],
-                end_date=data["end"],
-            )
+        city = Cities.objects.get(pk=city_id)
 
-        for record in data.items():
+        # check if journal already exist
+
+        journal = Journal.objects.create(
+            pk=journal_uuid,
+            user=self.request.user,
+            start_date=start_date,
+            end_date=end_date,
+            city=city,
+        )
+
+        for record in journal_data.items():
             hour = record[0]
             details = record[1]
 
@@ -449,4 +456,100 @@ class SaveJournal(View):
             )
             new_record.save()
 
-        return JsonResponse({"message": "Journal saved!"})
+        return JsonResponse({"message": "saved"})
+
+
+class EditJournal(View):
+    def get(self, request, *args, **kwargs):
+        date = request.GET.get("date").strip()
+        destination = request.GET.get("city")
+
+        city = Cities.objects.get(pk=destination)
+
+        sights = Sights.objects.filter(city=city)
+
+        shops = Shops.objects.filter(city=city)
+
+        foods = Foods.objects.filter(city=city)
+
+        sight_collections = UserSightCollection.objects.filter(
+            user=request.user, collection__in=sights
+        ).select_related("user", "collection")
+
+        food_collections = UserFoodCollection.objects.filter(
+            user=request.user, collection__in=foods
+        ).select_related("user", "collection")
+
+        shop_collections = UserShopCollection.objects.filter(
+            user=request.user, collection__in=shops
+        ).select_related("user", "collection")
+
+        hours = [
+            "0000-0100",
+            "0100-0200",
+            "0200-0300",
+            "0300-0400",
+            "0400-0500",
+            "0500-0600",
+            "0600-0700",
+            "0700-0800",
+            "0800-0900",
+            "0900-1000",
+            "1000-1100",
+            "1100-1200",
+            "1200-1300",
+            "1300-1400",
+            "1400-1500",
+            "1500-1600",
+            "1600-1700",
+            "1700-1800",
+            "1800-1900",
+            "1900-1000",
+            "2000-2100",
+            "2100-2200",
+            "2200-2300",
+            "2300-0000",
+        ]
+
+        journal = Journal.objects.get(pk=kwargs["pk"])
+        records = journal.record_set.filter(date=date)
+        records_validate = list(records.values_list("object_uuid", flat=True))
+
+        return render(
+            request,
+            "journing/edit_journal.html",
+            {
+                "records_validate": records_validate,
+                "sight_collections": sight_collections,
+                "food_collections": food_collections,
+                "shop_collections": shop_collections,
+                "hours": hours,
+                "records": records,
+                "journal_id": kwargs["pk"],
+                "date": date,
+            },
+        )
+
+
+class GetJournal(View):
+    def get(self, request, *args, **kwargs):
+        journal = Journal.objects.get(pk=kwargs["pk"])
+        data = journal.record_set.filter(date=request.GET.get("date"))
+
+        records = {}
+
+        for r in data:
+            records[r.hour] = {
+                "activity_name": r.activity_name,
+                "hour": r.hour,
+                "remark": r.remark,
+                "date": r.date,
+                "list_name": r.list_name,
+                "journal": r.journal.id,
+                "collection_id": r.object_uuid,
+                "img_local": r.image,
+            }
+
+        # records = serialize("json", records)
+
+        return JsonResponse({"records": records})

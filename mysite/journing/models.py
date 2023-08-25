@@ -46,8 +46,8 @@ class Notification(models.Model):
 class Journal(models.Model):
     id = models.UUIDField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    start_date = models.DateField()
-    end_date = models.DateField()
+    start_date = models.CharField()
+    end_date = models.CharField()
     city = models.ForeignKey(Cities, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
 

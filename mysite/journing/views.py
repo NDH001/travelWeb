@@ -306,8 +306,6 @@ class ResetNotification(View):
 
 class JournalView(LoginRequiredMixin, FormView):
     template_name = "journing/journal.html"
-    form_class = NewJournalForm
-    success_url = reverse_lazy("journing:edit_journal")
 
     def get(self, request, *args, **kwargs):
         journals = request.user.journal_set.all()
@@ -315,7 +313,22 @@ class JournalView(LoginRequiredMixin, FormView):
         return render(
             request,
             self.template_name,
-            {"form": self.form_class, "journals": journals},
+            {"journals": journals},
+        )
+
+
+class NewJournalView(View):
+    form_class = NewJournalForm
+    success_url = reverse_lazy("journing:edit_journal")
+    template_name = "journing/new_journal.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(
+            request,
+            self.template_name,
+            {
+                "form": self.form_class,
+            },
         )
 
     def post(self, request, *args, **kwargs):
@@ -429,8 +442,8 @@ class EditJournal(View):
             end = journal.end_date
             journal_id = journal.id
 
-            start = start.strftime("%Y-%m-%d").strip()
-            end = end.strftime("%Y-%m-%d").strip()
+            # start = start.strftime("%Y-%m-%d").strip()
+            # end = end.strftime("%Y-%m-%d").strip()
 
             date = request.GET.get("date").strip()
 

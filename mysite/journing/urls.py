@@ -55,8 +55,9 @@ urlpatterns = [
     path("reset/notification/", views.ResetNotification.as_view(), name="reset_noti"),
     # -------------------------------------------------------------------------------#
     path("journal/", views.JournalView.as_view(), name="journal"),
-    path("journal/new/", views.NewJournalView.as_view(), name="new_journal"),
+    # path("journal/new/", views.NewJournalView.as_view(), name="new_journal"),
     path("journal/save/", views.SaveJournal.as_view(), name="save_journal"),
+    path("journal/edit/", views.EditJournal.as_view(), name="edit_journal"),
     path("journal/edit/<str:pk>/", views.EditJournal.as_view(), name="edit_journal"),
     path("journal/edit/get/<str:pk>/", views.GetJournal.as_view(), name="get_journal"),
 ]

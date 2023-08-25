@@ -17,6 +17,11 @@ function getCookie(name) {
         
 }
 
+
+// records
+let journal = {}
+let journal_id_only = {}
+
 // the dimensions for the image in different zones
 const LIST_IMG_HEIGHT= '75px'
 const LIST_IMG_WIDTH= '120px'
@@ -93,17 +98,9 @@ function restore_div(index,new_collection_id=null){
 
 }
 
-$(document).ready(function(){
+function enable_drag(target,duplicate=false){
 
-    // records
-    journal = {}
-    journal_id_only = {}
-
-    //  the draggable and droppable elements
-    let collections = $('.collection-img')
-    let drop = $('.drop-area')
-
-    collections.draggable({
+    target.draggable({
         revert:'invalid',
         appendTo:'body',
         helper:'clone', 
@@ -113,12 +110,15 @@ $(document).ready(function(){
             ui.helper.data({'list_name':list_name})
             ui.helper.data({'collection_id':collection_id})
             // a variable that determines if the collection is dragged from pool or within a hour div ( false means from the pool)
-            ui.helper.data({'duplicate':false})
+            ui.helper.data({'duplicate':duplicate})
         }
         
     }) 
+}
 
-    drop.droppable({
+function enable_drop(target){
+
+    target.droppable({
         accept: ".collection-img",
         drop: function(event, ui) {
 
@@ -128,7 +128,7 @@ $(document).ready(function(){
             list_name = ui.helper.data('list_name')
             activity_name= ui.helper.data('activity_name')
             collection_id = ui.helper.data('collection_id')
-            date = $('.date').text()
+            date = $('.date').text().trim()
  
             // if collection is dragged and dropped from hour div, duplicate it so that the collection would remain in both hour div
             let current_element = undefined
@@ -181,21 +181,14 @@ $(document).ready(function(){
             )
 
             // while the collection is dragged within a hour div, set the duplicate condition to true
-            current_element.draggable({
-                revert:'invalid',
-                appendTo:'body',
-                helper:'clone', 
-                start:function(event,ui){
-                    ui.helper.data({'activity_name':activity_name})
-                    ui.helper.data({'list_name':list_name})
-                    ui.helper.data({'collection_id':collection_id})
-                    ui.helper.data({'duplicate':true})
-                }
-
-            }) 
+            enable_drag(current_element,duplicate=true)
 
     }
     })
+
+}
+
+function enable_save(){
 
     $('.save').on('click',function(){
 
@@ -207,8 +200,7 @@ $(document).ready(function(){
             
             journal[filled_hour]['remark'] = filled_hour_remark
         }
-        
-        console.log(journal)
+        console.log(start,'hello!')
         $.ajax({
             url:`/journal/save/`,
             type:'post',
@@ -227,7 +219,7 @@ $(document).ready(function(){
                     console.log(response,response.message,response.login_url)
                     window.location.href=response.login_url
                 }else if(response.message==='saved'){
-                    window.location.href=`/journal/edit/${journal_id}/?date=${date}&city=${destination_id}`
+                    window.location.href=`/journal/edit/${journal_id}/?date=${date}`
                 }
             },
             error: function(xhr, status, error) {
@@ -236,5 +228,23 @@ $(document).ready(function(){
             }
         })
     })
+
+}
+
+$(document).ready(function(){
+
+    //  the draggable and droppable elements
+    let collections = $('.collection-img')
+    let drop = $('.drop-area')
+
+    enable_drag(collections,duplicate=false)
+
+    enable_drop(drop)
+
+    enable_save()
+
+    if (!new_journal){
+        console.log('not new')
+    }
     
 })

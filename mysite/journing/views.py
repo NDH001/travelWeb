@@ -27,6 +27,8 @@ from .decorator import ajax_check_login
 import json
 import uuid
 
+from datetime import datetime, time
+
 # Create your views here.
 """-------------------------------------------------------------------------------------------"""
 
@@ -305,7 +307,7 @@ class ResetNotification(View):
 class JournalView(LoginRequiredMixin, FormView):
     template_name = "journing/journal.html"
     form_class = NewJournalForm
-    success_url = reverse_lazy("journing:new_journal")
+    success_url = reverse_lazy("journing:edit_journal")
 
     def get(self, request, *args, **kwargs):
         return render(
@@ -340,75 +342,75 @@ class JournalView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
 
-class NewJournalView(LoginRequiredMixin, View):
-    template_name = "journing/new_journal.html"
+# class NewJournalView(LoginRequiredMixin, View):
+#     template_name = "journing/new_journal.html"
 
-    def get(self, request, *args, **kwargs):
-        destination = request.session.get("destination")
-        start = request.session.get("start")
-        end = request.session.get("end")
+#     def get(self, request, *args, **kwargs):
+#         destination = request.session.get("destination")
+#         start = request.session.get("start")
+#         end = request.session.get("end")
 
-        city = Cities.objects.get(pk=destination)
+#         city = Cities.objects.get(pk=destination)
 
-        sights = Sights.objects.filter(city=city)
+#         sights = Sights.objects.filter(city=city)
 
-        shops = Shops.objects.filter(city=city)
+#         shops = Shops.objects.filter(city=city)
 
-        foods = Foods.objects.filter(city=city)
+#         foods = Foods.objects.filter(city=city)
 
-        sight_collections = UserSightCollection.objects.filter(
-            user=request.user, collection__in=sights
-        ).select_related("user", "collection")
+#         sight_collections = UserSightCollection.objects.filter(
+#             user=request.user, collection__in=sights
+#         ).select_related("user", "collection")
 
-        food_collections = UserFoodCollection.objects.filter(
-            user=request.user, collection__in=foods
-        ).select_related("user", "collection")
+#         food_collections = UserFoodCollection.objects.filter(
+#             user=request.user, collection__in=foods
+#         ).select_related("user", "collection")
 
-        shop_collections = UserShopCollection.objects.filter(
-            user=request.user, collection__in=shops
-        ).select_related("user", "collection")
+#         shop_collections = UserShopCollection.objects.filter(
+#             user=request.user, collection__in=shops
+#         ).select_related("user", "collection")
 
-        hours = [
-            "0000-0100",
-            "0100-0200",
-            "0200-0300",
-            "0300-0400",
-            "0400-0500",
-            "0500-0600",
-            "0600-0700",
-            "0700-0800",
-            "0800-0900",
-            "0900-1000",
-            "1000-1100",
-            "1100-1200",
-            "1200-1300",
-            "1300-1400",
-            "1400-1500",
-            "1500-1600",
-            "1600-1700",
-            "1700-1800",
-            "1800-1900",
-            "1900-1000",
-            "2000-2100",
-            "2100-2200",
-            "2200-2300",
-            "2300-0000",
-        ]
+#         hours = [
+#             "0000-0100",
+#             "0100-0200",
+#             "0200-0300",
+#             "0300-0400",
+#             "0400-0500",
+#             "0500-0600",
+#             "0600-0700",
+#             "0700-0800",
+#             "0800-0900",
+#             "0900-1000",
+#             "1000-1100",
+#             "1100-1200",
+#             "1200-1300",
+#             "1300-1400",
+#             "1400-1500",
+#             "1500-1600",
+#             "1600-1700",
+#             "1700-1800",
+#             "1800-1900",
+#             "1900-1000",
+#             "2000-2100",
+#             "2100-2200",
+#             "2200-2300",
+#             "2300-0000",
+#         ]
 
-        return render(
-            request,
-            self.template_name,
-            {
-                "sight_collections": sight_collections,
-                "food_collections": food_collections,
-                "shop_collections": shop_collections,
-                "hours": hours,
-                "journal_id": uuid.uuid4(),
-                "start": start,
-                "end": end,
-                "destination": city,
-            },
-        )
+#         return render(
+#             request,
+#             self.template_name,
+#             {
+#                 "sight_collections": sight_collections,
+#                 "food_collections": food_collections,
+#                 "shop_collections": shop_collections,
+#                 "hours": hours,
+#                 "journal_id": uuid.uuid4(),
+#                 "start": start,
+#                 "end": end,
+#                 "destination": city,
+#             },
+#         )
 
 
 class SaveJournal(View):
@@ -424,21 +426,24 @@ class SaveJournal(View):
         city = Cities.objects.get(pk=city_id)
 
         # check if journal already exist
+        try:
+            journal = Journal.objects.get(pk=journal_uuid)
+        except:
+            journal = Journal.objects.create(
+                pk=journal_uuid,
+                user=self.request.user,
+                start_date=start_date,
+                end_date=end_date,
+                city=city,
+            )
 
-        journal = Journal.objects.create(
-            pk=journal_uuid,
-            user=self.request.user,
-            start_date=start_date,
-            end_date=end_date,
-            city=city,
-        )
+        if journal:
+            records = journal.record_set.all()
+            records.delete()
 
         for record in journal_data.items():
             hour = record[0]
             details = record[1]
-
-            if hour == "uuid" or hour == "start" or hour == "end":
-                continue
 
             if details["list_name"] == "sight_collections":
                 ref = Sights.objects.get(pk=details["collection_id"])
@@ -461,12 +466,55 @@ class SaveJournal(View):
 
 class EditJournal(View):
     def get(self, request, *args, **kwargs):
-        date = request.GET.get("date").strip()
-        destination = request.GET.get("city")
+        data = {}
+        destination = None
+        start = None
+        end = None
+        journal_id = None
+        new = None
+
+        try:
+            journal = Journal.objects.get(pk=kwargs["pk"])
+        except:
+            journal = None
+
+        # new journal
+
+        if not journal:
+            destination = request.session.get("destination")
+            start = request.session.get("start").strip()
+            end = request.session.get("end").strip()
+            journal_id = uuid.uuid4()
+
+            new = True
+
+            data["journal_id"] = journal
+
+        # edit journal
+
+        else:
+            destination = journal.city
+            start = journal.start_date
+            end = journal.end_date
+            journal_id = journal.id
+
+            start = start.strftime("%Y-%m-%d").strip()
+            end = end.strftime("%Y-%m-%d").strip()
+
+            date = request.GET.get("date").strip()
+
+            records = journal.record_set.filter(date=date)
+            records_validate = list(records.values_list("object_uuid", flat=True))
+            new = False
+
+            data["date"] = date
+            data["records_validate"] = records_validate
+            data["records"] = records
 
         city = Cities.objects.get(pk=destination)
 
         sights = Sights.objects.filter(city=city)
+        # print(sights)
 
         shops = Shops.objects.filter(city=city)
 
@@ -485,49 +533,25 @@ class EditJournal(View):
         ).select_related("user", "collection")
 
         hours = [
-            "0000-0100",
-            "0100-0200",
-            "0200-0300",
-            "0300-0400",
-            "0400-0500",
-            "0500-0600",
-            "0600-0700",
-            "0700-0800",
-            "0800-0900",
-            "0900-1000",
-            "1000-1100",
-            "1100-1200",
-            "1200-1300",
-            "1300-1400",
-            "1400-1500",
-            "1500-1600",
-            "1600-1700",
-            "1700-1800",
-            "1800-1900",
-            "1900-1000",
-            "2000-2100",
-            "2100-2200",
-            "2200-2300",
-            "2300-0000",
+            time(x, 0).strftime("%H%M") + " - " + time(x + 1, 0).strftime("%H%M")
+            for x in range(23)
         ]
+        hours.append(time(23, 0).strftime("%H%M") + " - " + time(0, 0).strftime("%H%M"))
 
-        journal = Journal.objects.get(pk=kwargs["pk"])
-        records = journal.record_set.filter(date=date)
-        records_validate = list(records.values_list("object_uuid", flat=True))
+        data["sight_collections"] = sight_collections
+        data["food_collections"] = food_collections
+        data["shop_collections"] = shop_collections
+        data["hours"] = hours
+        data["start"] = start
+        data["end"] = end
+        data["journal_id"] = journal_id
+        data["destination"] = destination
+        data["new"] = new
 
         return render(
             request,
             "journing/edit_journal.html",
-            {
-                "records_validate": records_validate,
-                "sight_collections": sight_collections,
-                "food_collections": food_collections,
-                "shop_collections": shop_collections,
-                "hours": hours,
-                "records": records,
-                "journal_id": kwargs["pk"],
-                "date": date,
-            },
+            data,
         )
 
 

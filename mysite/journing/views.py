@@ -310,10 +310,12 @@ class JournalView(LoginRequiredMixin, FormView):
     success_url = reverse_lazy("journing:edit_journal")
 
     def get(self, request, *args, **kwargs):
+        journals = request.user.journal_set.all()
+
         return render(
             request,
             self.template_name,
-            {"form": self.form_class},
+            {"form": self.form_class, "journals": journals},
         )
 
     def post(self, request, *args, **kwargs):

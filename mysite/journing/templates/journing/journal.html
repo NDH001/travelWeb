@@ -8,7 +8,7 @@
 
 {% block content%}
 
-{% if not user.journal_set.all %}
+{% if not journals %}
 
 <div class='no-journal'>
 
@@ -27,7 +27,49 @@
 
 {% else %}
 
-hi
+<div class='all-journals'>
+
+    {% for journal in journals%}
+
+        <a href="{% url 'journing:edit_journal'%}{{journal.id}}?date={{journal.start_date}}">
+            <div class='indiv-journal'>
+
+            <div class='city-div'>
+                <div class='city-img-div'>
+                    <img src="{% static '/cityimgs/'%}{{journal.city.img_local}}">
+                </div>
+
+                <div class='city-name-div'>
+                    <h2> {{journal.city}} </h2>
+                </div>
+
+            </div>
+
+            <div class='journal-details'>
+
+                <div class='start-date'>
+                    <h2>
+                        {{journal.start_date}}
+                    </h2>
+                </div>
+
+                <div class='end-date'>
+                    <h2>
+                        {{journal.end_date}}
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            </div>
+        </a>
+
+    {% endfor %}
+
+</div>
+
 
 {% endif %}
 

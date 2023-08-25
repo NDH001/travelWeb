@@ -99,7 +99,6 @@ function restore_div(index,new_collection_id=null){
 }
 
 function enable_drag(target,duplicate=false){
-
     target.draggable({
         revert:'invalid',
         appendTo:'body',
@@ -121,10 +120,8 @@ function enable_drop(target){
     target.droppable({
         accept: ".collection-img",
         drop: function(event, ui) {
-
             // locate the hour div index --> time
             time = $(this).attr('id')
-            
             list_name = ui.helper.data('list_name')
             activity_name= ui.helper.data('activity_name')
             collection_id = ui.helper.data('collection_id')
@@ -148,8 +145,8 @@ function enable_drop(target){
             journal[time] = {collection_id,list_name,activity_name,date}
             journal_id_only[time] = collection_id
             
-            // console.log(journal)
-            // console.log(journal_id_only)
+            console.log(journal)
+            console.log(journal_id_only)
 
             // add the collection to the current hour div
             $(this).append(current_element);
@@ -200,7 +197,6 @@ function enable_save(){
             
             journal[filled_hour]['remark'] = filled_hour_remark
         }
-        console.log(start,'hello!')
         $.ajax({
             url:`/journal/save/`,
             type:'post',
@@ -231,6 +227,85 @@ function enable_save(){
 
 }
 
+function read_existing(){
+    $.ajax({
+        url: `/journal/edit/get/${journal_id}/?date=${date}`,
+        method: 'GET',
+        dataType: 'json',  // Expects JSON data
+        success: function(response) {
+        let records = response['records'];
+        console.log(records)
+
+        $('.hour-div').each(function(index,element){
+            if (records[index]){
+                current_record = records[index]
+
+                let img_path = undefined
+                let icon_path = undefined
+                if (current_record.list_name ==='sight_collections'){
+                    img_path = sightimg
+                    icon_path=sighticon
+                }else if(current_record.list_name ==='food_collections'){
+                    img_path = foodimg
+                    icon_path=foodicon
+                }else{
+                    img_path = shopimg
+                    icon_path=shopicon
+                }
+                
+                $(element).find('.drop-area').html(
+                    `<div class="collection-img" ondragstart="get_data('${current_record.activity_name}','${current_record.list_name}','${current_record.collection_id}')" style="height:${HOUR_IMG_HEIGHT};width:${HOUR_IMG_WIDTH};border-radius:10px;">
+
+                    <img src="${img_path}${current_record.img_local}" style="height:${HOUR_IMG_HEIGHT};width:${HOUR_IMG_WIDTH};border-radius:5px;">
+
+                    </div>`
+                )
+
+                $(element).find('.name').text(current_record.activity_name)
+
+
+                $(element).find('.activity').html(
+                    `<img src=${icon_path}></img>`
+                )
+
+                collection_id = current_record.collection_id
+                list_name = current_record.list_name
+                activity_name= current_record.activity_name
+                date = current_record.date
+                journal[index+1] = {
+                    collection_id,
+                    list_name,
+                    activity_name,
+                    date}
+                journal_id_only[index+1] = collection_id
+            }
+
+        }) 
+        },
+        error: function(error) {
+          console.log('Error:', error);
+        }
+      });
+}
+
+function enable_drop_area_after_saved(){
+    $('.drop-area').on('mouseenter', '.collection-img', function() {
+        $(this).draggable({
+            revert:'invalid',
+            appendTo:'body',
+            helper:'clone', 
+            start:function(event,ui){
+                // pass the collection parameters during drag (' simple variable reference wouldn't work ')
+                ui.helper.data({'activity_name':activity_name})
+                ui.helper.data({'list_name':list_name})
+                ui.helper.data({'collection_id':collection_id})
+                // a variable that determines if the collection is dragged from pool or within a hour div ( false means from the pool)
+                ui.helper.data({'duplicate':true})
+            }
+        });
+        });
+}
+
 $(document).ready(function(){
 
     //  the draggable and droppable elements
@@ -243,8 +318,9 @@ $(document).ready(function(){
 
     enable_save()
 
-    if (!new_journal){
-        console.log('not new')
+    if (new_journal=='False'){
+        read_existing()
     }
+    enable_drop_area_after_saved()
     
 })

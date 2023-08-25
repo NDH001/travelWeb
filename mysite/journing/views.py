@@ -563,7 +563,7 @@ class GetJournal(View):
         records = {}
 
         for r in data:
-            records[r.hour] = {
+            records[r.hour - 1] = {
                 "activity_name": r.activity_name,
                 "hour": r.hour,
                 "remark": r.remark,

@@ -56,6 +56,7 @@ function restore_div(index,new_collection_id=null){
     div = $(`#hour-div-${index}`)
     ori_list = div.find('.activity').find('img').attr('id')
     ori_list = '.' + ori_list + '-list';
+    console.log(ori_list)
     
     // return back to the pool with the preset dimension
     current_element = div.find('.drop-area').find('div')
@@ -242,15 +243,19 @@ function read_existing(){
 
                 let img_path = undefined
                 let icon_path = undefined
+                let list_append_id = undefined
                 if (current_record.list_name ==='sight_collections'){
                     img_path = sightimg
                     icon_path=sighticon
+                    list_append_id='sight'
                 }else if(current_record.list_name ==='food_collections'){
                     img_path = foodimg
                     icon_path=foodicon
+                    list_append_id='food'
                 }else{
                     img_path = shopimg
                     icon_path=shopicon
+                    list_append_id='shop'
                 }
                 
                 $(element).find('.drop-area').html(
@@ -265,7 +270,7 @@ function read_existing(){
 
 
                 $(element).find('.activity').html(
-                    `<img src=${icon_path}></img>`
+                    `<img id=${list_append_id} src=${icon_path}></img>`
                 )
 
                 collection_id = current_record.collection_id
@@ -320,7 +325,7 @@ $(document).ready(function(){
 
     if (new_journal=='False'){
         read_existing()
+        enable_drop_area_after_saved()
     }
-    enable_drop_area_after_saved()
     
 })

@@ -1,0 +1,25 @@
+{% extends 'journing/base.html'%}
+{% load static%}
+
+{% block headcontent%}
+<link rel='stylesheet' href="{% static 'journing/styles/new_journal.css'%}">
+{% endblock headcontent%}
+
+
+{% block content%}
+
+<div class='new-journal'>
+    <form method='post'>
+        {% csrf_token %}
+        <h2>{{form.as_p}}</h2>
+        <div class='submit-div'>
+            <a href="{% url 'journing:edit_journal'%}">
+            <h3>Create now !</h3>
+            </a>
+
+        </div>
+    </form>
+</div>
+
+{% endblock content%}
+

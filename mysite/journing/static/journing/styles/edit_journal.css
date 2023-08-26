@@ -7,26 +7,39 @@
     
 }
 
-.journal-id{
+.journal-id, .destination, .date, .title, .save{
     position: absolute;
+
+}
+
+.journal-id{
     left:30px;
     top:110px;
 }
 
 .destination{
-    position: absolute;
     left:720px;
 }
 
 .date{
-    position: absolute;
     left: 970px;
     top:110px;
 }
 
-.save{
+.title{
+    height: 30px;
     right:400px;
-    position: absolute;
+    top:100px;
+    border-radius: 5px;
+    border: none;
+    font-size: medium;
+    padding: 5px;
+    padding-left: 20px;
+    font-weight: 700;
+}
+
+.save{
+    right:200px;
     border: none;
     border-radius: 5px;
     font-size: large;

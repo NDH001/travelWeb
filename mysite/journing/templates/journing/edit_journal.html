@@ -8,10 +8,11 @@
 
 {% block content%}
 
-<button class='save'> Save </button>
 <h2 class='destination'> {{destination}} </h2>
 <i class='journal-id'> Journal ID: {{journal_id}}</i>
 <h2 class='date'> {{start}} </h2>
+<input class='title' placeholder='Untitled'> </input>
+<button class='save'> Save </button>
 <div class='main'>
     {% if not records_validate%}
     

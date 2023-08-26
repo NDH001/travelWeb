@@ -49,6 +49,7 @@ class Journal(models.Model):
     start_date = models.CharField()
     end_date = models.CharField()
     city = models.ForeignKey(Cities, on_delete=models.CASCADE)
+    title = models.CharField(default="Untitled")
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

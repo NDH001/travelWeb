@@ -305,6 +305,7 @@ class ResetNotification(View):
 
 
 class JournalView(LoginRequiredMixin, FormView):
+    # display all journals a user have
     template_name = "journing/journal.html"
 
     def get(self, request, *args, **kwargs):
@@ -318,6 +319,7 @@ class JournalView(LoginRequiredMixin, FormView):
 
 
 class NewJournalView(FormView):
+    # user can create new journals according to the destination and dates they selected
     form_class = NewJournalForm
     success_url = reverse_lazy("journing:edit_journal")
     template_name = "journing/new_journal.html"
@@ -360,17 +362,23 @@ class NewJournalView(FormView):
 class SaveJournal(View):
     @ajax_check_login
     def post(self, request, *args, **kwargs):
+        """
+        when the arrows or save button is clicked, javascript sents the corresponding data back to the view
+        data is the json object sent from the javascript that contains the various key variables
+        """
         data = json.loads(request.body)
         journal_uuid = data["uuid"]
         start_date = data["start"]
         end_date = data["end"]
         city_id = data["destination_id"]
-        journal_data = data["journal"]
+        journal_data = data[
+            "journal"
+        ]  # this is the json object that contains array of records sent from javascript
         date = data["date"]
 
         city = Cities.objects.get(pk=city_id)
 
-        # check if journal already exist
+        # check if journal already exist, create a new one if negative
         try:
             journal = Journal.objects.get(pk=journal_uuid)
         except:
@@ -382,16 +390,17 @@ class SaveJournal(View):
                 city=city,
             )
 
+        # before adding the new items , first clear the records for the selected date/page for the journal object, to ease the recording purpose
         if journal:
             records = journal.record_set.filter(date=date)
             records.delete()
 
-        print(journal_data.items())
-
+        # which afterwards we can start to add the array of items sent from the javascripts,
         for record in journal_data.items():
             hour = record[0]
             details = record[1]
 
+            # create different objects based on their instance type
             if details["list_name"] == "sight_collections":
                 ref = Sights.objects.get(pk=details["collection_id"])
             elif details["list_name"] == "food_collections":
@@ -399,6 +408,7 @@ class SaveJournal(View):
             else:
                 ref = Shops.objects.get(pk=details["collection_id"])
 
+            # create new record for each array item
             new_record = Record.objects.create(
                 content_object=ref,
                 hour=hour,
@@ -407,12 +417,34 @@ class SaveJournal(View):
                 journal=journal,
             )
             new_record.save()
-        journal.save()
+
         return JsonResponse({"message": "saved"})
 
 
 class EditJournal(View):
+    """
+    this is the view that allows user to plan and customize their trip. The user can drag around \n
+    their collections from the collection pool and drop them on the desired container. \n
+
+    the idea behind this view is as follows:
+
+    1. This view is for both creating new journal and editing existing journal
+    2. This view is called after the new journal page, and once this view is called, it will check for a \n
+        pk, if non existent, this means this is a new journal,and falls into the url pattern of /journal/edit/ \n
+        otherwise, it is an already existing journal with a pk, which falls into the url pattern of /journal/edit/<string:pk>/
+    3. If the journal does not exist, we retrieve the values declared earlier into the new journal view, \n
+        e.g. destinations,start date and end date, we do not create a new journal yet, this action is performed later with specific condition.
+        A unique uuid along with other relevant information is passed to the template which is passed to the javascript
+    4. If the journal exist however, we update the journal title if there is a pass of title from the url link \n
+        which means the title of the journal is changed ( performed in the javascript), and then we also gets all the \n
+        queries(records) id for this journal within the start and end date, flatten them and passed to the templates as well.
+        This queries is used to show/hide dropped collection items on the webpage
+    5. This view only retrieves data and does not manipulate data, which is performed with save journal view instead.
+
+    """
+
     def get(self, request, *args, **kwargs):
+        # some common variable for both new and existing journal to pass to the template
         data = {}
         destination = None
         start = None
@@ -453,6 +485,7 @@ class EditJournal(View):
 
             date = request.GET.get("date").strip()
 
+            # get all the queries with the start and end date
             all_records = journal.record_set.filter(
                 Q(date__gte=start) & Q(date__lte=end)
             )
@@ -461,14 +494,15 @@ class EditJournal(View):
             )
             new = False
 
+            # the queries id flattened for easy check in template
             data["all_records_validate"] = all_records_validate
             data["all_records"] = all_records
             data["title"] = title
 
+        # the query and sub queries
         city = Cities.objects.get(pk=destination)
 
         sights = Sights.objects.filter(city=city)
-        # print(sights)
 
         shops = Shops.objects.filter(city=city)
 
@@ -510,6 +544,11 @@ class EditJournal(View):
 
 
 class GetJournal(View):
+    """
+    this view is mainly used to update the journal json object in the javascript, all items being dropped in the database \n
+    on that particular day should also be registered with the journal json object when page first loads.
+    """
+
     def get(self, request, *args, **kwargs):
         journal = Journal.objects.get(pk=kwargs["pk"])
         data = journal.record_set.filter(date=request.GET.get("date"))
@@ -527,7 +566,5 @@ class GetJournal(View):
                 "collection_id": r.object_uuid,
                 "img_local": r.image,
             }
-
-        # records = serialize("json", records)
 
         return JsonResponse({"records": records})

@@ -20,8 +20,8 @@ function getCookie(name) {
 
 // records
 let journal = {}
-let journal_initial = {}
-let journal_id_only = {}
+let journal_initial = {} // a json to compare to the journal json to see if there is any changes on the page
+let journal_id_only = {} // a json with only journal json id for easy setting up of dropped items on page load ( the loop )
 
 // the dimensions for the image in different zones
 const LIST_IMG_HEIGHT= '75px'
@@ -34,6 +34,7 @@ let activity_name = undefined
 let list_name = undefined
 let collection_id = undefined
 
+// everytime a collection is clicked, its corresponding data is sent to this javascript
 function get_data(data,list,id){
     activity_name=data
     list_name=list
@@ -44,20 +45,13 @@ function get_data(data,list,id){
 function restore_div(index,new_collection_id=null){
 
     current_drop_zone_item_id = journal[index].collection_id
-    // console.log(current_drop_zone_item_id,'this one')
-    // console.log(journal[index].activity_name)
     delete journal[index]
     delete journal_id_only[index]
-
-    // console.log(journal,'journal after delete')
-    // console.log(journal_id_only,'after delete')
-    // console.log(journal_id_only.includes(current_drop_zone_item_id))
-    
-    // look for the clicked hour div according to the index passed in
+ 
+    // look for the collection category for the dropped item according to the index passed in
     div = $(`#hour-div-${index}`)
     ori_list = div.find('.activity').find('img').attr('id')
     ori_list = '.' + ori_list + '-list';
-    console.log(ori_list)
     
     // return back to the pool with the preset dimension
     current_element = div.find('.drop-area').find('div')
@@ -65,11 +59,12 @@ function restore_div(index,new_collection_id=null){
         'height':`${LIST_IMG_HEIGHT}`,
         'width':`${LIST_IMG_WIDTH}`
     })
+
+    // set the dimension for dropped item
     div.find('.drop-area').find('div').find('img').css({
-        'height':`${LIST_IMG_HEIGHT}`,
-        'width':`${LIST_IMG_WIDTH}`
+        'height':`${HOUR_IMG_HEIGHT}`,
+        'width':`${HOUR_IMG_WIDTH}`
     })
-    // console.log(current_drop_zone_item_id!=new_collection_id)
 
     // if the current item is not in any other hour div and current item id does not equal to the id of the newly coming in item then return it back to the pool
     if ( !Object.values(journal_id_only).includes(current_drop_zone_item_id) && current_drop_zone_item_id !=new_collection_id){
@@ -144,13 +139,10 @@ function enable_drop(target){
                 restore_div(time,collection_id)
             }
 
+            // add the new item to the journal records
             journal[time] = {collection_id,list_name,activity_name,date}
             journal_id_only[time] = collection_id
             
-            console.log(journal)
-            console.log(journal_id_only)
-            console.log(journal_initial,'copy')
-
             // add the collection to the current hour div
             $(this).append(current_element);
 
@@ -191,16 +183,18 @@ function enable_drop(target){
 function save(current_date,redirect_date){
 
 
-        let filled_hours_keys = Object.keys(journal) 
-        let redirect_link = undefined
+        let filled_hours_keys = Object.keys(journal) // search for all the div occupied with items
+        let redirect_link = undefined // the link changes depends on if there is a title changed or not (for efficiency --> not efficient to perform save action for just a title)
         let current_title = $('.title')
 
+        // set up the link depends on if there is a title change
         if (current_title.val() != title){
             redirect_link = `/journal/edit/${journal_id}/?date=${date_format(new Date(redirect_date))}&title=${$('.title').val()}`
         }else{
             redirect_link = `/journal/edit/${journal_id}/?date=${date_format(new Date(redirect_date))}`
         }
 
+        // add the remarks for each div since by only changing the remarks, the div save action is not triggered(unlike dropping of collections)
         for (let key in filled_hours_keys){
             filled_hour = filled_hours_keys[key]
             let filled_hour_remark = $(`#hour-div-${filled_hour}`).find('.remarks textarea').val()
@@ -208,14 +202,16 @@ function save(current_date,redirect_date){
             journal[filled_hour]['remark'] = filled_hour_remark
         }
 
+        // if nothing is changed,simply redirects to the next page
         if (Object.keys(journal).length===0 || JSON.stringify(journal)===JSON.stringify(journal_initial)){
             if ( new_journal == 'False'){
                 window.location.href=redirect_link
-                console.log('do nth')
+                console.log('no new updates')
             }else{
                 return
             }
         }
+        // else perform page save action
 
         $.ajax({
             url:`/journal/save/`,
@@ -255,10 +251,11 @@ function enable_save(){
 }
 
 function read_existing(){
+    // this function gets data from the django get journal view
     $.ajax({
         url: `/journal/edit/get/${journal_id}/?date=${date}`,
         method: 'GET',
-        dataType: 'json',  // Expects JSON data
+        dataType: 'json',
         success: function(response) {
         let records = response['records'];
         console.log(records)
@@ -292,6 +289,7 @@ function read_existing(){
                 date = current_record.date
                 remark = current_record.remark
 
+                // display the earlier dropped images
                 $(element).find('.drop-area').html(
                     `<div class="collection-img" ondragstart="get_data('${activity_name}','${list_name}','${collection_id}')" style="height:${HOUR_IMG_HEIGHT};width:${HOUR_IMG_WIDTH};border-radius:10px;">
 
@@ -308,6 +306,7 @@ function read_existing(){
 
                 $(element).find('.remarks textarea').val(remark)
 
+                // keep a copy of journal and journal_initial for comparison to check for any changes within a div
                 journal[index+1] = {
                     collection_id,
                     list_name,
@@ -336,6 +335,7 @@ function read_existing(){
 
 }
 
+// the drop area needs to be activated again after page read
 function enable_drop_area_after_saved(){
     $('.drop-area').on('mouseenter', '.collection-img', function() {
         $(this).draggable({
@@ -354,6 +354,7 @@ function enable_drop_area_after_saved(){
         });
 }
 
+// format the date to standadize
 function date_format(date){
 
     let year = date.getFullYear();
@@ -363,6 +364,7 @@ function date_format(date){
     return year + '-' + month + '-' + day
 }
 
+// get a new date depending on the arrows clicked
 function set_date(date_holder,next=true){
 
     date_to_be = new Date(date_holder.text())
@@ -377,7 +379,7 @@ function set_date(date_holder,next=true){
     
 
 }
-
+// arrow vanish if no more available page should be shown
 function check_arrow_visibility(){
 
     current_date = $('.date').text()
@@ -407,6 +409,7 @@ function check_arrow_visibility(){
 
 }
 
+// arrows sets the new date on the page and also save the current page
 function enable_arrows(){
     
     let date_holder = $('.date').find('h2')

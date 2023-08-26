@@ -31,7 +31,7 @@
 <input class='title' placeholder='Untitled'></input>
 <button class='save'> Save </button>
 <div class='main'>
-    {% if not records_validate%}
+    {% if not all_records_validate%}
     
         <div class='sight-list list'>
         {% for s in sight_collections%}
@@ -61,7 +61,7 @@
 
             <div class='sight-list list'>
             {% for s in sight_collections%}
-                {% if s.collection.id not in records_validate%}
+                {% if s.collection.id not in all_records_validate%}
                     <div class='collection-img' ondragstart="get_data('{{s.collection}}','sight_collections','{{s.collection.id}}')" >
                     <img src="{% static '/sightimgs/' %}{{s.collection.img_local}}">
                     </div>
@@ -71,7 +71,7 @@
 
             <div class='food-list list'>
             {% for f in food_collections%}
-                {% if f.collection.id not in records_validate%}
+                {% if f.collection.id not in all_records_validate%}
                     <div class='collection-img' ondragstart="get_data('{{f.collection}}','food_collections','{{f.collection.id}}')">
                     <img src="{% static '/foodimgs/' %}{{f.collection.img_local}}">
                     </div>
@@ -81,7 +81,7 @@
 
             <div class='shop-list list'>
             {% for s in shop_collections%}
-                {% if s.collection.id not in records_validate%}
+                {% if s.collection.id not in all_records_validate%}
                     <div class='collection-img' ondragstart="get_data('{{s.collection}}','shop_collections','{{s.collection.id}}')" >
                     <img src="{% static '/shopimgs/' %}{{s.collection.img_local}}">
                     </div>

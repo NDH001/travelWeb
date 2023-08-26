@@ -46,8 +46,8 @@ class Notification(models.Model):
 class Journal(models.Model):
     id = models.UUIDField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    start_date = models.CharField()
-    end_date = models.CharField()
+    start_date = models.DateField()
+    end_date = models.DateField()
     city = models.ForeignKey(Cities, on_delete=models.CASCADE)
     title = models.CharField(default="Untitled")
     created_on = models.DateTimeField(auto_now_add=True)
@@ -57,6 +57,7 @@ class Journal(models.Model):
 
     class Meta:
         db_table = '"journingdata"."journal"'
+        ordering = ["created_on"]
 
 
 class Record(models.Model):

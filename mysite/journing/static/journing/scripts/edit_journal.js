@@ -189,7 +189,7 @@ function enable_drop(target){
 function enable_save(){
 
     $('.save').on('click',function(){
-
+        console.log()
         if (Object.keys(journal).length===0){
             return
         }
@@ -221,7 +221,7 @@ function enable_save(){
                     console.log(response,response.message,response.login_url)
                     window.location.href=response.login_url
                 }else if(response.message==='saved'){
-                    window.location.href=`/journal/edit/${journal_id}/?date=${date}`
+                    window.location.href=`/journal/edit/${journal_id}/?date=${date_format(new Date(date))}`
                 }
             },
             error: function(xhr, status, error) {

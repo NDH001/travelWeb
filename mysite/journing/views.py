@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional
 from django.db import models
-from django.db.models import Exists, OuterRef
+from django.db.models import Exists, OuterRef, Q
 from django.db.models.query import QuerySet
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import ListView, DetailView
@@ -384,7 +384,8 @@ class SaveJournal(View):
             )
 
         if journal:
-            records = journal.record_set.all()
+            records = journal.record_set.filter(date=request.GET.get("date"))
+            print(records, "hey yo")
             records.delete()
 
         for record in journal_data.items():
@@ -446,21 +447,18 @@ class EditJournal(View):
             journal_id = journal.id
             title = journal.title
 
-            # start = start.strftime("%Y-%m-%d").strip()
-            # end = end.strftime("%Y-%m-%d").strip()
-
             date = request.GET.get("date").strip()
 
-            print(start, end)
-
-            records = journal.record_set.filter(
-                date__in=["2023-01-01", "2023-01-02", "2023-01-03"]
+            all_records = journal.record_set.filter(
+                Q(date__gte=start) & Q(date__lte=end)
             )
-            records_validate = list(records.values_list("object_uuid", flat=True))
+            all_records_validate = list(
+                all_records.values_list("object_uuid", flat=True)
+            )
             new = False
 
-            data["records_validate"] = records_validate
-            data["records"] = records
+            data["all_records_validate"] = all_records_validate
+            data["all_records"] = all_records
             data["title"] = title
 
         city = Cities.objects.get(pk=destination)

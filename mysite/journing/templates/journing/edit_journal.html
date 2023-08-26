@@ -98,7 +98,7 @@
 
 {% block jscontent%}
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="{% static 'journing/scripts/new_journal.js'%}"></script>
+<script src="{% static 'journing/scripts/edit_journal.js'%}"></script>
 <script>
     sighticon = "{% static 'journing/icons/attraction.png'%}"
     shopicon = "{% static 'journing/icons/shopping.png'%}"
@@ -114,6 +114,7 @@
     destination_id = "{{destination}}"
     date = "{{date}}"
     new_journal = "{{new}}"
+    title = "{{title}}"
 
     
 </script>

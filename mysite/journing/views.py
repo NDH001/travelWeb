@@ -366,6 +366,7 @@ class SaveJournal(View):
         end_date = data["end"]
         city_id = data["destination_id"]
         journal_data = data["journal"]
+        title = data["title"]
 
         city = Cities.objects.get(pk=city_id)
 
@@ -378,6 +379,7 @@ class SaveJournal(View):
                 user=self.request.user,
                 start_date=start_date,
                 end_date=end_date,
+                title=title,
                 city=city,
             )
 
@@ -441,6 +443,7 @@ class EditJournal(View):
             start = journal.start_date
             end = journal.end_date
             journal_id = journal.id
+            title = journal.title
 
             # start = start.strftime("%Y-%m-%d").strip()
             # end = end.strftime("%Y-%m-%d").strip()
@@ -454,6 +457,7 @@ class EditJournal(View):
             data["date"] = date
             data["records_validate"] = records_validate
             data["records"] = records
+            data["title"] = title
 
         city = Cities.objects.get(pk=destination)
 

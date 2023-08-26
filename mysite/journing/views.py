@@ -317,7 +317,7 @@ class JournalView(LoginRequiredMixin, FormView):
         )
 
 
-class NewJournalView(View):
+class NewJournalView(FormView):
     form_class = NewJournalForm
     success_url = reverse_lazy("journing:edit_journal")
     template_name = "journing/new_journal.html"

@@ -451,7 +451,11 @@ class EditJournal(View):
 
             date = request.GET.get("date").strip()
 
-            records = journal.record_set.filter(date=date)
+            print(start, end)
+
+            records = journal.record_set.filter(
+                date__in=["2023-01-01", "2023-01-02", "2023-01-03"]
+            )
             records_validate = list(records.values_list("object_uuid", flat=True))
             new = False
 

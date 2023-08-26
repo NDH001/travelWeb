@@ -189,6 +189,7 @@ function enable_drop(target){
 function enable_save(){
 
     $('.save').on('click',function(){
+
         if (Object.keys(journal).length===0){
             return
         }
@@ -317,19 +318,25 @@ function enable_drop_area_after_saved(){
         });
 }
 
+function date_format(date){
+
+    let year = date.getFullYear();
+    let month = (date.getMonth() + 1).toString().padStart(2, '0');
+    let day = date.getDate().toString().padStart(2, '0');
+
+    return year + '-' + month + '-' + day
+}
+
 function set_date(start_date,end_date,date_holder,next=true){
 
+    date_to_be = new Date(date_holder.text())
     if (next){
-        next_date = new Date(date_holder.text())
-        next_date.setDate(next_date.getDate() + 1);
-        date_holder.text(next_date.toLocaleDateString())
+        date_to_be.setDate(date_to_be.getDate() + 1);
     }
     else{
-
-        previous_date = new Date(date_holder.text())
-        previous_date.setDate(previous_date.getDate() - 1);
-        date_holder.text(previous_date.toLocaleDateString())
+        date_to_be.setDate(date_to_be.getDate() - 1);
     }
+    date_holder.text(date_format(date_to_be))
 }
 
 $(document).ready(function(){

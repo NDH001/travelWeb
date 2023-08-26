@@ -352,7 +352,7 @@ class NewJournalView(FormView):
         cleaned_data = form.cleaned_data
         self.request.session["destination"] = cleaned_data["where_to"].city
         self.request.session["start"] = cleaned_data["start_date"].isoformat()
-        self.request.session["end"] = cleaned_data["start_date"].isoformat()
+        self.request.session["end"] = cleaned_data["end_date"].isoformat()
 
         return super().form_valid(form)
 
@@ -418,6 +418,7 @@ class EditJournal(View):
         end = None
         journal_id = None
         new = None
+        date = None
 
         try:
             journal = Journal.objects.get(pk=kwargs["pk"])
@@ -431,7 +432,7 @@ class EditJournal(View):
             start = request.session.get("start").strip()
             end = request.session.get("end").strip()
             journal_id = uuid.uuid4()
-
+            date = start
             new = True
 
             data["journal_id"] = journal
@@ -454,7 +455,6 @@ class EditJournal(View):
             records_validate = list(records.values_list("object_uuid", flat=True))
             new = False
 
-            data["date"] = date
             data["records_validate"] = records_validate
             data["records"] = records
             data["title"] = title
@@ -495,7 +495,7 @@ class EditJournal(View):
         data["journal_id"] = journal_id
         data["destination"] = destination
         data["new"] = new
-
+        data["date"] = date
         return render(
             request,
             "journing/edit_journal.html",

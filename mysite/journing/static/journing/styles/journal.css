@@ -55,10 +55,13 @@
     grid-template-columns: 1fr 2fr;
     align-items: center;
     text-align: center;
+    position: relative;
 }
 
-.indiv-journal a{
-    text-decoration: none;
+.created-on{
+    position: absolute;
+    top:30px;
+    right:50px;
 }
 
 .city-div{

@@ -12,23 +12,22 @@
 <i class='journal-id'> Journal ID: {{journal_id}}</i>
 <div class='date'>
 
-    {% if date > start%}
-    <div class='left-arrow' >
-        <img src="{% static 'journing/icons/left_arrow.png'%}" >
-    </div>
-    {% endif %}
+    {% comment %} {{date}} {{start|date:'Y-m-d'}} {{end|date:'Y-m-d'}} {% endcomment %}
+    {% comment %} {{date}} {{start}} {{end}} {% endcomment %}
 
-    <h2> {{date}} </h2>
+        <div class='left-arrow' >
+            <img src="{% static 'journing/icons/left_arrow.png'%}" >
+        </div>
 
-    {% if date < end%}
-    <div class='right-arrow'>
+        <h2> {{date}} </h2>
 
-        <img src="{% static 'journing/icons/right_arrow.png'%}" >
-    </div>
-    {% endif %}
+        <div class='right-arrow'>
+
+            <img src="{% static 'journing/icons/right_arrow.png'%}" >
+        </div>
 
 </div>
-<input class='title' placeholder='Untitled'></input>
+<input class='title' placeholder="{{title}}"></input>
 <button class='save'> Save </button>
 <div class='main'>
     {% if not all_records_validate%}

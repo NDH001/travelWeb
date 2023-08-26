@@ -366,7 +366,7 @@ class SaveJournal(View):
         end_date = data["end"]
         city_id = data["destination_id"]
         journal_data = data["journal"]
-        title = data["title"]
+        date = data["date"]
 
         city = Cities.objects.get(pk=city_id)
 
@@ -379,14 +379,14 @@ class SaveJournal(View):
                 user=self.request.user,
                 start_date=start_date,
                 end_date=end_date,
-                title=title,
                 city=city,
             )
 
         if journal:
-            records = journal.record_set.filter(date=request.GET.get("date"))
-            print(records, "hey yo")
+            records = journal.record_set.filter(date=date)
             records.delete()
+
+        print(journal_data.items())
 
         for record in journal_data.items():
             hour = record[0]
@@ -407,7 +407,7 @@ class SaveJournal(View):
                 journal=journal,
             )
             new_record.save()
-
+        journal.save()
         return JsonResponse({"message": "saved"})
 
 
@@ -441,6 +441,10 @@ class EditJournal(View):
         # edit journal
 
         else:
+            if request.GET.get("title"):
+                journal.title = request.GET.get("title")
+            journal.save()
+
             destination = journal.city
             start = journal.start_date
             end = journal.end_date

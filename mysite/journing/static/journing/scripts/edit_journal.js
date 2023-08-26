@@ -20,6 +20,7 @@ function getCookie(name) {
 
 // records
 let journal = {}
+let journal_initial = {}
 let journal_id_only = {}
 
 // the dimensions for the image in different zones
@@ -148,6 +149,7 @@ function enable_drop(target){
             
             console.log(journal)
             console.log(journal_id_only)
+            console.log(journal_initial,'copy')
 
             // add the collection to the current hour div
             $(this).append(current_element);
@@ -186,22 +188,35 @@ function enable_drop(target){
 
 }
 
-function enable_save(){
+function save(current_date,redirect_date){
 
-    $('.save').on('click',function(){
-        console.log()
-        if (Object.keys(journal).length===0){
-            return
+
+        let filled_hours_keys = Object.keys(journal) 
+        let redirect_link = undefined
+        let current_title = $('.title')
+
+        if (current_title.val() != title){
+            redirect_link = `/journal/edit/${journal_id}/?date=${date_format(new Date(redirect_date))}&title=${$('.title').val()}`
+        }else{
+            redirect_link = `/journal/edit/${journal_id}/?date=${date_format(new Date(redirect_date))}`
         }
 
-        let filled_hours_keys = Object.keys(journal)
-        
         for (let key in filled_hours_keys){
             filled_hour = filled_hours_keys[key]
             let filled_hour_remark = $(`#hour-div-${filled_hour}`).find('.remarks textarea').val()
             
             journal[filled_hour]['remark'] = filled_hour_remark
         }
+
+        if (Object.keys(journal).length===0 || JSON.stringify(journal)===JSON.stringify(journal_initial)){
+            if ( new_journal == 'False'){
+                window.location.href=redirect_link
+                console.log('do nth')
+            }else{
+                return
+            }
+        }
+
         $.ajax({
             url:`/journal/save/`,
             type:'post',
@@ -211,7 +226,7 @@ function enable_save(){
             'start' : start,
             'end' : end,
             'destination_id' : destination_id,
-            'title':$('.title').val()
+            'date':date_format(new Date(current_date))
             }),
             beforeSend: function(xhr, settings) {
                 xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
@@ -221,7 +236,7 @@ function enable_save(){
                     console.log(response,response.message,response.login_url)
                     window.location.href=response.login_url
                 }else if(response.message==='saved'){
-                    window.location.href=`/journal/edit/${journal_id}/?date=${date_format(new Date(date))}`
+                    window.location.href= redirect_link
                 }
             },
             error: function(xhr, status, error) {
@@ -229,6 +244,12 @@ function enable_save(){
                 // window.location.href='/accounts/login/'
             }
         })
+}
+
+function enable_save(){
+
+    $('.save').on('click',function(){
+        save(date,date)
     })
 
 }
@@ -265,31 +286,45 @@ function read_existing(){
                     list_append_id='shop'
                 }
                 
+                collection_id = current_record.collection_id
+                list_name = current_record.list_name
+                activity_name= current_record.activity_name
+                date = current_record.date
+                remark = current_record.remark
+
                 $(element).find('.drop-area').html(
-                    `<div class="collection-img" ondragstart="get_data('${current_record.activity_name}','${current_record.list_name}','${current_record.collection_id}')" style="height:${HOUR_IMG_HEIGHT};width:${HOUR_IMG_WIDTH};border-radius:10px;">
+                    `<div class="collection-img" ondragstart="get_data('${activity_name}','${list_name}','${collection_id}')" style="height:${HOUR_IMG_HEIGHT};width:${HOUR_IMG_WIDTH};border-radius:10px;">
 
                     <img src="${img_path}${current_record.img_local}" style="height:${HOUR_IMG_HEIGHT};width:${HOUR_IMG_WIDTH};border-radius:5px;">
 
                     </div>`
                 )
 
-                $(element).find('.name').text(current_record.activity_name)
-
-
+                $(element).find('.name').text(activity_name)
+ 
                 $(element).find('.activity').html(
                     `<img id=${list_append_id} src=${icon_path}></img>`
-                )
+                    )
 
-                collection_id = current_record.collection_id
-                list_name = current_record.list_name
-                activity_name= current_record.activity_name
-                date = current_record.date
+                $(element).find('.remarks textarea').val(remark)
+
                 journal[index+1] = {
                     collection_id,
                     list_name,
                     activity_name,
-                    date}
+                    date,
+                    remark,
+                }
                 journal_id_only[index+1] = collection_id
+
+
+                journal_initial[index+1] = {
+                    collection_id,
+                    list_name,
+                    activity_name,
+                    date,
+                    remark,
+                }
             }
 
         }) 
@@ -298,6 +333,7 @@ function read_existing(){
           console.log('Error:', error);
         }
       });
+
 }
 
 function enable_drop_area_after_saved(){
@@ -327,7 +363,7 @@ function date_format(date){
     return year + '-' + month + '-' + day
 }
 
-function set_date(start_date,end_date,date_holder,next=true){
+function set_date(date_holder,next=true){
 
     date_to_be = new Date(date_holder.text())
     if (next){
@@ -337,6 +373,52 @@ function set_date(start_date,end_date,date_holder,next=true){
         date_to_be.setDate(date_to_be.getDate() - 1);
     }
     date_holder.text(date_format(date_to_be))
+    return date_holder.text()
+    
+
+}
+
+function check_arrow_visibility(){
+
+    current_date = $('.date').text()
+    left_arrow = $('.left-arrow')
+    right_arrow = $('.right-arrow')
+    if (new Date(current_date) > new Date(start)){
+        left_arrow.css({
+            'display':'block'
+        })
+    }else{
+
+        left_arrow.css({
+            'display':'none'
+        })
+    }
+
+    if (new Date(current_date) < new Date(end)){
+        right_arrow.css({
+            'display':'block'
+        })
+    }else{
+
+        right_arrow.css({
+            'display':'none'
+        })
+    }
+
+}
+
+function enable_arrows(){
+    
+    let date_holder = $('.date').find('h2')
+    $('.right-arrow').on('click',function(){
+        save(date,set_date(date_holder,next=true))
+        check_arrow_visibility()
+    })
+    
+    $('.left-arrow').on('click',function(){
+        save(date,set_date(date_holder,next=false))
+        check_arrow_visibility()
+    })
 }
 
 $(document).ready(function(){
@@ -345,24 +427,22 @@ $(document).ready(function(){
     let collections = $('.collection-img')
     let drop = $('.drop-area')
 
-    let start_date = new Date(start).toLocaleDateString()
-    let end_date = new Date(end).toLocaleDateString()
-    let date_holder = $('.date').find('h2')
-
+    // let start_date = new Date(start).toLocaleDateString()
+    // let end_date = new Date(end).toLocaleDateString()
+    
     enable_drag(collections,duplicate=false)
-
+    
     enable_drop(drop)
-
+    
     enable_save()
 
+    check_arrow_visibility()
+
+    enable_arrows()
+  
     if (new_journal=='False'){
         read_existing()
         enable_drop_area_after_saved()
     }
-
-    $('.right-arrow').on('click',function(){
-        set_date(start_date,end_date,date_holder,next=true)
-
-    })
 
 })

@@ -455,6 +455,7 @@ class EditJournal(View):
 
         template = "journing/edit_journal.html"
 
+        user = request.user
         try:
             journal = Journal.objects.get(pk=kwargs["pk"])
         except:
@@ -486,8 +487,11 @@ class EditJournal(View):
             title = journal.title
 
             # check if it is a sample journal
-            if journal.id == "c61d8d18-f642-4ecb-9eeb-ace66ca61fd7":
+            if (
+                str(journal.id) == "c61d8d18-f642-4ecb-9eeb-ace66ca61fd7"
+            ):  # 9596e0f5-802c-4a10-96f7-ac34a21f3bf9
                 template = "journing/sample_journal.html"
+                user = User.objects.get(username="jun")
 
             date = request.GET.get("date").strip()
 
@@ -515,15 +519,15 @@ class EditJournal(View):
         foods = Foods.objects.filter(city=city)
 
         sight_collections = UserSightCollection.objects.filter(
-            user=request.user, collection__in=sights
+            user=user, collection__in=sights
         ).select_related("user", "collection")
 
         food_collections = UserFoodCollection.objects.filter(
-            user=request.user, collection__in=foods
+            user=user, collection__in=foods
         ).select_related("user", "collection")
 
         shop_collections = UserShopCollection.objects.filter(
-            user=request.user, collection__in=shops
+            user=user, collection__in=shops
         ).select_related("user", "collection")
 
         hours = [

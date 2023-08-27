@@ -7,8 +7,13 @@
         padding: 20px;
         bottom: 0px;
         top:150px;
-        
-    }
+        }
+
+    .top{
+	display:grid;
+	grid-template-columns:2fr 1fr 2fr 1fr 1fr;
+	align-items: center;	
+	}
 
     .journal-id, .destination, .date, .title, .save{
         position: absolute;

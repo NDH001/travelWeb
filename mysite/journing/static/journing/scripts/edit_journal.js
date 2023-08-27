@@ -62,8 +62,8 @@ function restore_div(index,new_collection_id=null){
 
     // set the dimension for dropped item
     div.find('.drop-area').find('div').find('img').css({
-        'height':`${HOUR_IMG_HEIGHT}`,
-        'width':`${HOUR_IMG_WIDTH}`
+        'height':`${LIST_IMG_HEIGHT}`,
+        'width':`${LIST_IMG_WIDTH}`
     })
 
     // if the current item is not in any other hour div and current item id does not equal to the id of the newly coming in item then return it back to the pool

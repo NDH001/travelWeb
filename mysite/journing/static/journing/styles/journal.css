@@ -1,11 +1,46 @@
+@media (min-width:400px){
+    .no-journal{
+
+        margin: auto;
+        width: 500px;
+        height: 400px;
+        margin-top: 300px;
+    }
+
+    .create_journal{
+        font-size: x-large;
+        right:100px;
+        top:150px;
+    }
+
+    .all-journals{
+
+        width: 90%;
+    }
+}
+
+@media (min-width:1500px){
+    .no-journal{
+
+        margin-top: 100px;
+    }
+
+    .create_journal{
+
+        right:500px;
+        top:150px;
+    }
+    
+    .all-journals{
+
+        width: 60%;
+    }
+}
+
 .no-journal{
     display:grid;
     grid-template-rows: 5fr 1fr 1fr;
     background-color: rgb(50,50,50);
-    width: 500px;
-    height: 400px;
-    margin: auto;
-    margin-top: 100px;
     border-radius: 30px;
     padding: 30px 50px;
     
@@ -32,18 +67,15 @@
 .new-journal:hover{
     cursor: pointer;
 }
-
+/* if there is journal */
 .create_journal{
     position: absolute;
-    right:500px;
-    top:150px;
 }
 
 .all-journals{
     margin:auto;
     margin-top:50px;
     padding: 50px;
-    width: 60%;
 }
 
 .indiv-journal{
@@ -66,13 +98,15 @@
 
 .city-div{
     width: 280px;
-    height: 150px;
-    padding: 20px;
+    height: 180px;
+    padding-bottom: 50px;
+    padding-top: 30px;
 }
 
 .city-img-div{
     width: 100%;
     height: 100%;
+    margin-bottom: 20px;
 }
 
 .city-img-div img{

@@ -309,7 +309,7 @@ class JournalView(LoginRequiredMixin, FormView):
     template_name = "journing/journal.html"
 
     def get(self, request, *args, **kwargs):
-        journals = request.user.journal_set.all()
+        journals = request.user.journal_set.all().prefetch_related("city")
 
         return render(
             request,

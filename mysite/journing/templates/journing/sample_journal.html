@@ -1,0 +1,137 @@
+{% extends 'journing/base.html'%}
+{% load static%}
+
+
+{% block headcontent%}
+<link rel='stylesheet' href="{% static 'journing/styles/edit_journal.css'%}">
+{% endblock headcontent%}
+
+{% block content%}
+
+<h2 class='destination'> {{destination}} </h2>
+<i class='journal-id'> Journal ID: {{journal_id}}</i>
+<div class='date'>
+
+    {% comment %} {{date}} {{start|date:'Y-m-d'}} {{end|date:'Y-m-d'}} {% endcomment %}
+    {% comment %} {{date}} {{start}} {{end}} {% endcomment %}
+
+        <div class='left-arrow' >
+            <img src="{% static 'journing/icons/left_arrow.png'%}" >
+        </div>
+
+        <h2> {{date}} </h2>
+
+        <div class='right-arrow'>
+
+            <img src="{% static 'journing/icons/right_arrow.png'%}" >
+        </div>
+
+</div>
+<input class='title' placeholder="{{title}}"></input>
+<button class='save'> Save </button>
+<div class='main'>
+    {% if not all_records_validate%}
+    
+        <div class='sight-list list'>
+        {% for s in sight_collections%}
+            <div class='collection-img' ondragstart="get_data('{{s.collection}}','sight_collections','{{s.collection.id}}')" >
+            <img src="{% static '/sightimgs/' %}{{s.collection.img_local}}">
+            </div> 
+        {% endfor %}
+        </div>
+
+        <div class='food-list list'>
+            {% for f in food_collections%}
+            <div class='collection-img' ondragstart="get_data('{{f.collection}}','food_collections','{{f.collection.id}}')">
+            <img src="{% static '/foodimgs/' %}{{f.collection.img_local}}">
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class='shop-list list'>
+            {% for s in shop_collections%}
+            <div class='collection-img' ondragstart="get_data('{{s.collection}}','shop_collections','{{s.collection.id}}')" >
+            <img src="{% static '/shopimgs/' %}{{s.collection.img_local}}">
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% else %}
+
+            <div class='sight-list list'>
+            {% for s in sight_collections%}
+                {% if s.collection.id not in all_records_validate%}
+                    <div class='collection-img' ondragstart="get_data('{{s.collection}}','sight_collections','{{s.collection.id}}')" >
+                    <img src="{% static '/sightimgs/' %}{{s.collection.img_local}}">
+                    </div>
+                {% endif%}
+            {% endfor%}
+            </div>
+
+            <div class='food-list list'>
+            {% for f in food_collections%}
+                {% if f.collection.id not in all_records_validate%}
+                    <div class='collection-img' ondragstart="get_data('{{f.collection}}','food_collections','{{f.collection.id}}')">
+                    <img src="{% static '/foodimgs/' %}{{f.collection.img_local}}">
+                    </div>
+                {% endif %}
+            {% endfor %}
+            </div>
+
+            <div class='shop-list list'>
+            {% for s in shop_collections%}
+                {% if s.collection.id not in all_records_validate%}
+                    <div class='collection-img' ondragstart="get_data('{{s.collection}}','shop_collections','{{s.collection.id}}')" >
+                    <img src="{% static '/shopimgs/' %}{{s.collection.img_local}}">
+                    </div>
+                {% endif %}
+            {% endfor %}
+            </div>
+
+        
+    {% endif %}
+        
+    <div class='planner'>
+        {% for hour in hours %}
+
+        <div class='hour-div' id="hour-div-{{forloop.counter}}" >
+
+            <div class='time element'><h2>{{hour}}</h2></div>
+            <div class='drop-area element' id="{{forloop.counter}}">
+
+            </div>
+            <div class='name element'> - </div>
+            <div class='activity element'> </div>
+            <div class='remarks element'><textarea></textarea></div>
+
+        <div class='clear-item' onclick="restore_div('{{forloop.counter}}')"> <u>Clear</u> </div>
+        </div>        
+        {% endfor%}
+    </div>
+</div>
+
+{% endblock content%}
+
+{% block jscontent%}
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{% static 'journing/scripts/sample_journal.js'%}"></script>
+<script>
+    sighticon = "{% static 'journing/icons/attraction.png'%}"
+    shopicon = "{% static 'journing/icons/shopping.png'%}"
+    foodicon = "{% static 'journing/icons/food.png'%}"
+
+    sightimg = "{% static '/sightimgs/'%}"
+    foodimg = "{% static '/foodimgs/'%}"
+    shopimg = "{% static '/shopimgs/'%}"
+
+    journal_id = "{{journal_id}}"
+    start ="{{start}}"
+    end = "{{end}}"
+    destination_id = "{{destination}}"
+    date = "{{date}}"
+    new_journal = "{{new}}"
+    title = "{{title}}"
+
+    
+</script>
+{% endblock jscontent%}

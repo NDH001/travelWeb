@@ -453,6 +453,8 @@ class EditJournal(View):
         new = None
         date = None
 
+        template = "journing/edit_journal.html"
+
         try:
             journal = Journal.objects.get(pk=kwargs["pk"])
         except:
@@ -482,6 +484,10 @@ class EditJournal(View):
             end = journal.end_date
             journal_id = journal.id
             title = journal.title
+
+            # check if it is a sample journal
+            if journal.id == "c61d8d18-f642-4ecb-9eeb-ace66ca61fd7":
+                template = "journing/sample_journal.html"
 
             date = request.GET.get("date").strip()
 
@@ -538,7 +544,7 @@ class EditJournal(View):
         data["date"] = date
         return render(
             request,
-            "journing/edit_journal.html",
+            template,
             data,
         )
 

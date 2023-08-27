@@ -488,7 +488,7 @@ class EditJournal(View):
 
             # check if it is a sample journal
             if (
-                str(journal.id) == "c61d8d18-f642-4ecb-9eeb-ace66ca61fd7"
+                str(journal.id) == "9596e0f5-802c-4a10-96f7-ac34a21f3bf9"
             ):  # 9596e0f5-802c-4a10-96f7-ac34a21f3bf9
                 template = "journing/sample_journal.html"
                 user = User.objects.get(username="jun")

@@ -18,7 +18,7 @@
     .journal-id{
         left:30px;
         top:100px;
-        width: 150px;
+        width: 200px;
     }
 
     .destination{
@@ -94,6 +94,7 @@
         overflow-x: auto; 
         white-space: nowrap; 
         width: 100%;
+        height: 150px;
         
         
     }

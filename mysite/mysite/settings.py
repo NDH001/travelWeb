@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "storages"
+    "storages",
+    'corsheaders',
+    'rest_framework',
     # "debug_toolbar",
     # "crispy_forms",
     # "crispy_bootstrap4",
@@ -52,6 +54,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     # "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -165,6 +168,8 @@ MEDIA_URL = "/media/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 INTERNAL_IPS = ["127.0.0.1"]
+
+CORS_ALLOWED_ORIGINS= True
 
 AWS_ACCESS_KEY_ID = "AKIAXOKFZM4IZ23FGEBX"
 AWS_SECRET_ACCESS_KEY = "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"

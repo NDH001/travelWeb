@@ -24,6 +24,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("userdata.urls")),
     path("collections/", include("collectiondata.urls")),
+    path('api/',include('api.urls')),
     # path('__debug__/',include('debug_toolbar.urls'))
 ]
 

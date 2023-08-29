@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-cnx-#u)zic*@-u%!&+3y-rvg9=q3w6ten%+(y+vbbcvhvs(9@w
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
-ALLOWED_HOSTS = ["13.250.194.206","www.journing.co","journing.co"]
+ALLOWED_HOSTS = ["13.250.194.206", "www.journing.co", "journing.co"]
 
 
 # Application definition
@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "storages",
-    'corsheaders',
-    'rest_framework',
+    "corsheaders",
+    "rest_framework",
     # "debug_toolbar",
     # "crispy_forms",
     # "crispy_bootstrap4",
@@ -54,7 +54,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     # "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -91,11 +91,11 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME":'journing',
-        'USER':'postgres',
-        'PASSWORD':'Forwhat000!',
-        'PORT':'5432',
-        'HOST':'db-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com',
+        "NAME": "journing",
+        "USER": "postgres",
+        "PASSWORD": "Forwhat000!",
+        "PORT": "5432",
+        "HOST": "db-instance.c8dr5e4c6fd8.ap-southeast-1.rds.amazonaws.com",
         "OPTIONS": {
             "options": "-c search_path=public,django,traveldata,userdata,journingdata,collectiondata"
         },
@@ -169,7 +169,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 INTERNAL_IPS = ["127.0.0.1"]
 
-CORS_ALLOWED_ORIGINS= True
+CORS_ALLOWED_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 AWS_ACCESS_KEY_ID = "AKIAXOKFZM4IZ23FGEBX"
 AWS_SECRET_ACCESS_KEY = "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"

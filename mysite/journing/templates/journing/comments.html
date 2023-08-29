@@ -54,7 +54,7 @@
     <div class='comment-timestamp'>
 {% comment %} ensures only user who posted the comment can delete or edit the said comment {% endcomment %}
         {% if user == c.user%}
-        <div id='pop-up-confirm-js'onclick="pop_up_confirmation('{{c.id}}','{{view.kwargs.pk}}', '{{view.kwargs.slug}}')"> <img src="{% static 'journing/icons/delete.webp'%}"> </div>
+        <div id='pop-up-confirm-js'onclick="pop_up_confirmation('{{c.id}}','{{view.kwargs.pk}}', '{{view.kwargs.slug}}')"> <img src="{% static 'journing/icons/delete.png'%}"> </div>
         {%endif%}
         <h4>{{c.created_on}}</h4>
     </div>

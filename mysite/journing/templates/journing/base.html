@@ -11,6 +11,15 @@
 		href="{%static 'journing/logos/logo_favicon.png'%}"
 		/>
 		<link rel="stylesheet" href="{% static 'journing/styles/base.css' %}" />
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-NCJ802DYPK"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-NCJ802DYPK');
+		</script>
 		{%block headcontent%} {%endblock headcontent%}
 	</head>
 

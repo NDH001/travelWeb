@@ -11,6 +11,7 @@
 		href="{%static 'journing/logos/logo_favicon.png'%}"
 		/>
 		<link rel="stylesheet" href="{% static 'journing/styles/base.css' %}" />
+		{%block headcontent%} {%endblock headcontent%}
 		<!-- Google tag (gtag.js) -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-NCJ802DYPK"></script>
 		<script>
@@ -20,7 +21,6 @@
 
 		gtag('config', 'G-NCJ802DYPK');
 		</script>
-		{%block headcontent%} {%endblock headcontent%}
 	</head>
 
 {% comment %} body {% endcomment %}

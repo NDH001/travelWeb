@@ -3,7 +3,8 @@
 	{% url 'journing:index' as index_url %}
 	{% comment %} default styling and title {% endcomment %}
 	<head>
-		<title>Journing</title>
+		<title>{% block title%}Journing{% endblock title%}</title>
+
 		{% load static %}
 		<link
 		rel="icon"

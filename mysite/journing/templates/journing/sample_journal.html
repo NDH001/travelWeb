@@ -1,11 +1,8 @@
 {% extends 'journing/base.html'%}
 {% load static%}
 
-
+{% block title%}Sample Journal{% endblock title%}
 {% block headcontent%}
-<script>
-    document.title = 'Sample Journal'
-</script>
 <link rel='stylesheet' href="{% static 'journing/styles/edit_journal.css'%}">
 {% endblock headcontent%}
 
